@@ -49,5 +49,4 @@ for index, row in movies.iterrows():
     #mycursor.execute("INSERT INTO Ratings (userId, movieId, rating, timestamp) VALUES (%s, %s, %s, %s)", (int(row[0]), int(row[1]), row[2], int(row[3])))
     #db.commit()
 
-
 mycursor.close()
