@@ -21,8 +21,13 @@ def data_nullity(dataset):
     return dataset.isnull().sum()
 
 
-print(data_nullity(movies))
+""" print(data_nullity(movies))
 print(data_nullity(tags))
 print(data_nullity(ratings))
-print(data_nullity(links))
+print(data_nullity(links)) """
+
+for index, row in movies.iterrows():
+    print(type(row))
+
+
 
