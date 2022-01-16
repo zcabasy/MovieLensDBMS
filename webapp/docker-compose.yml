@@ -16,11 +16,11 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: urlshortener
+      MYSQL_DATABASE: movielens
     ports:
       - '3308:3306'
     volumes:
-      - './database:/var/lib/mysql'
+      - './db:/var/lib/mysql'
     networks:
       - backend
 networks:
