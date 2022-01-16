@@ -1,0 +1,6 @@
+CREATE DATABASE IF NOT EXISTS `MovieLensDB`;
+
+CREATE SCHEMA IF NOT EXISTS `movies_schema` DEFAULT CHARACTER SET utf8 ;
+CREATE SCHEMA IF NOT EXISTS `user_personality_schema` DEFAULT CHARACTER SET utf8 ;
+
+USE `movies_schema`;
