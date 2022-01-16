@@ -1,3 +1,5 @@
+USE `movies_schema`;
+
 --Table Movies
 CREATE TABLE IF NOT EXISTS `movies_schema`.`Movies` (
   `movieId` INT NOT NULL,
@@ -45,3 +47,9 @@ CREATE TABLE IF NOT EXISTS `movies_schema`.`Links` (
   `tmdbId` INT NOT NULL,
   PRIMARY KEY (`movieId`))
 ENGINE = InnoDB;
+
+USE `user_personality_schema`;
+
+--Personality table
+
+--Personality-Ratings
