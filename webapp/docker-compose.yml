@@ -23,9 +23,11 @@ services:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: MovieLensDB
     ports:
-      - '3308:3306'
+      - '3306:3306'
     volumes:
       - './db:/var/lib/mysql'
+      - './data:/data'
+      - './db-scripts:/docker-entrypoint-initdb.d'
     networks:
       - backend
 
