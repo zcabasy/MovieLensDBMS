@@ -18,7 +18,7 @@ except mariadb.Error as e:
 # Get Cursor
 cur = conn.cursor()
 
-cur.execute("SELECT * FROM Movies LIMIT 11") 
+cur.execute("SELECT * FROM RatingsForPersonality LIMIT 11") 
 
 for row in cur: 
     print(row)
