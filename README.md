@@ -17,5 +17,5 @@ $ docker exec -it mariadb bash
 
 Once in the container's bash terminal, the MySQL shell can be run using:
 ```
-$ mysql -uroot -proot
+$ mysql -uroot -ppassword
 ```

@@ -6,9 +6,9 @@ services:
     restart: always
     ports:
       # Port 5000 is always in use by a macOS Monterey process so we map the app to port 5001
-      - '5001:5001'
+      - 5001:5001
     volumes:
-      - './app:/app'
+      - ./app:/app
     networks:
       - backend
     links:
@@ -17,17 +17,17 @@ services:
   mariadb:
     container_name: mariadb
     # Using MariaDB as there is no arm64 MySQL image (problematic for developing on Apple Silicon Macs)
-    image: 'mariadb:latest'
+    image: mariadb:latest
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: MovieLensDB
+      MYSQL_ROOT_PASSWORD: password
+      # MYSQL_USER: user
+      # MYSQL_PASSWORD: password
     ports:
       - '3306:3306'
     volumes:
-      - './db:/var/lib/mysql'
-      - './data:/data'
-      - './db-scripts:/docker-entrypoint-initdb.d'
+      - ./data:/data
+      - ./db:/docker-entrypoint-initdb.d/:ro
     networks:
       - backend
 
