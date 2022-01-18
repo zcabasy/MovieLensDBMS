@@ -5,7 +5,7 @@ import sys
 try:
     conn = mariadb.connect(
         user="root",
-        password="root",
+        password="password",
         host="localhost",
         port=3308,
         database="MovieLensDB"
@@ -18,7 +18,7 @@ except mariadb.Error as e:
 # Get Cursor
 cur = conn.cursor()
 
-cur.execute("SELECT * FROM Tags LIMIT 11") 
+cur.execute("SELECT * FROM Movies LIMIT 11") 
 
 for row in cur: 
     print(row)
