@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS `MovieLensDB`.`Tags` (
   `timestamp` INT NOT NULL,
   PRIMARY KEY (`userId`, `movieId`, `tag`),
   INDEX `movieId_idx` (`movieId` ASC) VISIBLE,
-  CONSTRAINT `movieId`
+  CONSTRAINT `tags.movieId`
     FOREIGN KEY (`movieId`)
     REFERENCES `MovieLensDB`.`Movies` (`movieId`)
     ON DELETE CASCADE
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `MovieLensDB`.`Ratings` (
   `timestamp` INT NOT NULL,
   PRIMARY KEY (`userId`, `movieId`),
   INDEX `moveId_idx` (`movieId` ASC) VISIBLE,
-  CONSTRAINT `moveId`
+  CONSTRAINT `ratings.moveId`
     FOREIGN KEY (`movieId`)
     REFERENCES `MovieLensDB`.`Movies` (`movieId`)
     ON DELETE CASCADE
@@ -44,17 +44,17 @@ ENGINE = InnoDB;
 
 
 --Table Links
--- CREATE TABLE IF NOT EXISTS `MovieLensDB`.`Links` (
---   `movieId` INT NOT NULL,
---   `imdbId` INT NOT NULL,
---   `tmdbId` INT NOT NULL,
---   PRIMARY KEY (`movieId`),
---   CONSTRAINT `movieId`
---     FOREIGN KEY (`movieId`)
---     REFERENCES `MovieLensDB`.`Movies` (`movieId`)
---     ON DELETE CASCADE
---     ON UPDATE CASCADE)
--- ENGINE = InnoDB;
+CREATE TABLE IF NOT EXISTS `MovieLensDB`.`Links` (
+  `movieId` INT NOT NULL,
+  `imdbId` INT NOT NULL,
+  `tmdbId` INT NOT NULL,
+  PRIMARY KEY (`movieId`),
+  CONSTRAINT `links.movieId`
+    FOREIGN KEY (`movieId`)
+    REFERENCES `MovieLensDB`.`Movies` (`movieId`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
 
 --Table Personality
 CREATE TABLE IF NOT EXISTS `MovieLensDB`.`Personality` (
@@ -107,7 +107,7 @@ ENGINE = InnoDB;
 LOAD DATA INFILE '/data/movies.csv' INTO TABLE Movies FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
 LOAD DATA INFILE '/data/tags.csv' INTO TABLE Tags FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
 LOAD DATA INFILE '/data/ratings.csv' INTO TABLE Ratings FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
---LOAD DATA INFILE '/data/links.csv' INTO TABLE Links FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+LOAD DATA INFILE '/data/links.csv' INTO TABLE Links FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
 
 --LOAD DATA INFILE '/data/personality_data/personality-data.csv' INTO TABLE Personality FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
 LOAD DATA INFILE '/data/personality_data/ratings.csv' INTO TABLE RatingsForPersonality FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
