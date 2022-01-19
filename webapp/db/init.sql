@@ -92,7 +92,7 @@ CREATE TABLE IF NOT EXISTS `MovieLensDB`.`Personality` (
   `predicted_rating_12` FLOAT NULL,
   `is_personalized` INT NULL,
   `enjoy_watching` INT NULL,
-  PRIMARY KEY (`userId`))
+  PRIMARY KEY (`userId`, `movie_1`, `predicted_rating_1`, `movie_2`, `predicted_rating_2`, `movie_3`, `predicted_rating_3`, `movie_4`, `predicted_rating_4`, `movie_5`, `predicted_rating_5`, `movie_6`, `predicted_rating_6`, `movie_7`, `predicted_rating_7`, `movie_8`, `predicted_rating_8`, `movie_9`, `predicted_rating_9`, `movie_10`, `predicted_rating_10`, `movie_11`, `predicted_rating_11`, `movie_12`, `predicted_rating_12`))
 ENGINE = InnoDB;
 
 --Table Ratings-Personality
@@ -109,5 +109,5 @@ LOAD DATA INFILE '/data/tags.csv' INTO TABLE Tags FIELDS TERMINATED BY ',' ENCLO
 LOAD DATA INFILE '/data/ratings.csv' INTO TABLE Ratings FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
 LOAD DATA INFILE '/data/links.csv' INTO TABLE Links FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
 
---LOAD DATA INFILE '/data/personality_data/personality-data.csv' INTO TABLE Personality FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+LOAD DATA INFILE '/data/personality_data/personality-data.csv' INTO TABLE Personality FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
 LOAD DATA INFILE '/data/personality_data/ratings.csv' INTO TABLE RatingsForPersonality FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
