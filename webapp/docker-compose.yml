@@ -1,5 +1,7 @@
 version: '3'
+
 services:
+  
   flask-app:
     container_name: flask-app
     build: app
@@ -9,6 +11,90 @@ services:
       - 5001:5001
     volumes:
       - ./app:/app
+    networks:
+      - backend
+    links:
+      - mariadb
+
+  use-case-1:
+    container_name: use-case-1
+    build: microservices/use-case-1
+    restart: always
+    ports:
+      # Port 5000 is always in use by a macOS Monterey process so we map the app to port 5001
+      - 5002:5002
+    # volumes:
+    #   - ./microservices/use-case-1:/microservices/use-case-1
+    networks:
+      - backend
+    links:
+      - mariadb
+
+  use-case-2:
+    container_name: use-case-2
+    build: microservices/use-case-2
+    restart: always
+    ports:
+      # Port 5000 is always in use by a macOS Monterey process so we map the app to port 5001
+      - 5003:5003
+    # volumes:
+    #   - ./microservices/use-case-1:/microservices/use-case-1
+    networks:
+      - backend
+    links:
+      - mariadb
+
+  use-case-3:
+    container_name: use-case-3
+    build: microservices/use-case-3
+    restart: always
+    ports:
+      # Port 5000 is always in use by a macOS Monterey process so we map the app to port 5001
+      - 5004:5004
+    # volumes:
+    #   - ./microservices/use-case-1:/microservices/use-case-1
+    networks:
+      - backend
+    links:
+      - mariadb
+
+  use-case-4:
+    container_name: use-case-4
+    build: microservices/use-case-4
+    restart: always
+    ports:
+      # Port 5000 is always in use by a macOS Monterey process so we map the app to port 5001
+      - 5005:5005
+    # volumes:
+    #   - ./microservices/use-case-1:/microservices/use-case-1
+    networks:
+      - backend
+    links:
+      - mariadb
+
+  use-case-5:
+    container_name: use-case-5
+    build: microservices/use-case-5
+    restart: always
+    ports:
+      # Port 5000 is always in use by a macOS Monterey process so we map the app to port 5001
+      - 5006:5006
+    # volumes:
+    #   - ./microservices/use-case-1:/microservices/use-case-1
+    networks:
+      - backend
+    links:
+      - mariadb
+
+  use-case-6:
+    container_name: use-case-6
+    build: microservices/use-case-6
+    restart: always
+    ports:
+      # Port 5000 is always in use by a macOS Monterey process so we map the app to port 5001
+      - 5007:5007
+    # volumes:
+    #   - ./microservices/use-case-1:/microservices/use-case-1
     networks:
       - backend
     links:
@@ -25,6 +111,91 @@ services:
       # MYSQL_PASSWORD: password
     ports:
       - '3308:3306'
+    volumes:
+      - ./data:/data
+      - ./db:/docker-entrypoint-initdb.d/:ro
+    networks:
+      - backend
+
+  db-2:
+    container_name: db-2
+    # Using MariaDB as there is no arm64 MySQL image (problematic for developing on Apple Silicon Macs)
+    image: mariadb:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      # MYSQL_USER: user
+      # MYSQL_PASSWORD: password
+    ports:
+      - '33082:3306'
+    volumes:
+      - ./data:/data
+      - ./db:/docker-entrypoint-initdb.d/:ro
+    networks:
+      - backend
+
+  db-3:
+    container_name: db-3
+    # Using MariaDB as there is no arm64 MySQL image (problematic for developing on Apple Silicon Macs)
+    image: mariadb:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      # MYSQL_USER: user
+      # MYSQL_PASSWORD: password
+    ports:
+      - '33083:3306'
+    volumes:
+      - ./data:/data
+      - ./db:/docker-entrypoint-initdb.d/:ro
+    networks:
+      - backend
+
+  db-4:
+    container_name: db-4
+    # Using MariaDB as there is no arm64 MySQL image (problematic for developing on Apple Silicon Macs)
+    image: mariadb:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      # MYSQL_USER: user
+      # MYSQL_PASSWORD: password
+    ports:
+      - '33084:3306'
+    volumes:
+      - ./data:/data
+      - ./db:/docker-entrypoint-initdb.d/:ro
+    networks:
+      - backend
+
+  db-5:
+    container_name: db-5
+    # Using MariaDB as there is no arm64 MySQL image (problematic for developing on Apple Silicon Macs)
+    image: mariadb:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      # MYSQL_USER: user
+      # MYSQL_PASSWORD: password
+    ports:
+      - '33085:3306'
+    volumes:
+      - ./data:/data
+      - ./db:/docker-entrypoint-initdb.d/:ro
+    networks:
+      - backend
+
+  db-6:
+    container_name: db-6
+    # Using MariaDB as there is no arm64 MySQL image (problematic for developing on Apple Silicon Macs)
+    image: mariadb:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      # MYSQL_USER: user
+      # MYSQL_PASSWORD: password
+    ports:
+      - '33086:3306'
     volumes:
       - ./data:/data
       - ./db:/docker-entrypoint-initdb.d/:ro

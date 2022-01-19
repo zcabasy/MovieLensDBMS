@@ -2,9 +2,7 @@ from flask import Flask, render_template
 
 app = Flask(__name__)
 
-
 @app.route("/")
-@app.route("/home")
 @app.route("/use-case-1.html")
 def use_case_1():
     return render_template("use-case-1.html")
