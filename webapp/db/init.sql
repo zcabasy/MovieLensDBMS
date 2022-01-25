@@ -2,7 +2,7 @@ CREATE DATABASE IF NOT EXISTS `MovieLensDB`;
 
 USE `MovieLensDB`;
 
---Table Movies
+-- Table Movies
 CREATE TABLE IF NOT EXISTS `MovieLensDB`.`Movies` (
   `movieId` INT NOT NULL,
   `title` VARCHAR(500) NOT NULL,
@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS `MovieLensDB`.`Movies` (
 ENGINE = InnoDB;
 
 
---Table Tags
+-- Table Tags
 CREATE TABLE IF NOT EXISTS `MovieLensDB`.`Tags` (
   `userId` INT NOT NULL,
   `movieId` INT NOT NULL,
@@ -24,10 +24,38 @@ CREATE TABLE IF NOT EXISTS `MovieLensDB`.`Tags` (
     REFERENCES `MovieLensDB`.`Movies` (`movieId`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
-ENGINE = InnoDB;
+ENGINE = InnoDB;      
 
 
---Table Ratings
+
+-- Table Movie_Genres
+CREATE TABLE IF NOT EXISTS `MovieLensDB`.`Movie_Genres` (
+  `userId` INT NOT NULL,
+  `movieId` INT NOT NULL,
+  `genreId` INT NOT NULL,
+  PRIMARY KEY (`userId`, `movieId`, `genreId`),
+  INDEX `movieId_idx` (`movieId` ASC) VISIBLE,
+  CONSTRAINT `genresId.movieId`
+    FOREIGN KEY (`movieId`)
+    REFERENCES `MovieLensDB`.`Movies` (`movieId`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;      
+
+-- Table Genres
+CREATE TABLE IF NOT EXISTS `MovieLensDB`.`Genres` (
+  `genreId` INT NOT NULL,
+  `genres` VARCHAR(500) NOT NULL,
+  PRIMARY KEY (`genreId`, `genres`),
+  INDEX `genreId_idx` (`genreId` ASC) VISIBLE,
+  CONSTRAINT `genres.genreId`
+    FOREIGN KEY (`genreId`)
+    REFERENCES `MovieLensDB`.`Movies_Genres` (`genreId`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = INNODB;
+
+-- Table Ratings
 CREATE TABLE IF NOT EXISTS `MovieLensDB`.`Ratings` (
   `userId` INT NOT NULL,
   `movieId` INT NOT NULL,
@@ -43,7 +71,7 @@ CREATE TABLE IF NOT EXISTS `MovieLensDB`.`Ratings` (
 ENGINE = InnoDB;
 
 
---Table Links
+-- Table Links
 CREATE TABLE IF NOT EXISTS `MovieLensDB`.`Links` (
   `movieId` INT NOT NULL,
   `imdbId` INT NOT NULL,
@@ -56,7 +84,7 @@ CREATE TABLE IF NOT EXISTS `MovieLensDB`.`Links` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
---Table Personality
+-- Table Personality
 CREATE TABLE IF NOT EXISTS `MovieLensDB`.`Personality` (
   `userId` VARCHAR(500) NOT NULL,
   `openness` FLOAT NOT NULL,
@@ -95,7 +123,7 @@ CREATE TABLE IF NOT EXISTS `MovieLensDB`.`Personality` (
   PRIMARY KEY (`userId`, `movie_1`, `predicted_rating_1`, `movie_2`, `predicted_rating_2`, `movie_3`, `predicted_rating_3`, `movie_4`, `predicted_rating_4`, `movie_5`, `predicted_rating_5`, `movie_6`, `predicted_rating_6`, `movie_7`, `predicted_rating_7`, `movie_8`, `predicted_rating_8`, `movie_9`, `predicted_rating_9`, `movie_10`, `predicted_rating_10`, `movie_11`, `predicted_rating_11`, `movie_12`, `predicted_rating_12`))
 ENGINE = InnoDB;
 
---Table Ratings-Personality
+-- Table Ratings-Personality
 CREATE TABLE IF NOT EXISTS `MovieLensDB`.`RatingsForPersonality` (
   `userId` VARCHAR(500) NOT NULL,
   `movieId` INT NOT NULL,
@@ -108,6 +136,8 @@ LOAD DATA INFILE '/data/movies.csv' INTO TABLE Movies FIELDS TERMINATED BY ',' E
 LOAD DATA INFILE '/data/tags.csv' INTO TABLE Tags FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
 LOAD DATA INFILE '/data/ratings.csv' INTO TABLE Ratings FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
 LOAD DATA INFILE '/data/links.csv' INTO TABLE Links FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+LOAD DATA INFILE '/data/genres.csv' INTO TABLE Genres FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+LOAD DATA INFILE '/data/movie_genres.csv' INTO TABLE Movies_Genres FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
 
 LOAD DATA INFILE '/data/personality_data/personality-data.csv' INTO TABLE Personality FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
 LOAD DATA INFILE '/data/personality_data/ratings.csv' INTO TABLE RatingsForPersonality FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
