@@ -1,176 +1,76 @@
-version: '3'
-#need to get rid of all the warnings
+x-app: &default-app
+  build:
+    context: "."
+    target: "app"
+    args:
+      - "FLASK_ENV=${FLASK_ENV:-production}"
+      - "NODE_ENV=${NODE_ENV:-production}"
+  depends_on:
+    - "postgres"
+    - "redis"
+  env_file:
+    - ".env"
+  restart: "${DOCKER_RESTART_POLICY:-unless-stopped}"
+  stop_grace_period: "3s"
+  tty: true
+  volumes:
+    - "${DOCKER_WEB_VOLUME:-./public:/app/public}"
+
 services:
-  
-  api-gateway:
-    container_name: api-gateway
-    build: app
-    restart: always
-    ports:
-      - 5001:5001
+  postgres:
+    deploy:
+      resources:
+        limits:
+          cpus: "${DOCKER_POSTGRES_CPUS:-0}"
+          memory: "${DOCKER_POSTGRES_MEMORY:-0}"
+    env_file:
+      - ".env"
+    image: "postgres:14.1-bullseye"
+    restart: "${DOCKER_RESTART_POLICY:-unless-stopped}"
+    stop_grace_period: "3s"
     volumes:
-      - ./app:/app
-    networks:
-      - gateway
-      - vpn
+      - "postgres:/var/lib/postgresql/data"
 
-  use-case-1:
-    container_name: use-case-1
-    build: microservices/use-case-1
-    restart: always
-    ports:
-      - 5002:5002
-    networks:
-      - vpn
-    links:
-      - db-1
-
-  use-case-2:
-    container_name: use-case-2
-    build: microservices/use-case-2
-    restart: always
-    ports:
-      - 5003:5003
-    networks:
-      - vpn
-    links:
-      - db-2
-
-  use-case-3:
-    container_name: use-case-3
-    build: microservices/use-case-3
-    restart: always
-    ports:
-      - 5004:5004
-    networks:
-      - vpn
-    links:
-      - db-3
-
-  use-case-4:
-    container_name: use-case-4
-    build: microservices/use-case-4
-    restart: always
-    ports:
-      - 5005:5005
-    networks:
-      - vpn
-    links:
-      - db-4
-
-  use-case-5:
-    container_name: use-case-5
-    build: microservices/use-case-5
-    restart: always
-    ports:
-      - 5006:5006
-    networks:
-      - vpn
-    links:
-      - db-5
-
-  use-case-6:
-    container_name: use-case-6
-    build: microservices/use-case-6
-    restart: always
-    ports:
-      - 5007:5007
-    networks:
-      - vpn
-    links:
-      - db-6
-  
-  db-1:
-    container_name: db-1
-    image: mariadb:latest
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: password
-    ports:
-      - '3308:3306'
+  redis:
+    deploy:
+      resources:
+        limits:
+          cpus: "${DOCKER_REDIS_CPUS:-0}"
+          memory: "${DOCKER_REDIS_MEMORY:-0}"
+    env_file:
+      - ".env"
+    image: "redis:6.2.6-bullseye"
+    restart: "${DOCKER_RESTART_POLICY:-unless-stopped}"
+    stop_grace_period: "3s"
     volumes:
-      - ./data:/data
-      - ./db:/docker-entrypoint-initdb.d/:ro
-    networks:
-      - vpn
+      - "redis:/data"
 
-  db-2:
-    container_name: db-2
-    image: mariadb:latest
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: password
+  web:
+    <<: *default-app
+    deploy:
+      resources:
+        limits:
+          cpus: "${DOCKER_WEB_CPUS:-0}"
+          memory: "${DOCKER_WEB_MEMORY:-0}"
+    healthcheck:
+      test: "${DOCKER_WEB_HEALTHCHECK_TEST:-curl localhost:8000/up}"
+      interval: "60s"
+      timeout: "3s"
+      start_period: "5s"
+      retries: 3
     ports:
-      - '33082:3306'
-    volumes:
-      - ./data:/data
-      - ./db:/docker-entrypoint-initdb.d/:ro
-    networks:
-      - vpn
+      - "${DOCKER_WEB_PORT_FORWARD:-127.0.0.1:8000}:8000"
 
-  db-3:
-    container_name: db-3
-    image: mariadb:latest
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: password
-    ports:
-      - '33083:3306'
-    volumes:
-      - ./data:/data
-      - ./db:/docker-entrypoint-initdb.d/:ro
-    networks:
-      - vpn
-
-  db-4:
-    container_name: db-4
-    image: mariadb:latest
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: password
-    ports:
-      - '33084:3306'
-    volumes:
-      - ./data:/data
-      - ./db:/docker-entrypoint-initdb.d/:ro
-    networks:
-      - vpn
-
-  db-5:
-    container_name: db-5
-    image: mariadb:latest
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: password
-    ports:
-      - '33085:3306'
-    volumes:
-      - ./data:/data
-      - ./db:/docker-entrypoint-initdb.d/:ro
-    networks:
-      - vpn
-
-  db-6:
-    container_name: db-6
-    image: mariadb:latest
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: password
-    ports:
-      - '33086:3306'
-    volumes:
-      - ./data:/data
-      - ./db:/docker-entrypoint-initdb.d/:ro
-    networks:
-      - vpn
-
-networks:
-
-  gateway: null
-
-  vpn:
-    internal: true
+  worker:
+    <<: *default-app
+    command: celery -A "movielens.app.celery_app" worker -l "${CELERY_LOG_LEVEL:-info}"
+    entrypoint: []
+    deploy:
+      resources:
+        limits:
+          cpus: "${DOCKER_WORKER_CPUS:-0}"
+          memory: "${DOCKER_WORKER_MEMORY:-0}"
 
 volumes:
-  app: null
-  db: null
+  postgres: {}
+  redis: {}
