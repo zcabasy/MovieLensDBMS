@@ -93,8 +93,4 @@ script by running: rm bin/rename-project
 Or you can keep it around in case you decide to change your project's
 name later on after developing it for a bit. You can re-run this
 script as many times as you want until you're happy.
-
-Check out the rest of the README on GitHub to wrap things up:
-
-https://github.com/nickjj/docker-${FIND_FRAMEWORK}-example#start-and-setup-the-project
 EOF
