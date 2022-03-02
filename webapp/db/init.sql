@@ -135,32 +135,34 @@ LOAD DATA INFILE '/data/tags.csv' INTO TABLE Tags FIELDS TERMINATED BY ',' ENCLO
 LOAD DATA INFILE '/data/ratings.csv' INTO TABLE Ratings FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
 LOAD DATA INFILE '/data/links.csv' INTO TABLE Links FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
 LOAD DATA INFILE '/data/genres.csv' INTO TABLE Genres FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
-LOAD DATA INFILE '/data/movie_genres.csv' INTO TABLE Movies_Genres FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+LOAD DATA INFILE '/data/movie_genres.csv' INTO TABLE Movie_Genres FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
 
 LOAD DATA INFILE '/data/personality_data/personality-data.csv' INTO TABLE Personality FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
 LOAD DATA INFILE '/data/personality_data/ratings.csv' INTO TABLE RatingsForPersonality FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
 
 -- Create indexes for faster searching
 CREATE INDEX titleIndex
-ON movies (title);
+ON Movies (title);
 
 CREATE INDEX tagIndex
-ON tags (tag);
+ON Tags (tag);
 
 CREATE INDEX genreIndex
-ON movie_genres (genreId);
+ON Movie_Genres (genreId);
 
 -- Create view for users to use
 CREATE VIEW `movielens` AS
-SELECT movies.movieId, movies.title, GROUP_CONCAT(DISTINCT tags.tag) as tag, AVG(ratings.rating) as rating, links.imdbId, GROUP_CONCAT(DISTINCT movie_genres.genreId) as genreId
-FROM movies 
-INNER JOIN tags ON movies.movieId = tags.movieId 
-INNER JOIN ratings ON movies.movieId = ratings.movieId
-INNER JOIN links ON movies.movieId = links.movieId
-INNER JOIN movie_genres ON movies.movieId = movie_genres.movieId
+SELECT Movies.movieId, Movies.title, GROUP_CONCAT(DISTINCT Tags.tag) as tag, AVG(Ratings.rating) as rating, Links.imdbId, GROUP_CONCAT(DISTINCT Movie_Genres.genreId) as genreId
+FROM Movies 
+INNER JOIN Tags ON Movies.movieId = Tags.movieId 
+INNER JOIN Ratings ON Movies.movieId = Ratings.movieId
+INNER JOIN Links ON Movies.movieId = Links.movieId
+INNER JOIN Movie_Genres ON Movies.movieId = Movie_Genres.movieId
 GROUP BY title
-ORDER BY movieId
+ORDER BY movieId;
 
--- Create safe user
-CREATE USER 'safe_browser' IDENTIFIED BY 'pass123';
-GRANT SELECT ON TABLE `MovieLensDB`.* TO 'safe_browser';
+-- Setup permissions for safeuser
+REVOKE ALL PRIVILEGES, GRANT OPTION FROM 'safebrowser';
+FLUSH PRIVILEGES;
+GRANT SELECT ON TABLE `MovieLensDB`.* TO 'safebrowser';
+FLUSH PRIVILEGES;

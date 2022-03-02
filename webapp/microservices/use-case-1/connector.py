@@ -1,13 +1,16 @@
 import mariadb
 import sys
 
-# Connect to MariaDB Platform
+# f = open("mysql-user-db1.txt")
+# pwd = f.read()
+# f.close()
+
 try:
     conn = mariadb.connect(
-        user="root",
+        user="safeuser",
         password="password",
         host="localhost",
-        port=3308,
+        port=33082,
         database="MovieLensDB"
     )
     

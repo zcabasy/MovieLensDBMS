@@ -1,5 +1,7 @@
 from flask import Flask
 from flask_caching import Cache
+import mariadb
+import sys
 
 use_case_1 = Flask(__name__)
 
@@ -7,14 +9,51 @@ cache = Cache()
 cache.init_app(use_case_1)
 use_case_1.config['CACHE_TYPE'] = 'SimpleCache'
 
+def connect():
+    # f = open("mysql-user-db1.txt")
+    # pwd = f.read()
+    # f.close()
+    pwd = "password"
+
+    try:
+        conn = mariadb.connect(
+            user="safeuser",
+            password=pwd,
+            host="localhost",
+            port=3308,
+            database="MovieLensDB"
+        )
+        return conn
+        
+    except mariadb.Error as e:
+        print(f"Error connecting to MariaDB Platform: {e}")
+        sys.exit(1)
+    
+
 @use_case_1.route("/")
-#should add max memory size to this
-#limited timeout to ensure we don't run out of memory
-#we have in memory and in process caching here
-#should we use out of process caching if we want to spin up multiple instance of each microservice? -> no, out of scope for this project
-@cache.memoize(timeout=60)
-def home():
-    return "1"
+def query_table():
+
+    title = ""
+    rating_lower = 0
+    rating_upper = 5
+    tag = ""
+    genre = ""
+
+    conn = connect()
+    cur = conn.cursor()
+    cur.execute("SELECT title, tag, rating, genreId FROM movielens \
+                    WHERE title LIKE '%?%' AND \
+                    tag LIKE '%?%'  AND \
+                    (genreId LIKE '%?%') AND \
+                    rating BETWEEN ? AND ? \
+                    ORDER BY ?;", (title, tag, genre, rating_lower, rating_upper)) 
+    
+    # Parse response and package into something that can be returned e.g. JSON
+    response = ""
+
+    conn.close()
+    
+    return response
 
 if __name__ == '__main__':
     use_case_1.run(debug = True, port = 5002, host="0.0.0.0")

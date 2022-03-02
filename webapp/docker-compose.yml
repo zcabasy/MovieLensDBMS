@@ -1,5 +1,4 @@
 version: '3'
-#need to get rid of all the warnings
 services:
   
   api-gateway:
@@ -84,78 +83,110 @@ services:
     container_name: db-1
     image: mariadb:latest
     restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: password
+    environment: 
+      - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/mysql-root-db1
+      - MYSQL_USER=safebrowser
+      - MYSQL_PASSWORD_FILE=/run/secrets/mysql-user-db1
     ports:
       - '3308:3306'
     volumes:
       - ./data:/data
       - ./db:/docker-entrypoint-initdb.d/:ro
+      - ./conf:/etc/mysql/conf.d
     networks:
       - vpn
+    secrets:
+      - mysql-root-db1
+      - mysql-user-db1
 
   db-2:
     container_name: db-2
     image: mariadb:latest
     restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: password
+    environment: 
+      - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/mysql-root-db2
+      - MYSQL_USER=safebrowser
+      - MYSQL_PASSWORD_FILE=/run/secrets/mysql-user-db2
     ports:
       - '33082:3306'
     volumes:
       - ./data:/data
       - ./db:/docker-entrypoint-initdb.d/:ro
+      - ./conf:/etc/mysql/conf.d
     networks:
       - vpn
+    secrets:
+      - mysql-root-db2
+      - mysql-user-db2
 
   db-3:
     container_name: db-3
     image: mariadb:latest
     restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: password
+    environment: 
+      - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/mysql-root-db3
+      - MYSQL_USER=safebrowser
+      - MYSQL_PASSWORD_FILE=/run/secrets/mysql-user-db3
     ports:
       - '33083:3306'
     volumes:
       - ./data:/data
       - ./db:/docker-entrypoint-initdb.d/:ro
+      - ./conf:/etc/mysql/conf.d
     networks:
       - vpn
+    secrets:
+      - mysql-root-db3
+      - mysql-user-db3
 
   db-4:
     container_name: db-4
     image: mariadb:latest
     restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: password
+    environment: 
+      - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/mysql-root-db4
+      - MYSQL_USER=safebrowser
+      - MYSQL_PASSWORD_FILE=/run/secrets/mysql-user-db4
     ports:
       - '33084:3306'
     volumes:
       - ./data:/data
       - ./db:/docker-entrypoint-initdb.d/:ro
+      - ./conf:/etc/mysql/conf.d
     networks:
       - vpn
+    secrets:
+      - mysql-root-db4
+      - mysql-user-db4
 
   db-5:
     container_name: db-5
     image: mariadb:latest
     restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: password
+    environment: 
+      - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/mysql-root-db5
+      - MYSQL_USER=safebrowser
+      - MYSQL_PASSWORD_FILE=/run/secrets/mysql-user-db5
     ports:
       - '33085:3306'
     volumes:
       - ./data:/data
       - ./db:/docker-entrypoint-initdb.d/:ro
+      - ./conf:/etc/mysql/conf.d
     networks:
       - vpn
+    secrets:
+      - mysql-root-db5
+      - mysql-user-db5
 
   db-6:
     container_name: db-6
     image: mariadb:latest
     restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: password
+    environment: 
+      - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/mysql-root-db6
+      - MYSQL_USER=safebrowser
+      - MYSQL_PASSWORD_FILE=/run/secrets/mysql-user-db6
     ports:
       - '33086:3306'
     volumes:
@@ -163,9 +194,11 @@ services:
       - ./db:/docker-entrypoint-initdb.d/:ro
     networks:
       - vpn
+    secrets:
+      - mysql-root-db6
+      - mysql-user-db6
 
 networks:
-
   gateway: null
 
   vpn:
@@ -174,3 +207,29 @@ networks:
 volumes:
   app: null
   db: null
+
+secrets:
+  mysql-root-db1:
+    file: mysql-root-db1.txt
+  mysql-root-db2:
+    file: mysql-root-db2.txt
+  mysql-root-db3:
+    file: mysql-root-db3.txt
+  mysql-root-db4:
+    file: mysql-root-db4.txt
+  mysql-root-db5:
+    file: mysql-root-db5.txt
+  mysql-root-db6:
+    file: mysql-root-db6.txt
+  mysql-user-db1:
+    file: mysql-user-db1.txt
+  mysql-user-db2:
+    file: mysql-user-db2.txt
+  mysql-user-db3:
+    file: mysql-user-db3.txt
+  mysql-user-db4:
+    file: mysql-user-db4.txt
+  mysql-user-db5:
+    file: mysql-user-db5.txt
+  mysql-user-db6:
+    file: mysql-user-db6.txt
