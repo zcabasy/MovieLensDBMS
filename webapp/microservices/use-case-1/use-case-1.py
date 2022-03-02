@@ -5,7 +5,7 @@ use_case_1 = Flask(__name__)
 
 cache = Cache()
 cache.init_app(use_case_1)
-use_case_1.config['CACHE_TYPE'] = 'memcached'
+use_case_1.config['CACHE_TYPE'] = 'SimpleCache'
 
 @use_case_1.route("/")
 #should add max memory size to this

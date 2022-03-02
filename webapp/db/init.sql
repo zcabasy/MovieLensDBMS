@@ -27,33 +27,31 @@ CREATE TABLE IF NOT EXISTS `MovieLensDB`.`Tags` (
 ENGINE = InnoDB;      
 
 
+-- Table Genres
+CREATE TABLE IF NOT EXISTS `MovieLensDB`.`Genres` (
+  `genreId` INT NOT NULL,
+  `genre` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`genreId`))
+ENGINE = InnoDB;
+
 
 -- Table Movie_Genres
 CREATE TABLE IF NOT EXISTS `MovieLensDB`.`Movie_Genres` (
-  `userId` INT NOT NULL,
   `movieId` INT NOT NULL,
   `genreId` INT NOT NULL,
-  PRIMARY KEY (`userId`, `movieId`, `genreId`),
-  INDEX `movieId_idx` (`movieId` ASC) VISIBLE,
-  CONSTRAINT `genresId.movieId`
+  PRIMARY KEY (`movieId`, `genreId`),
+  INDEX `genreId_idx` (`genreId` ASC) VISIBLE,
+  CONSTRAINT `genreId`
+    FOREIGN KEY (`genreId`)
+    REFERENCES `MovieLensDB`.`Genres` (`genreId`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `movieId`
     FOREIGN KEY (`movieId`)
     REFERENCES `MovieLensDB`.`Movies` (`movieId`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
-ENGINE = InnoDB;      
-
--- Table Genres
-CREATE TABLE IF NOT EXISTS `MovieLensDB`.`Genres` (
-  `genreId` INT NOT NULL,
-  `genres` VARCHAR(500) NOT NULL,
-  PRIMARY KEY (`genreId`, `genres`),
-  INDEX `genreId_idx` (`genreId` ASC) VISIBLE,
-  CONSTRAINT `genres.genreId`
-    FOREIGN KEY (`genreId`)
-    REFERENCES `MovieLensDB`.`Movies_Genres` (`genreId`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
-ENGINE = INNODB;
+ENGINE = InnoDB;
 
 -- Table Ratings
 CREATE TABLE IF NOT EXISTS `MovieLensDB`.`Ratings` (
@@ -141,3 +139,28 @@ LOAD DATA INFILE '/data/movie_genres.csv' INTO TABLE Movies_Genres FIELDS TERMIN
 
 LOAD DATA INFILE '/data/personality_data/personality-data.csv' INTO TABLE Personality FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
 LOAD DATA INFILE '/data/personality_data/ratings.csv' INTO TABLE RatingsForPersonality FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+
+-- Create indexes for faster searching
+CREATE INDEX titleIndex
+ON movies (title);
+
+CREATE INDEX tagIndex
+ON tags (tag);
+
+CREATE INDEX genreIndex
+ON movie_genres (genreId);
+
+-- Create view for users to use
+CREATE VIEW `movielens` AS
+SELECT movies.movieId, movies.title, GROUP_CONCAT(DISTINCT tags.tag) as tag, AVG(ratings.rating) as rating, links.imdbId, GROUP_CONCAT(DISTINCT movie_genres.genreId) as genreId
+FROM movies 
+INNER JOIN tags ON movies.movieId = tags.movieId 
+INNER JOIN ratings ON movies.movieId = ratings.movieId
+INNER JOIN links ON movies.movieId = links.movieId
+INNER JOIN movie_genres ON movies.movieId = movie_genres.movieId
+GROUP BY title
+ORDER BY movieId
+
+-- Create safe user
+CREATE USER 'safe_browser' IDENTIFIED BY 'pass123';
+GRANT SELECT ON TABLE `MovieLensDB`.* TO 'safe_browser';
