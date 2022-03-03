@@ -40,7 +40,7 @@ def query_table():
     cur = conn.cursor()
     cur.execute("SELECT GROUP_CONCAT(ratings.rating) as rating FROM movies \
                 INNER JOIN ratings ON movies.movieId = ratings.movieId \
-                WHERE movies.movieId = ?;", movieId) 
+                WHERE movies.movieId = %s;", (movieId, )) 
 
     # Parse response and create list
     ratings_list = []
