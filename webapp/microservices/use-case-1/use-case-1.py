@@ -32,21 +32,21 @@ def connect():
 
 @use_case_1.route("/")
 def query_table():
-
-    title = ""
+    # Do not remove % signs from strings below, needed for regex matching in sql. Instead, add user content in between
+    title = "%--%"
     rating_lower = 0
     rating_upper = 5
-    tag = ""
-    genre = ""
+    tag = "%--%"
+    genre = "%--%"
 
     conn = connect()
     cur = conn.cursor()
     cur.execute("SELECT title, tag, rating, genreId FROM movielens \
-                    WHERE title LIKE '%?%' AND \
-                    tag LIKE '%?%'  AND \
-                    (genreId LIKE '%?%') AND \
-                    rating BETWEEN ? AND ? \
-                    ORDER BY ?;", (title, tag, genre, rating_lower, rating_upper)) 
+                    WHERE title LIKE '%s' AND \
+                    tag LIKE '%s'  AND \
+                    (genreId LIKE '%s') AND \
+                    rating BETWEEN %s AND %s \
+                    ORDER BY %s;", (title, tag, genre, rating_lower, rating_upper)) 
     
     # Parse response and package into something that can be returned e.g. JSON
     response = ""
