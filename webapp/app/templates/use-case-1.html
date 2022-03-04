@@ -99,11 +99,11 @@
       <br><br>
       <h3>Form:</h3>
       <br><br>
-      <form>
+      <form method="POST">
         <div class="form-group row">
           <label for="movieTitle" class="col-sm-2 col-form-label">Movie Title</label>
           <div class="col-sm-10">
-            <input type="text" class="form-control" id="movieTitle" placeholder="Toy Story">
+            <input type="text" class="form-control" name="movieTitle" id="movieTitle" placeholder="Toy Story">
           </div>
         </div>
         <br>
@@ -113,7 +113,7 @@
         <!-- TODO: Replace the options with genres by scraping from genres table-->
         <div class="form-group col-md-4">
           <label for="genre">Genre</label>
-          <select id="genre" class="form-control">
+          <select id="genre" name="genre" class="form-control">
             <option selected>Genre...</option>
             <option value="Genre 1">Genre 1...</option>
             <option value="Genre 2">Etc</option>
@@ -127,7 +127,7 @@
         <div class="form-group row">
           <label for="rating" class="col-sm-2 col-form-label">Rating</label>
           <div class="col-sm-10">
-            <input id="ex1" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="5" data-slider-step="0.5" data-slider-value="4"/>
+            <input id="ex1" name="rating" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="5" data-slider-step="0.5" data-slider-value="4"/>
           </div>
         </div>
 
@@ -155,7 +155,8 @@
 
         <div class="form-group row">
           <div class="col-sm-10">
-            <button type="submit" class="btn btn-primary">Search</button>
+            <button type="submit"
+            class="btn btn-primary">Search</button>
           </div>
         </div>
       </form>
