@@ -1,3 +1,6 @@
 Flask
 Flask-Caching
 mariadb
+numpy
+pandas
+scikit-learn

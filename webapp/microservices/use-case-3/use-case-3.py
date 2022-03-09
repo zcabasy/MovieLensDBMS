@@ -1,8 +1,8 @@
 from flask import Flask
 from flask_caching import Cache
 import mariadb
-import sys
 import numpy as np
+import sys
 
 use_case_3 = Flask(__name__)
 
