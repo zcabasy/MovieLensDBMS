@@ -66,35 +66,6 @@
 
       <h1>Case 1</h1>
 
-      <!-- Slideshow-->
-
-      <!-- <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-        <ol class="carousel-indicators">
-          <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-          <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-          <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-        </ol>
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <img class="d-block w-100" src="https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Zm9jdXN8ZW58MHx8MHx8&w=1000&q=80" alt="First slide">
-          </div>
-          <div class="carousel-item">
-            <img class="d-block w-100" src="https://media.istockphoto.com/photos/boulevard-next-to-the-river-thames-picture-id1133845967?k=20&m=1133845967&s=612x612&w=0&h=MwmQv6LpVneuqxDU3Qw-1EtDatXwmnEo9PXFb7vGTkQ=" alt="Second slide">
-          </div>
-          <div class="carousel-item">
-            <img class="d-block w-100" src="..." alt="Third slide">
-          </div>
-        </div>
-        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="sr-only">Next</span>
-        </a>
-      </div> -->
-
     
       <br><br>
       <h3>Form:</h3>
@@ -113,23 +84,62 @@
         <!-- TODO: Replace the options with genres by scraping from genres table-->
         <div class="form-group col-md-4">
           <label for="genre">Genre</label>
-          <select id="genre" name="genre" class="form-control">
-            <option selected>Genre...</option>
-            <option value="Genre 1">Genre 1...</option>
-            <option value="Genre 2">Etc</option>
 
-          </select>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+              Default checkbox
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+              Default checkbox
+            </label>
+          </div>
         </div>
         <br>
 
         <!-- Slider taken from https://github.com/seiyria/bootstrap-slider
         its Javascript code configured used in script tag below-->
         <div class="form-group row">
-          <label for="rating" class="col-sm-2 col-form-label">Rating</label>
+          <label for="rating" class="col-sm-2 col-form-label">Ratings</label>
           <div class="col-sm-10">
-            <input id="ex1" name="rating" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="5" data-slider-step="0.5" data-slider-value="4"/>
+            
           </div>
         </div>
+
+        <label for="reviewFrom">From (between 1 and 5):</label>
+        <input type="number" id="reviewFrom" name="reviewFrom" min="1" max="5">     
+        <label for="reviewFrom">To  </label>
+        <input type="number" id="reviewFrom" name="reviewFrom" min="1" max="5">  
+
+
+        <br>
+        <br>
+        <div class="form-group row">
+          <label for="movieTitle" class="col-sm-2 col-form-label">Tags</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" name="movieTitle" id="movieTitle" placeholder="Sample tag">
+          </div>
+        </div>
+
+        <br>
+        <div class="form-group row">
+          <label for="orderBy" class="col-sm-2 col-form-label">Order By</label>
+        <div class="form-group col-md-4">
+
+        <select class="form-select" aria-label="orderBy">
+          <option selected>Select Order</option>
+          <option value="1">Ratings: Highest to Lowest</option>
+          <option value="2">Ratings: Lowest to Highest</option>
+          <option value="3">Title: Ascending</option>
+          <option value="4">Title: Descending</option>
+        </select>
+        </div>
+        </div>
+
+    
 
 
         
@@ -165,8 +175,9 @@
 
  
 
+      <!-- Filterable Table below -->
 
-      <div class="container">
+      <!-- <div class="container">
         <h2>Filterable Table</h2>
         <p>Type something in the input field to search the table for first names, last names or emails:</p>  
         <input class="form-control" id="myInput" type="text" placeholder="Search..">
@@ -206,7 +217,7 @@
         
         <p>Note that we start the search in tbody, to prevent filtering the table headers.</p>
       </div>
-      
+       -->
       <script>
         //Table filtering code
       $(document).ready(function(){
@@ -218,11 +229,34 @@
         });
       });
 
-      //Slider code for "Ratings"
-      var slider = new Slider('#ex1', {
-	formatter: function(value) {
-		return 'Current value: ' + value;
-	}
+//       //Slider code for "Ratings"
+//       var slider = new Slider('#ex1', {
+// 	formatter: function(value) {
+// 		return 'Current value: ' + value;
+// 	}
+// });
+
+//Slider for ratings multi slider
+$('#multi6').mdbRange({
+  width: '25%',
+  single: {
+    active: true,
+    multi: {
+      active: true,
+      rangeLength: 2
+    },
+  }
+});
+
+$('#multi5').mdbRange({
+  width: '50%',
+  single: {
+    active: true,
+    multi: {
+      active: true,
+      rangeLength: 2
+    },
+  }
 });
       </script>
 
