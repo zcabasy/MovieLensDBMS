@@ -5,8 +5,7 @@ USE `MovieLensDB`;
 -- Table Movies
 CREATE TABLE IF NOT EXISTS `MovieLensDB`.`Movies` (
   `movieId` INT NOT NULL,
-  `title` VARCHAR(500) NOT NULL,
-  `genres` VARCHAR(500) NOT NULL,
+  `title` VARCHAR(500) NOT NULL
   PRIMARY KEY (`movieId`))
 ENGINE = InnoDB;
 
@@ -88,37 +87,48 @@ CREATE TABLE IF NOT EXISTS `MovieLensDB`.`Personality` (
   `openness` FLOAT NOT NULL,
   `agreeableness` FLOAT NOT NULL,
   `emotional_stability` FLOAT NOT NULL,
-  ` conscientiousness` FLOAT NOT NULL,
-  ` extraversion` FLOAT NOT NULL,
+  `conscientiousness` FLOAT NOT NULL,
+  `extraversion` FLOAT NOT NULL,
   `assigned metric` VARCHAR(45) NOT NULL,
   `assigned condition` VARCHAR(45) NOT NULL,
-  `movie_1` INT NULL,
-  `predicted_rating_1` FLOAT NULL,
-  `movie_2` INT NULL,
-  `predicted_rating_2` FLOAT NULL,
-  `movie_3` INT NULL,
-  `predicted_rating_3` FLOAT NULL,
-  `movie_4` INT NULL,
-  `predicted_rating_4` FLOAT NULL,
-  `movie_5` INT NULL,
-  `predicted_rating_5` FLOAT NULL,
-  `movie_6` INT NULL,
-  `predicted_rating_6` FLOAT NULL,
-  `movie_7` INT NULL,
-  `predicted_rating_7` FLOAT NULL,
-  `movie_8` INT NULL,
-  `predicted_rating_8` FLOAT NULL,
-  `movie_9` INT NULL,
-  `predicted_rating_9` FLOAT NULL,
-  `movie_10` INT NULL,
-  `predicted_rating_10` FLOAT NULL,
-  `movie_11` INT NULL,
-  `predicted_rating_11` FLOAT NULL,
-  `movie_12` INT NULL,
-  `predicted_rating_12` FLOAT NULL,
-  `is_personalized` INT NULL,
-  `enjoy_watching` INT NULL,
-  PRIMARY KEY (`userId`, `movie_1`, `predicted_rating_1`, `movie_2`, `predicted_rating_2`, `movie_3`, `predicted_rating_3`, `movie_4`, `predicted_rating_4`, `movie_5`, `predicted_rating_5`, `movie_6`, `predicted_rating_6`, `movie_7`, `predicted_rating_7`, `movie_8`, `predicted_rating_8`, `movie_9`, `predicted_rating_9`, `movie_10`, `predicted_rating_10`, `movie_11`, `predicted_rating_11`, `movie_12`, `predicted_rating_12`))
+  PRIMARY KEY (`userId`))
+ENGINE = InnoDB;
+
+-- Table Personality Predictions
+CREATE TABLE IF NOT EXISTS `MovieLensDB`.`Personality-Predictions` (
+  `userId` VARCHAR(500) NOT NULL,
+  `movie_1` INT NOT NULL,
+  `predicted_rating_1` FLOAT NOT NULL,
+  `movie_2` INT NOT NULL,
+  `predicted_rating_2` FLOAT NOT NULL,
+  `movie_3` INT NOT NULL,
+  `predicted_rating_3` FLOAT NOT NULL,
+  `movie_4` INT NOT NULL,
+  `predicted_rating_4` FLOAT NOT NULL,
+  `movie_5` INT NOT NULL,
+  `predicted_rating_5` FLOAT NOT NULL,
+  `movie_6` INT NOT NULL,
+  `predicted_rating_6` FLOAT NOT NULL,
+  `movie_7` INT NOT NULL,
+  `predicted_rating_7` FLOAT NOT NULL,
+  `movie_8` INT NOT NULL,
+  `predicted_rating_8` FLOAT NOT NULL,
+  `movie_9` INT NOT NULL,
+  `predicted_rating_9` FLOAT NOT NULL,
+  `movie_10` INT NOT NULL,
+  `predicted_rating_10` FLOAT NOT NULL,
+  `movie_11` INT NOT NULL,
+  `predicted_rating_11` FLOAT NOT NULL,
+  `movie_12` INT NOT NULL,
+  `predicted_rating_12` FLOAT NOT NULL,
+  `is_personalized` INT NOT NULL,
+  `enjoy_watching` INT NOT NULL,
+  PRIMARY KEY (`userId`),
+  CONSTRAINT `Personality-Predictions.userId`
+    FOREIGN KEY (`userId`)
+    REFERENCES `MovieLensDB`.`Personality` (`userId`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 -- Table Ratings-Personality
@@ -127,7 +137,12 @@ CREATE TABLE IF NOT EXISTS `MovieLensDB`.`RatingsForPersonality` (
   `movieId` INT NOT NULL,
   `rating` FLOAT NOT NULL,
   `timestamp` DATETIME NOT NULL,
-  PRIMARY KEY (`userId`, `movieId`))
+  PRIMARY KEY (`userId`, `movieId`),
+  CONSTRAINT `RatingsForPersonality.userId`
+    FOREIGN KEY (`userId`)
+    REFERENCES `MovieLensDB`.`Personality` (`userId`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 LOAD DATA INFILE '/data/movies.csv' INTO TABLE Movies FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
@@ -138,6 +153,7 @@ LOAD DATA INFILE '/data/genres.csv' INTO TABLE Genres FIELDS TERMINATED BY ',' E
 LOAD DATA INFILE '/data/movie_genres.csv' INTO TABLE Movie_Genres FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
 
 LOAD DATA INFILE '/data/personality_data/personality-data.csv' INTO TABLE Personality FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+LOAD DATA INFILE '/data/personality_data/personality-predictions.csv' INTO TABLE Personality-Predictions FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
 LOAD DATA INFILE '/data/personality_data/ratings.csv' INTO TABLE RatingsForPersonality FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
 
 -- Create indexes for faster searching
