@@ -11,9 +11,10 @@ import sys
 
 use_case_4 = Flask(__name__)
 
+use_case_4.config['CACHE_TYPE'] = 'SimpleCache'
+use_case_4.config['CACHE_DEFAULT_TIMEOUT'] = 300
 cache = Cache()
 cache.init_app(use_case_4)
-use_case_4.config['CACHE_TYPE'] = 'SimpleCache'
 
 def connect():
     # f = open("mysql-user-db4.txt")
@@ -128,6 +129,7 @@ def data_for_given_movie(movieId):
 
 
 @use_case_4.route("/", methods=["GET", "POST"])
+@cache.cached(timeout=300)
 def predict_rating():
     
     movieId = 0

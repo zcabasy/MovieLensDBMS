@@ -2,13 +2,15 @@ from flask import Flask, request
 from flask_caching import Cache
 import mariadb
 import sys
+from matplotlib.style import use
 import numpy as np
 
 use_case_2 = Flask(__name__)
 
+use_case_2.config['CACHE_TYPE'] = 'SimpleCache'
+use_case_2.config['CACHE_DEFAULT_TIMEOUT'] = 300
 cache = Cache()
 cache.init_app(use_case_2)
-use_case_2.config['CACHE_TYPE'] = 'SimpleCache'
 
 def connect():
     # f = open("mysql-user-db2.txt")
@@ -32,6 +34,7 @@ def connect():
     
 
 @use_case_2.route("/", methods=["GET", "POST"])
+@cache.cached(timeout=300)
 def query_table():
 
     query = request.form

@@ -5,9 +5,11 @@ import sys
 
 use_case_1 = Flask(__name__)
 
+
+use_case_1.config['CACHE_TYPE'] = 'SimpleCache'
+use_case_1.config['CACHE_DEFAULT_TIMEOUT'] = 300
 cache = Cache()
 cache.init_app(use_case_1)
-use_case_1.config['CACHE_TYPE'] = 'SimpleCache'
 
 
 def connect():
@@ -31,6 +33,7 @@ def connect():
             sys.exit(1)
         
 @use_case_1.route("/",  methods=["GET", "POST"])
+@cache.cached(timeout=300)
 def query_table(query):
         # Do not remove % signs from strings below, needed for regex matching in sql. Instead, add user content in between
         title = "%--%"

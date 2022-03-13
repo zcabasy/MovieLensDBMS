@@ -6,9 +6,10 @@ import sys
 
 use_case_3 = Flask(__name__)
 
+use_case_3.config['CACHE_TYPE'] = 'SimpleCache'
+use_case_3.config['CACHE_DEFAULT_TIMEOUT'] = 300
 cache = Cache()
 cache.init_app(use_case_3)
-use_case_3.config['CACHE_TYPE'] = 'SimpleCache'
 
 def connect():
     # f = open("mysql-user-db3.txt")
@@ -32,6 +33,7 @@ def connect():
     
 
 @use_case_3.route("/", methods=["GET", "POST"])
+@cache.cached(timeout=300)
 def query_table():
     
     query = request.form
