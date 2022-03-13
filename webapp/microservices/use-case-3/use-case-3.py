@@ -8,6 +8,7 @@ use_case_3 = Flask(__name__)
 
 use_case_3.config['CACHE_TYPE'] = 'SimpleCache'
 use_case_3.config['CACHE_DEFAULT_TIMEOUT'] = 300
+use_case_3.config['CACHE_THRESHOLD'] = 500
 cache = Cache()
 cache.init_app(use_case_3)
 
