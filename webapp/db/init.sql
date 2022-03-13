@@ -152,12 +152,13 @@ ON Movie_Genres (genreId);
 
 -- Create view for users to use
 CREATE VIEW `movielens` AS
-SELECT Movies.movieId, Movies.title, GROUP_CONCAT(DISTINCT Tags.tag) as tag, AVG(Ratings.rating) as rating, Links.imdbId, GROUP_CONCAT(DISTINCT Movie_Genres.genreId) as genreId
-FROM Movies 
-INNER JOIN Tags ON Movies.movieId = Tags.movieId 
-INNER JOIN Ratings ON Movies.movieId = Ratings.movieId
-INNER JOIN Links ON Movies.movieId = Links.movieId
-INNER JOIN Movie_Genres ON Movies.movieId = Movie_Genres.movieId
+SELECT Movies.movieId, Movies.title, GROUP_CONCAT(DISTINCT Tags.tag) as tag, AVG(Ratings.rating) as rating, Links.imdbId, GROUP_CONCAT(DISTINCT Genres.genre) as genre
+FROM Movies
+LEFT JOIN Tags ON Movies.movieId = Tags.movieId 
+LEFT JOIN Ratings ON Movies.movieId = Ratings.movieId
+LEFT JOIN Links ON Movies.movieId = Links.movieId
+LEFT JOIN Movie_Genres ON Movies.movieId = Movie_Genres.movieId
+LEFT JOIN Genres ON Movie_Genres.genreId = Genres.genreId
 GROUP BY title
 ORDER BY movieId;
 

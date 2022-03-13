@@ -42,6 +42,7 @@ def query_table(query):
         rating_upper = 5
         tag = "%--%"
         genre = "%--%"
+        sort_by = ""
 
         query = request.form    
         
@@ -50,19 +51,15 @@ def query_table(query):
         rating = query.get("rating")
         print("Post received, " + movieTitle + " sent to Microservices 1", flush=True)
         
- 
-        sql = "SELECT title, tag, rating, genreId FROM movielens \
-                        WHERE title LIKE '%s' AND \
-                        tag LIKE '%s'  AND \
-                        (genreId LIKE '%s') AND \
-                        rating BETWEEN %s AND %s \
-                        ORDER BY %s;", (title, tag, genre, rating_lower, rating_upper)
-
-        sql_schema = "SELECT * FROM information_schema.tables WHERE table_schema='MovieLensDB'\G" # alternative test code to view information schema (not tested)
 
         conn = connect()
         cur = conn.cursor()
-        cur.execute(sql) 
+        cur.execute("SELECT title, tag, rating, genre FROM movielens \
+            WHERE title LIKE %s AND \
+            tag LIKE %s  AND \
+            (genre LIKE %s) AND \
+            rating BETWEEN %s AND %s \
+            ORDER BY %s;", (title, tag, genre, rating_lower, rating_upper, sort_by))
         
         # Parse response and package into something that can be returned e.g. JSON
         response = ""
