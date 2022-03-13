@@ -1,3 +1,5 @@
 Flask
 mariadb
+numpy
+requests
 Flask-Caching

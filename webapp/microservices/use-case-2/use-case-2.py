@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 from flask_caching import Cache
 import mariadb
 import sys
@@ -31,9 +31,15 @@ def connect():
         sys.exit(1)
     
 
-@use_case_2.route("/")
+@use_case_2.route("/", methods=["GET", "POST"])
 def query_table():
 
+    query = request.form
+    movieName = query.get("movieName")
+    print("Post received, " + movieName +
+          " sent to Microservices 2", flush=True)
+
+    movieId = 1
     movieId = 1
 
     conn = connect()

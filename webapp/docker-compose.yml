@@ -79,6 +79,22 @@ services:
     links:
       - db-6
   
+  data-catalogue:
+    container_name: data-catalogue
+    build: microservices/data-catalogue
+    restart: always
+    ports:
+      - 5010:5010
+    networks:
+      - vpn
+    links:
+      - db-1
+      - db-2
+      - db-3
+      - db-4
+      - db-5
+      - db-6
+
   db-1:
     container_name: db-1
     image: mariadb:latest
@@ -202,7 +218,7 @@ networks:
   gateway: null
 
   vpn:
-    internal: true
+    internal: false
 
 volumes:
   app: null

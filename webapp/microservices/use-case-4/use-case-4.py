@@ -1,8 +1,9 @@
-from flask import Flask
+from flask import Flask, request
 from flask_caching import Cache
 import mariadb
 import numpy as np
 import pandas as pd
+
 from sklearn.model_selection import train_test_split
 from sklearn.svm import SVR
 from sklearn.metrics import mean_squared_error
@@ -125,9 +126,16 @@ def data_for_given_movie(movieId):
         y = df.pop('Actual')
         return [X, y]
 
-@use_case_4.route("/")
+
+@use_case_4.route("/", methods=["GET", "POST"])
 def predict_rating():
+    
     movieId = 0
+    query = request.form
+    print("Post received, " + query +
+          " sent to Microservices 4", flush=True)
+
+    
     data = data_for_given_movie(movieId)
     #X_test here is pd df, can we use this directly?
     X_test = data[0]

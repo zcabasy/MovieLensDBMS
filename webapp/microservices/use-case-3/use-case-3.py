@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 from flask_caching import Cache
 import mariadb
 import numpy as np
@@ -31,8 +31,14 @@ def connect():
         sys.exit(1)
     
 
-@use_case_3.route("/")
+@use_case_3.route("/", methods=["GET", "POST"])
 def query_table():
+    
+    query = request.form
+    popularTable = query.get("popularTable")
+    unpopularTable = query.get("unpopularTable")
+    print("Post received, " + popularTable + " sent to Microservices 3")
+
 
     conn = connect()
     cur = conn.cursor()
