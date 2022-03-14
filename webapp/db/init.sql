@@ -81,6 +81,20 @@ CREATE TABLE IF NOT EXISTS `MovieLensDB`.`Links` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
+-- Table Metrics
+CREATE TABLE IF NOT EXISTS `MovieLensDB`.`Metrics` (
+  `metricId` INT NOT NULL,
+  `metric` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`metricId`))
+ENGINE = InnoDB;
+
+-- Table Conditions
+CREATE TABLE IF NOT EXISTS `MovieLensDB`.`Conditions` (
+  `conditionId` INT NOT NULL,
+  `Condition` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`conditionId`))
+ENGINE = InnoDB;
+
 -- Table Personality
 CREATE TABLE IF NOT EXISTS `MovieLensDB`.`Personality` (
   `userId` VARCHAR(500) NOT NULL,
@@ -89,9 +103,21 @@ CREATE TABLE IF NOT EXISTS `MovieLensDB`.`Personality` (
   `emotional_stability` FLOAT NOT NULL,
   `conscientiousness` FLOAT NOT NULL,
   `extraversion` FLOAT NOT NULL,
-  `assigned metric` VARCHAR(45) NOT NULL,
-  `assigned condition` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`userId`))
+  `assigned metric` INT NOT NULL,
+  `assigned condition` INT NOT NULL,
+  PRIMARY KEY (`userId`),
+  INDEX `metricId_idx` (`assigned metric` ASC) VISIBLE,
+  INDEX `conditionId_idx` (`assigned condition` ASC) VISIBLE,
+  CONSTRAINT `metricId`
+    FOREIGN KEY (`assigned metric`)
+    REFERENCES `MovieLensDB`.`Metrics` (`metricId`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `conditionId`
+    FOREIGN KEY (`assigned condition`)
+    REFERENCES `MovieLensDB`.`Conditions` (`conditionId`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 -- Table Personality Predictions
@@ -152,8 +178,10 @@ LOAD DATA INFILE '/data/links.csv' INTO TABLE Links FIELDS TERMINATED BY ',' ENC
 LOAD DATA INFILE '/data/genres.csv' INTO TABLE Genres FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
 LOAD DATA INFILE '/data/movie_genres.csv' INTO TABLE Movie_Genres FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
 
+LOAD DATA INFILE '/data/personality_data/metric.csv' INTO TABLE Metrics FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+LOAD DATA INFILE '/data/personality_data/condition.csv' INTO TABLE Conditions FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
 LOAD DATA INFILE '/data/personality_data/personality-data.csv' INTO TABLE Personality FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
-LOAD DATA INFILE '/data/personality_data/personality-predictions.csv' INTO TABLE Personality-Predictions FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+LOAD DATA INFILE '/data/personality_data/personality-predictions.csv' INTO TABLE `Personality-Predictions` FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
 LOAD DATA INFILE '/data/personality_data/ratings.csv' INTO TABLE RatingsForPersonality FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
 
 -- Create indexes for faster searching
