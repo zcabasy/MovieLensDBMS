@@ -21,6 +21,7 @@ services:
       - 5002:5002
     volumes:
       - ./mysql-user-db1.txt:/pwd
+      - ./microservices/use-case-1:/microservices/use-case-1
     networks:
       - vpn
     links:
