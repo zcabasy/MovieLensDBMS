@@ -10,12 +10,16 @@
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/cover/">
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/0.71/jquery.csv-0.71.min.js"></script>
+    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/bootstrap-slider.js" integrity="sha512-tCkLWlSXiiMsUaDl5+8bqwpGXXh0zZsgzX6pB9IQCZH+8iwXRYfcCpdxl/owoM6U4ap7QZDW4kw7djQUiQ4G2A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/css/bootstrap-slider.css" integrity="sha512-SZgE3m1he0aEF3tIxxnz/3mXu/u/wlMNxQSnE0Cni9j/O8Gs+TjM9tm1NX34nRQ7GiLwUEzwuE3Wv2FLz2667w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
     <!-- Bootstrap core CSS -->
 <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -42,6 +46,7 @@
     
     <!-- Custom styles for this template -->
     <link href="../static/cover.css" rel="stylesheet">
+
   </head>
   <body class="d-flex h-100 text-white bg-dark">
     
@@ -67,7 +72,7 @@
       <h1>Case 1</h1>
 
     
-      <br><br>
+     <br>
       <h3>Form:</h3>
       <br><br>
       <form method="POST">
@@ -82,39 +87,165 @@
 
 
         <!-- TODO: Replace the options with genres by scraping from genres table-->
-        <div class="form-group col-md-4">
+        <div class="form-group row">
           <label for="genre">Genre</label>
 
-          <div class="form-check">
+          <div class="form-check col-sm">
             <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
             <label class="form-check-label" for="flexCheckDefault">
-              Default checkbox
+              Action
             </label>
           </div>
-          <div class="form-check">
+          <div class="form-check col-sm">
             <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
             <label class="form-check-label" for="flexCheckDefault">
-              Default checkbox
+              Adventure
+            </label>
+          </div>
+
+          <div class="form-check col-sm">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+              Animation
+            </label>
+          </div>
+          <div class="form-check col-sm">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+              Children
+            </label>
+          </div>
+
+          <div class="form-group row">
+
+          <div class="form-check col-sm">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+              Comedy
+            </label>
+          </div>
+          <div class="form-check col-sm">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+              Crime
+            </label>
+          </div>
+
+          <div class="form-check col-sm">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+              Documentary
+            </label>
+          </div>
+          <div class="form-check col-sm">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+              Drama
+            </label>
+          </div>
+
+          </div>
+          <div class="form-group row">
+
+          <div class="form-check col-sm">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+              Fantasy
+            </label>
+          </div>
+          <div class="form-check col-sm">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+              Film-Noir
+            </label>
+          </div>
+
+          <div class="form-check col-sm">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+              Horror
+            </label>
+          </div>
+          <div class="form-check col-sm">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+              IMAX
+            </label>
+          </div>
+
+        </div>
+        <div class="form-group row">
+
+          <div class="form-check col-sm">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+              Musical
+            </label>
+          </div>
+          <div class="form-check col-sm">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+              Mystery
+            </label>
+          </div>
+
+          <div class="form-check col-sm">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+              Romance
+            </label>
+          </div>
+          <div class="form-check col-sm">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+              Sci-Fi
+            </label>
+          </div>
+
+        </div>
+        <div class="form-group row">
+
+          <div class="form-check col-sm">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+              Thriller
+            </label>
+          </div>
+          <div class="form-check col-sm">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+              War
+            </label>
+          </div>
+          <div class="form-check col-sm">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+              Western
             </label>
           </div>
         </div>
         <br>
+        <br>
 
         <!-- Slider taken from https://github.com/seiyria/bootstrap-slider
         its Javascript code configured used in script tag below-->
-        <div class="form-group row">
+        <div class="form-group">
           <label for="rating" class="col-sm-2 col-form-label">Ratings</label>
           <div class="col-sm-10">
             
           </div>
         </div>
 
-        <label for="reviewFrom">From (between 1 and 5):</label>
-        <input type="number" id="reviewFrom" name="reviewFrom" min="1" max="5">     
-        <label for="reviewFrom">To  </label>
-        <input type="number" id="reviewFrom" name="reviewFrom" min="1" max="5">  
+        <div class="col-md-4">
+          <label for="reviewFrom">From (between 1 and 5):</label>
+          <input type="number" id="reviewFrom" name="reviewFrom" min="1" max="5">     
+          <label for="reviewFrom">To  </label>
+          <input type="number" id="reviewFrom" name="reviewFrom" min="1" max="5">  
+        </div>
 
 
+
+        <br>
         <br>
         <br>
         <div class="form-group row">
@@ -124,7 +255,7 @@
           </div>
         </div>
 
-        <br>
+        <br> <br>
         <div class="form-group row">
           <label for="orderBy" class="col-sm-2 col-form-label">Order By</label>
         <div class="form-group col-md-4">
@@ -237,27 +368,28 @@
 // });
 
 //Slider for ratings multi slider
-$('#multi6').mdbRange({
-  width: '25%',
-  single: {
-    active: true,
-    multi: {
-      active: true,
-      rangeLength: 2
-    },
-  }
-});
 
-$('#multi5').mdbRange({
-  width: '50%',
-  single: {
-    active: true,
-    multi: {
-      active: true,
-      rangeLength: 2
-    },
-  }
-});
+
+
+//Sample code Syed requested, 3.
+
+function getImdbID(movieID) {
+
+  //var data = $.csv.toObjects(csv);
+
+  $.get( "../../data/links.csv", function( CSVdata) {
+     // CSVdata is populated with the file contents
+     // ready to be converted into an Array
+      data = $.csv.toArray(CSVdata);
+      console.log(data)
+  });
+
+
+  return movieID;
+}
+
+console.log( getImdbID(1) );
+
       </script>
 
 
