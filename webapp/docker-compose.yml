@@ -6,7 +6,7 @@ x-app: &default-app
       - "FLASK_ENV=${FLASK_ENV:-production}"
       - "NODE_ENV=${NODE_ENV:-production}"
   depends_on:
-    - "postgres"
+    - "mariadb"
     - "redis"
   env_file:
     - ".env"
@@ -17,7 +17,7 @@ x-app: &default-app
     - "${DOCKER_WEB_VOLUME:-./public:/app/public}"
 
 services:
-  postgres:
+  mariadb:
     deploy:
       resources:
         limits:
@@ -25,11 +25,17 @@ services:
           memory: "${DOCKER_POSTGRES_MEMORY:-0}"
     env_file:
       - ".env"
-    image: "postgres:14.1-bullseye"
+    environment: 
+      - "MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-password}"
+      - "MYSQL_USER=${MYSQL_USER:-safebrowser}"
+      - "MYSQL_PASSWORD=${MYSQL_PASSWORD:-password}"
+    image: "mariadb:latest"
     restart: "${DOCKER_RESTART_POLICY:-unless-stopped}"
     stop_grace_period: "3s"
     volumes:
-      - "postgres:/var/lib/postgresql/data"
+      - ./data:/data
+      - ./db:/docker-entrypoint-initdb.d/:ro
+      - ./conf:/etc/mysql/conf.d
 
   redis:
     deploy:
@@ -72,5 +78,5 @@ services:
           memory: "${DOCKER_WORKER_MEMORY:-0}"
 
 volumes:
-  postgres: {}
+  mariadb: {}
   redis: {}

@@ -1,4 +1,5 @@
-FROM node:16.13.2-bullseye-slim AS assets
+FROM node:16.14.0-bullseye-slim AS assets
+LABEL maintainer="Nick Janetakis <nick.janetakis@gmail.com>"
 
 WORKDIR /app/assets
 
@@ -19,7 +20,7 @@ ENV NODE_ENV="${NODE_ENV}" \
     PATH="${PATH}:/node_modules/.bin" \
     USER="node"
 
-COPY --chown=node:node ../ ../
+COPY --chown=node:node . ..
 
 RUN if [ "${NODE_ENV}" != "development" ]; then \
   ../run yarn:build:js && ../run yarn:build:css; else mkdir -p /app/public; fi
@@ -29,6 +30,7 @@ CMD ["bash"]
 ###############################################################################
 
 FROM python:3.10.2-slim-bullseye AS app
+LABEL maintainer="Nick Janetakis <nick.janetakis@gmail.com>"
 
 WORKDIR /app
 

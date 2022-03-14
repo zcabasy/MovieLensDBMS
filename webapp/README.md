@@ -14,7 +14,7 @@ practices](https://nickjanetakis.com/blog/best-practices-around-production-ready
 based on building and deploying dozens of assorted Dockerized web apps since
 late 2014.
 
-**This app is using Flask 2.0.2 and Python 3.10.2**. The screenshot doesn't get
+**This app is using Flask 2.0.3 and Python 3.10.2**. The screenshot doesn't get
 updated every time I bump the versions:
 
 [![Screenshot](.github/docs/screenshot.jpg)](https://github.com/nickjj/docker-flask-example/blob/main/.github/docs/screenshot.jpg?raw=true)
@@ -93,7 +93,8 @@ and changes.
     - *[black](https://github.com/psf/black)* is used to format the code base
     - *[pytest](https://github.com/pytest-dev/pytest)* and *pytest-cov* for writing tests and reporting test coverage
 - **Blueprints**:
-    - Add `page` blueprint to render a `/` page and `/up` health check endpoint
+    - Add `page` blueprint to render a `/` page
+    - Add `up` blueprint to provide a few health check pages
 - **Config**:
     - Log to STDOUT so that Docker can consume and deal with log output 
     - Extract a bunch of configuration settings into environment variables
