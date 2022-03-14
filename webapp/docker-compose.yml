@@ -19,6 +19,8 @@ services:
     restart: always
     ports:
       - 5002:5002
+    volumes:
+      - ./mysql-user-db1.txt:/pwd
     networks:
       - vpn
     links:
@@ -218,7 +220,7 @@ networks:
   gateway: null
 
   vpn:
-    internal: false
+    internal: true
 
 volumes:
   app: null

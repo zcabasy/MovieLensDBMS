@@ -5,7 +5,7 @@ USE `MovieLensDB`;
 -- Table Movies
 CREATE TABLE IF NOT EXISTS `MovieLensDB`.`Movies` (
   `movieId` INT NOT NULL,
-  `title` VARCHAR(500) NOT NULL
+  `title` VARCHAR(500) NOT NULL,
   PRIMARY KEY (`movieId`))
 ENGINE = InnoDB;
 
@@ -174,7 +174,7 @@ LEFT JOIN Tags ON Movies.movieId = Tags.movieId
 LEFT JOIN Ratings ON Movies.movieId = Ratings.movieId
 LEFT JOIN Links ON Movies.movieId = Links.movieId
 LEFT JOIN Movie_Genres ON Movies.movieId = Movie_Genres.movieId
-LEFT JOIN Genres ON Movie_Genres.genreId = Genres.genreId
+INNER JOIN Genres ON Movie_Genres.genreId = Genres.genreId
 GROUP BY title
 ORDER BY movieId;
 
