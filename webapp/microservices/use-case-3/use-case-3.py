@@ -36,13 +36,6 @@ def connect():
 @use_case_3.route("/", methods=["GET", "POST"])
 @cache.cached(timeout=300)
 def query_table():
-    
-    query = request.form
-    popularTable = query.get("popularTable")
-    unpopularTable = query.get("unpopularTable")
-    print("Post received, " + popularTable + " sent to Microservices 3")
-
-
     conn = connect()
     cur = conn.cursor()
     # Popular Movies Query

@@ -37,14 +37,7 @@ def connect():
 @use_case_2.route("/", methods=["GET", "POST"])
 @cache.cached(timeout=300)
 def query_table():
-
-    query = request.form
-    movieName = query.get("movieName")
-    print("Post received, " + movieName +
-          " sent to Microservices 2", flush=True)
-
-    movieId = 1
-    movieId = 1
+    movieId = 0
 
     conn = connect()
     cur = conn.cursor()
@@ -61,8 +54,10 @@ def query_table():
     std_dev = np.std(ratings_list)
     min = np.min(ratings_list)
     max = np.max(ratings_list)
+    median = np.median(ratings_list)
+    #Mode was not included here as a metric since ratings can take any continuous value so it is not very useful here
 
-    return [ratings_list, mean, std_dev, min, max]
+    return [ratings_list, mean, std_dev, min, max, median]
 
 if __name__ == '__main__':
     use_case_2.run(debug = True, port = 5003, host="0.0.0.0")

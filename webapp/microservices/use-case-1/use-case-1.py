@@ -33,7 +33,7 @@ def connect():
         
 @use_case_1.route("/",  methods=["GET", "POST"])
 @cache.cached(timeout=300)
-def query_table(query):
+def query_table():
         # Do not remove % signs from strings below, needed for regex matching in sql. Instead, add user content in between
         title = "%--%"
         rating_lower = 0
@@ -41,14 +41,6 @@ def query_table(query):
         tag = "%--%"
         genre = "%--%"
         sort_by = ""
-
-        query = request.form    
-        
-        movieTitle = query.get("movieTitle")
-        genre = query.get("genre")
-        rating = query.get("rating")
-        print("Post received, " + movieTitle + " sent to Microservices 1", flush=True)
-        
 
         conn = connect()
         cur = conn.cursor()
@@ -61,7 +53,7 @@ def query_table(query):
         
         # Parse response and package into something that can be returned e.g. JSON
         response = ""
-
+        
         conn.close()
         
         return response

@@ -90,8 +90,11 @@ def train_model():
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42, shuffle = True)
 
     clf = SVR().fit(X_train, y_train)
+
+    y_pred = clf.predict(X_test)
+    score = mean_squared_error(y_test, y_pred)
     
-    return clf
+    return clf, score
 
 def data_for_given_movie(movieId):
     conn = connect()
@@ -136,10 +139,6 @@ def data_for_given_movie(movieId):
 def predict_rating():
     
     movieId = 0
-    query = request.form
-    print("Post received, " + query +
-          " sent to Microservices 4", flush=True)
-
     
     data = data_for_given_movie(movieId)
     X_test = data[0]
@@ -148,7 +147,7 @@ def predict_rating():
     if exists('clf.joblib'):
         clf = load('clf.joblib')
     else:
-        clf = train_model()
+        clf, score = train_model()
         dump(clf, 'clf.joblib')
     
     y_pred = clf.predict(X_test)
