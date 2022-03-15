@@ -19,11 +19,10 @@ services:
     restart: always
     ports:
       - 5002:5002
-    volumes:
-      - ./mysql-user-db1.txt:/pwd
-      - ./microservices/use-case-1:/microservices/use-case-1
     networks:
       - vpn
+    volumes:
+      - ./microservices/use-case-1:/microservices/use-case-1
     links:
       - db-1
 
@@ -35,6 +34,8 @@ services:
       - 5003:5003
     networks:
       - vpn
+    volumes:
+      - ./microservices/use-case-2:/microservices/use-case-2
     links:
       - db-2
 
@@ -46,6 +47,8 @@ services:
       - 5004:5004
     networks:
       - vpn
+    volumes:
+      - ./microservices/use-case-3:/microservices/use-case-3
     links:
       - db-3
 
@@ -57,6 +60,8 @@ services:
       - 5005:5005
     networks:
       - vpn
+    volumes:
+      - ./microservices/use-case-4:/microservices/use-case-4
     links:
       - db-4
 
@@ -68,6 +73,8 @@ services:
       - 5006:5006
     networks:
       - vpn
+    volumes:
+      - ./microservices/use-case-5:/microservices/use-case-5
     links:
       - db-5
 
@@ -79,23 +86,9 @@ services:
       - 5007:5007
     networks:
       - vpn
+    volumes:
+      - ./microservices/use-case-6:/microservices/use-case-6
     links:
-      - db-6
-  
-  data-catalogue:
-    container_name: data-catalogue
-    build: microservices/data-catalogue
-    restart: always
-    ports:
-      - 5010:5010
-    networks:
-      - vpn
-    links:
-      - db-1
-      - db-2
-      - db-3
-      - db-4
-      - db-5
       - db-6
 
   db-1:
@@ -217,15 +210,15 @@ services:
       - mysql-root-db6
       - mysql-user-db6
 
+volumes:
+  app: null
+  db: null
+
 networks:
   gateway: null
 
   vpn:
     internal: true
-
-volumes:
-  app: null
-  db: null
 
 secrets:
   mysql-root-db1:

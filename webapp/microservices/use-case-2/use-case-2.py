@@ -42,7 +42,7 @@ def query_table():
 
     conn = connect()
     cur = conn.cursor()
-    cur.execute("SELECT GROUP_CONCAT(ratings.rating) as rating FROM ratings WHERE ratings.movieId = %s;", (movieId, )) 
+    cur.execute("SELECT GROUP_CONCAT(Ratings.rating) as rating FROM Ratings WHERE Ratings.movieId = %s;", (movieId, )) 
 
     # Parse response and create list
     ratings_list = []
