@@ -377,12 +377,24 @@ function getImdbID(movieID) {
 
   //var data = $.csv.toObjects(csv);
 
-  $.get( "../../data/links.csv", function( CSVdata) {
-     // CSVdata is populated with the file contents
-     // ready to be converted into an Array
-      data = $.csv.toArray(CSVdata);
-      console.log(data)
-  });
+  // $.get( "../../data/links.csv", function( CSVdata) {
+  //    // CSVdata is populated with the file contents
+  //    // ready to be converted into an Array
+  //     data = $.csv.toArray(CSVdata);
+  //     console.log(data)
+  // });
+
+    var data;
+      $.ajax({
+        type: "GET",  
+        url: "../../data/links.csv",
+        dataType: "text",       
+        success: function(response)  
+        {
+        data = $.csv.toArrays(response);
+        generateHtmlTable(data);
+        }   
+      });
 
 
   return movieID;
