@@ -42,10 +42,9 @@ def sql_to_pandas():
     conn = connect()
     cur = conn.cursor()
 
-    cur.execute("SELECT movies.title, GROUP_CONCAT(ratings.rating) as ratings, COUNT(ratings.rating) as num_ratings \
-                FROM movies \
-                INNER JOIN ratings on movies.movieId = ratings.movieId \
-                GROUP BY title \
+    cur.execute("SELECT Ratings.movieId, GROUP_CONCAT(Ratings.rating) as ratings, COUNT(Ratings.rating) as num_ratings \
+                FROM Ratings \
+                GROUP BY movieId \
                 ORDER BY num_ratings DESC;")
 
     df = pd.DataFrame()
@@ -99,10 +98,9 @@ def train_model():
 def data_for_given_movie(movieId):
     conn = connect()
     cur = conn.cursor()
-    cur.execute("SELECT movies.title, GROUP_CONCAT(ratings.rating) as ratings, COUNT(ratings.rating) as num_ratings \
-                FROM movies \
-                INNER JOIN ratings on movies.movieId = ratings.movieId \
-                WHERE movies.movieId = %s;", (movieId, ))
+    cur.execute("SELECT Ratings.movieId, GROUP_CONCAT(Ratings.rating) as ratings, COUNT(Ratings.rating) as num_ratings \
+                FROM Ratings \
+                WHERE movieId = %s;", (movieId, ))
 
     for row in cur:
         name = row[0]

@@ -39,10 +39,10 @@ def query_table():
     conn = connect()
     cur = conn.cursor()
     # Popular Movies Query
-    cur.execute("SELECT genres.genre, AVG(ratings.rating) AS rating, stddev(ratings.rating) as std_rating, \
-                MIN(ratings.rating) as min_rating, MAX(ratings.rating) as max_rating, COUNT(ratings.rating) as num_ratings \
-                FROM genres INNER JOIN movie_genres ON genres.genreId = movie_genres.genreId \
-                INNER JOIN ratings ON movie_genres.movieId = ratings.movieId \
+    cur.execute("SELECT Genres.genre, AVG(Ratings.rating) AS rating, stddev(Ratings.rating) as std_rating, \
+                MIN(Ratings.rating) as min_rating, MAX(Ratings.rating) as max_rating, COUNT(Ratings.rating) as num_ratings \
+                FROM Genres INNER JOIN Movie_Genres ON Genres.genreId = Movie_Genres.genreId \
+                INNER JOIN Ratings ON Movie_Genres.movieId = Ratings.movieId \
                 GROUP BY genre \
                 ORDER BY rating DESC, std_rating ASC, min_rating DESC, max_rating DESC, num_ratings DESC \
                 LIMIT 10;")
@@ -51,12 +51,12 @@ def query_table():
     popular_response  = ""
 
     # Polarising Movies Query
-    cur.execute("SELECT genres.genre, AVG(ratings.rating) AS rating, stddev(ratings.rating) as std_rating, \
-                MIN(ratings.rating) as min_rating, MAX(ratings.rating) as max_rating, MAX(ratings.rating) - MIN(ratings.rating) as range_rating, \
-                COUNT(ratings.rating) as num_ratings \
-                FROM genres \
-                INNER JOIN movie_genres ON genres.genreId = movie_genres.genreId \
-                INNER JOIN ratings ON movie_genres.movieId = ratings.movieId \
+    cur.execute("SELECT Genres.genre, AVG(Ratings.rating) AS rating, stddev(Ratings.rating) as std_rating, \
+                MIN(Ratings.rating) as min_rating, MAX(Ratings.rating) as max_rating, MAX(Ratings.rating) - MIN(Ratings.rating) as range_rating, \
+                COUNT(Ratings.rating) as num_ratings \
+                FROM Genres \
+                INNER JOIN Movie_Genres ON Genres.genreId = Movie_Genres.genreId \
+                INNER JOIN Ratings ON Movie_Genres.movieId = Ratings.movieId \
                 GROUP BY genre \
                 ORDER BY std_rating DESC, range_rating DESC, num_ratings DESC \
                 LIMIT 10;")

@@ -104,7 +104,6 @@ services:
     volumes:
       - ./data:/data
       - ./db:/docker-entrypoint-initdb.d/:ro
-      - ./conf:/etc/mysql/conf.d
     networks:
       - vpn
     secrets:
@@ -124,7 +123,6 @@ services:
     volumes:
       - ./data:/data
       - ./db:/docker-entrypoint-initdb.d/:ro
-      - ./conf:/etc/mysql/conf.d
     networks:
       - vpn
     secrets:
@@ -144,7 +142,6 @@ services:
     volumes:
       - ./data:/data
       - ./db:/docker-entrypoint-initdb.d/:ro
-      - ./conf:/etc/mysql/conf.d
     networks:
       - vpn
     secrets:
@@ -164,7 +161,6 @@ services:
     volumes:
       - ./data:/data
       - ./db:/docker-entrypoint-initdb.d/:ro
-      - ./conf:/etc/mysql/conf.d
     networks:
       - vpn
     secrets:
@@ -184,7 +180,6 @@ services:
     volumes:
       - ./data:/data
       - ./db:/docker-entrypoint-initdb.d/:ro
-      - ./conf:/etc/mysql/conf.d
     networks:
       - vpn
     secrets:
