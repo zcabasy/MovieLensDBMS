@@ -5,12 +5,6 @@ import sys
 
 use_case_1 = Flask(__name__)
 
-use_case_1.config['CACHE_TYPE'] = 'SimpleCache'
-use_case_1.config['CACHE_DEFAULT_TIMEOUT'] = 300
-use_case_1.config['CACHE_THRESHOLD'] = 500
-cache = Cache()
-cache.init_app(use_case_1)
-
 def connect():
         # f = open("mysql-user-db1.txt")
         # pwd = f.read()
@@ -19,7 +13,7 @@ def connect():
 
         try:
             conn = mariadb.connect(
-                user="safebrowser",
+                user="root",
                 password=pwd,
                 host="localhost",
                 port=3308,
@@ -32,7 +26,6 @@ def connect():
             sys.exit(1)
         
 @use_case_1.route("/",  methods=["POST"])
-# @cache.cached(timeout=300)
 def query_table():
     data = request.form
     title = "%" + data["title"] + "%"

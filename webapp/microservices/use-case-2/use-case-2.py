@@ -35,11 +35,14 @@ def connect():
     
 
 @use_case_2.route("/", methods=["POST"])
-# @cache.cached(timeout=300)
 def query_table():
     data = request.form
     movieId = int(data["movieId"])
-
+    
+    cached_val = cache.get(movieId)
+    if cached_val != None:
+        return cached_val
+    
     conn = connect()
     cur = conn.cursor()
     cur.execute("SELECT GROUP_CONCAT(Ratings.rating) as rating FROM Ratings WHERE Ratings.movieId = %s;", (movieId, )) 
@@ -57,8 +60,10 @@ def query_table():
     max = np.max(ratings_list)
     median = np.median(ratings_list)
     #Mode was not included here as a metric since ratings can take any continuous value so it is not very useful here
-
-    return [ratings_list, mean, std_dev, min, max, median]
+    
+    return_val = [ratings_list, mean, std_dev, min, max, median]
+    cache.set(movieId, return_val)
+    return return_val
 
 if __name__ == '__main__':
     use_case_2.run(debug = True, port = 5003, host="0.0.0.0")

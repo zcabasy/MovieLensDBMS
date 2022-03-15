@@ -1,11 +1,20 @@
 from ast import Pass
 import requests
 from flask import Flask, render_template, request
+from flask_caching import Cache
 
 app = Flask(__name__)
 
+app.config['CACHE_TYPE'] = 'SimpleCache'
+app.config['CACHE_DEFAULT_TIMEOUT'] = 300
+app.config['CACHE_THRESHOLD'] = 500
+cache = Cache()
+cache.init_app(app)
+
 @app.route("/", methods=["GET", "POST"])
+# @cache.cached(timeout=300)
 @app.route("/use-case-1.html",  methods=["GET", "POST"])
+# @cache.cached(timeout=300)
 def use_case_1():
     if request.method == "POST":
         # req = request.form

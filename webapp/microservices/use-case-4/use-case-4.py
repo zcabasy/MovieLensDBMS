@@ -38,7 +38,7 @@ def connect():
         print(f"Error connecting to MariaDB Platform: {e}")
         sys.exit(1)
 
-def sql_to_pandas():
+def gen_dataset():
     conn = connect()
     cur = conn.cursor()
 
@@ -78,13 +78,14 @@ def sql_to_pandas():
     conn.close()
     df.columns = ['Movie', 'Mean', 'Std', 'Min', 'Max', 'Sample', 'Actual']
 
-    return df
-
-def train_model():
-    df = sql_to_pandas()
     X = df.drop('Actual', axis=1)
     X = X.drop('Movie', axis = 1)
     y = df.pop('Actual')
+
+    return X, y
+
+def train_model():
+    X, y = gen_dataset()
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42, shuffle = True)
 
@@ -103,13 +104,20 @@ def data_for_given_movie(movieId):
                 WHERE movieId = %s;", (movieId, ))
 
     for row in cur:
+        #Only one result since we specify movieId which is unique
         name = row[0]
         ratings = row[1]
         ratings = ratings.split(",")
         ratings_map = map(float, ratings)
         ratings = list(ratings_map)
+
+        #Full stats
         actual_mean = np.mean(ratings)
+        actual_std = np.std(ratings)
+        actual_min_rating = min(ratings)
+        actual_max_rating = max(ratings)
         num_ratings = len(ratings)
+        full_stats = [actual_mean, actual_std, actual_min_rating, actual_max_rating, num_ratings]
 
         if num_ratings == 2 or num_ratings == 3 or num_ratings == 4:
             ratings = ratings[0:1] # make this random
@@ -117,11 +125,13 @@ def data_for_given_movie(movieId):
             threshold = 0.2 * num_ratings
             ratings = ratings[0:int(threshold)] # make this random
 
+        #Subset Stats
         mean = np.mean(ratings)
         std = np.std(ratings)
         min_rating = min(ratings)
         max_rating = max(ratings)
         sample_size = len(ratings)
+        subset_stats = [mean, std, min_rating, max_rating, sample_size]
 
         row = pd.Series([name, mean, std, min_rating, max_rating, sample_size, actual_mean])
         df = pd.DataFrame([row])
@@ -129,18 +139,24 @@ def data_for_given_movie(movieId):
         X = df.drop('Actual', axis=1)
         X = X.drop('Movie', axis=1)
         y = df.pop('Actual')
-        return [X, y]
+        return [X, y, subset_stats, full_stats]
 
 
 @use_case_4.route("/", methods=["GET", "POST"])
-@cache.cached(timeout=300)
 def predict_rating():
     
-    movieId = 0
-    
+    data = request.form
+    movieId = int(data["movieId"])
+
+    cached_val = cache.get(movieId)
+    if cached_val != None:
+        return cached_val
+
     data = data_for_given_movie(movieId)
     X_test = data[0]
     y_test = data[1]
+    subset_stats = data[2]
+    full_stats = data[3]
 
     if exists('clf.joblib'):
         clf = load('clf.joblib')
@@ -151,7 +167,9 @@ def predict_rating():
     y_pred = clf.predict(X_test)
 
     score = mean_squared_error(y_test, y_pred)
-    return [score, X_test, y_test, y_pred]
+    return_val = [score, y_test, y_pred, subset_stats, full_stats]
+    cache.set(movieId, return_val)
+    return return_val
     
 
 if __name__ == '__main__':
