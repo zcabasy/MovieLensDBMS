@@ -1,5 +1,5 @@
-from flask import Flask, request
-from flask_caching import Cache
+from flask import Flask
+from flask_caching import Cache, request
 import mariadb
 import sys
 
@@ -19,7 +19,7 @@ def connect():
 
         try:
             conn = mariadb.connect(
-                user="safeuser",
+                user="safebrowser",
                 password=pwd,
                 host="localhost",
                 port=3308,
@@ -31,32 +31,47 @@ def connect():
             print(f"Error connecting to MariaDB Platform: {e}")
             sys.exit(1)
         
-@use_case_1.route("/",  methods=["GET", "POST"])
-@cache.cached(timeout=300)
+@use_case_1.route("/",  methods=["POST"])
+# @cache.cached(timeout=300)
 def query_table():
-        # Do not remove % signs from strings below, needed for regex matching in sql. Instead, add user content in between
-        title = "%--%"
-        rating_lower = 0
-        rating_upper = 5
-        tag = "%--%"
-        genre = "%--%"
-        sort_by = ""
+    data = request.form
+    title = "%" + data["title"] + "%"
+    rating_lower = int(data["min_rating"])
+    rating_upper = int(data["max_rating"])
+    sort_by = data["sort_by"]
 
-        conn = connect()
-        cur = conn.cursor()
-        cur.execute("SELECT title, tag, rating, genre FROM movielens \
-            WHERE title LIKE %s AND \
-            tag LIKE %s  AND \
-            (genre LIKE %s) AND \
-            rating BETWEEN %s AND %s \
-            ORDER BY %s;", (title, tag, genre, rating_lower, rating_upper, sort_by))
-        
-        # Parse response and package into something that can be returned e.g. JSON
-        response = ""
-        
-        conn.close()
-        
-        return response
+    org_tag = data["tag"].split(",")
+    tag = ""
+    for x in range(len(org_tag)):
+        if x == 0:
+            tag += "%" + org_tag[x] + "%"
+        else:
+            tag += " OR tag LIKE %" + org_tag[x] + "%"
+    
+    org_genre = data["genre"].split(",")
+    genre = ""
+    for x in range(len(org_genre)):
+        if x == 0:
+            genre += "%" + org_genre[x] + "%"
+        else:
+            genre += " OR genre LIKE %" + org_genre[x] + "%"
+    
+    conn = connect()
+    cur = conn.cursor()
+    cur.execute("SELECT movieId, title, tag, rating, genre FROM movielens \
+        WHERE title LIKE %s AND \
+        (tag LIKE %s)  AND \
+        (genre LIKE %s) AND \
+        rating BETWEEN %s AND %s \
+        ORDER BY %s;", (title, tag, genre, rating_lower, rating_upper, sort_by))
+    
+    # Parse response and package into something that can be returned e.g., JSON
+    response = ""
+    
+    conn.close()
+    
+    return response
 
 if __name__ == '__main__':
+    
     use_case_1.run(debug = True, port = 5002, host="0.0.0.0")

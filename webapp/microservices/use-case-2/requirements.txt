@@ -3,3 +3,4 @@ Flask-Caching
 mariadb
 numpy
 matplotlib
+requests

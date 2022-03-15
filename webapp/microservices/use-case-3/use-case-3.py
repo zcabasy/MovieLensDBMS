@@ -20,7 +20,7 @@ def connect():
 
     try:
         conn = mariadb.connect(
-            user="safeuser",
+            user="safebrowser",
             password=pwd,
             host="localhost",
             port=33083,
@@ -33,18 +33,12 @@ def connect():
         sys.exit(1)
     
 
-@use_case_3.route("/", methods=["GET", "POST"])
+@use_case_3.route("/", methods=["POST"])
 @cache.cached(timeout=300)
 def query_table():
     conn = connect()
     cur = conn.cursor()
     # Popular Movies Query
-    # cur.execute("SELECT movies.title, AVG(ratings.rating) as avg_rating, stddev(ratings.rating) as std_rating, \
-    #             MIN(ratings.rating) as min_rating, MAX(ratings.rating) as max_rating, COUNT(ratings.rating) as num_ratings \
-    #             FROM movies INNER JOIN ratings ON movies.movieId = ratings.movieId \
-    #             GROUP BY title \
-    #             ORDER BY num_ratings DESC, avg_rating DESC, std_rating ASC\
-    #             LIMIT 10;") 
     cur.execute("SELECT genres.genre, AVG(ratings.rating) AS rating, stddev(ratings.rating) as std_rating, \
                 MIN(ratings.rating) as min_rating, MAX(ratings.rating) as max_rating, COUNT(ratings.rating) as num_ratings \
                 FROM genres INNER JOIN movie_genres ON genres.genreId = movie_genres.genreId \
@@ -57,12 +51,6 @@ def query_table():
     popular_response  = ""
 
     # Polarising Movies Query
-    # cur.execute("SELECT movies.title, AVG(ratings.rating) as avg_rating, stddev(ratings.rating) as std_rating, \
-    #             MIN(ratings.rating) as min_rating, MAX(ratings.rating) as max_rating, COUNT(ratings.rating) as num_ratings \
-    #             FROM movies INNER JOIN ratings ON movies.movieId = ratings.movieId \
-    #             GROUP BY title \
-    #             ORDER BY std_rating DESC, num_ratings DESC \
-    #             LIMIT 10;") 
     cur.execute("SELECT genres.genre, AVG(ratings.rating) AS rating, stddev(ratings.rating) as std_rating, \
                 MIN(ratings.rating) as min_rating, MAX(ratings.rating) as max_rating, MAX(ratings.rating) - MIN(ratings.rating) as range_rating, \
                 COUNT(ratings.rating) as num_ratings \

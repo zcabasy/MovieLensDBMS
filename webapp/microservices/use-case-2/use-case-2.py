@@ -21,7 +21,7 @@ def connect():
 
     try:
         conn = mariadb.connect(
-            user="safeuser",
+            user="safebrowser",
             password=pwd,
             host="localhost",
             port=33082,
@@ -34,19 +34,20 @@ def connect():
         sys.exit(1)
     
 
-@use_case_2.route("/", methods=["GET", "POST"])
-@cache.cached(timeout=300)
+@use_case_2.route("/", methods=["POST"])
+# @cache.cached(timeout=300)
 def query_table():
-    movieId = 0
+    data = request.form
+    movieId = int(data["movieId"])
 
     conn = connect()
     cur = conn.cursor()
-    cur.execute("SELECT GROUP_CONCAT(ratings.rating) as rating FROM movies \
-                INNER JOIN ratings ON movies.movieId = ratings.movieId \
-                WHERE movies.movieId = %s;", (movieId, )) 
+    cur.execute("SELECT GROUP_CONCAT(ratings.rating) as rating FROM ratings WHERE ratings.movieId = %s;", (movieId, )) 
 
     # Parse response and create list
     ratings_list = []
+    for row in cur:
+        ratings_list = list(map(float, row[0].split(",")))
 
     conn.close()
 

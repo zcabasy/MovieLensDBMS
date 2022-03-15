@@ -5,18 +5,18 @@ import sys
 # pwd = f.read()
 # f.close()
 
-# try:
-#     conn = mariadb.connect(
-#         user="safeuser",
-#         password="password",
-#         host="localhost",
-#         port=33082,
-#         database="MovieLensDB"
-#     )
+try:
+    conn = mariadb.connect(
+        user="safebrowser",
+        password="password",
+        host="localhost",
+        port=3308,
+        database="MovieLensDB"
+    )
     
-# except mariadb.Error as e:
-#     print(f"Error connecting to MariaDB Platform: {e}")
-#     sys.exit(1)
+except mariadb.Error as e:
+    print(f"Error connecting to MariaDB Platform: {e}")
+    sys.exit(1)
 
 # # Get Cursor
 # cur = conn.cursor()
