@@ -5,7 +5,11 @@ import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.svm import SVR
-from sklearn.metrics import mean_squared_error
+from sklearn.metrics import mean_absolute_error
+from joblib import dump, load
+from os.path import exists
+from sklearn.preprocessing import StandardScaler
+
 import sys
 from joblib import dump, load
 from os.path import exists
@@ -79,6 +83,8 @@ def gen_dataset():
     conn.close()
     df.columns = ['Movie', 'Mean', 'Std', 'Min', 'Max', 'Sample', 'Actual']
 
+    df.to_csv('dataset-4.csv', index=False)
+    
     X = df.drop('Actual', axis=1)
     X = X.drop('Movie', axis = 1)
     y = df.pop('Actual')
@@ -86,14 +92,20 @@ def gen_dataset():
     return X, y
 
 def train_model():
-    X, y = gen_dataset()
+    if exists('dataset-4.csv'):
+        df = pd.read_csv('dataset-4.csv')
+        X = df.drop('Actual', axis=1)
+        X = X.drop('Movie', axis = 1)
+        y = df.pop('Actual')
+    else:
+        X, y = gen_dataset()
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42, shuffle = True)
 
     clf = SVR().fit(X_train, y_train)
 
     y_pred = clf.predict(X_test)
-    score = mean_squared_error(y_test, y_pred)
+    score = mean_absolute_error(y_test, y_pred)
     
     return clf, score
 
@@ -167,7 +179,7 @@ def predict_rating():
     
     y_pred = clf.predict(X_test)
 
-    score = mean_squared_error(y_test, y_pred)
+    score = mean_absolute_error(y_test, y_pred)
     return_val = [score, y_test, y_pred, subset_stats, full_stats]
     cache.set(movieId, return_val)
     return return_val
