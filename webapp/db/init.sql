@@ -194,17 +194,17 @@ ON Tags (tag);
 CREATE INDEX genreIndex
 ON Movie_Genres (genreId);
 
--- Create view for users to use
-CREATE VIEW `movielens` AS
-SELECT Movies.movieId, Movies.title, GROUP_CONCAT(DISTINCT Tags.tag) as tag, AVG(Ratings.rating) as rating, Links.imdbId, GROUP_CONCAT(DISTINCT Genres.genre) as genre
-FROM Movies
-LEFT JOIN Tags ON Movies.movieId = Tags.movieId 
-LEFT JOIN Ratings ON Movies.movieId = Ratings.movieId
-LEFT JOIN Links ON Movies.movieId = Links.movieId
-LEFT JOIN Movie_Genres ON Movies.movieId = Movie_Genres.movieId
-INNER JOIN Genres ON Movie_Genres.genreId = Genres.genreId
-GROUP BY title
-ORDER BY movieId;
+CREATE INDEX metricIndex
+ON Personality (`assigned metric`);
+
+CREATE INDEX conditionIndex
+ON Personality (`assigned condition`);
+
+CREATE INDEX enjoyedIndex
+ON `Personality-Predictions` (enjoy_watching);
+
+CREATE INDEX personalisedIndex
+ON `Personality-Predictions` (is_personalized);
 
 -- Setup permissions for safeuser
 REVOKE ALL PRIVILEGES, GRANT OPTION FROM 'safebrowser';
