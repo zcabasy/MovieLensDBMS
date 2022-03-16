@@ -24,7 +24,7 @@ services:
     volumes:
       - ./microservices/use-case-1:/microservices/use-case-1
     links:
-      - db-1
+      - "db-1:db-1"
 
   use-case-2:
     container_name: use-case-2
@@ -37,7 +37,7 @@ services:
     volumes:
       - ./microservices/use-case-2:/microservices/use-case-2
     links:
-      - db-2
+      - "db-2:db-2"
 
   use-case-3:
     container_name: use-case-3
@@ -50,7 +50,7 @@ services:
     volumes:
       - ./microservices/use-case-3:/microservices/use-case-3
     links:
-      - db-3
+      - "db-3:db-3"
 
   use-case-4:
     container_name: use-case-4
@@ -63,7 +63,7 @@ services:
     volumes:
       - ./microservices/use-case-4:/microservices/use-case-4
     links:
-      - db-4
+      - "db-4:db-4"
 
   use-case-5:
     container_name: use-case-5
@@ -76,7 +76,7 @@ services:
     volumes:
       - ./microservices/use-case-5:/microservices/use-case-5
     links:
-      - db-5
+      - "db-5:db-5"
 
   use-case-6:
     container_name: use-case-6
@@ -89,7 +89,7 @@ services:
     volumes:
       - ./microservices/use-case-6:/microservices/use-case-6
     links:
-      - db-6
+      - "db-6:db-6"
 
   db-1:
     container_name: db-1
@@ -104,13 +104,12 @@ services:
     volumes:
       - ./data:/data
       - ./db:/docker-entrypoint-initdb.d/:ro
-      - ./conf:/etc/mysql/conf.d
     networks:
       - vpn
     secrets:
       - mysql-root-db1
       - mysql-user-db1
-
+  
   db-2:
     container_name: db-2
     image: mariadb:latest
@@ -124,7 +123,6 @@ services:
     volumes:
       - ./data:/data
       - ./db:/docker-entrypoint-initdb.d/:ro
-      - ./conf:/etc/mysql/conf.d
     networks:
       - vpn
     secrets:
@@ -144,7 +142,6 @@ services:
     volumes:
       - ./data:/data
       - ./db:/docker-entrypoint-initdb.d/:ro
-      - ./conf:/etc/mysql/conf.d
     networks:
       - vpn
     secrets:
@@ -164,7 +161,6 @@ services:
     volumes:
       - ./data:/data
       - ./db:/docker-entrypoint-initdb.d/:ro
-      - ./conf:/etc/mysql/conf.d
     networks:
       - vpn
     secrets:
@@ -184,7 +180,6 @@ services:
     volumes:
       - ./data:/data
       - ./db:/docker-entrypoint-initdb.d/:ro
-      - ./conf:/etc/mysql/conf.d
     networks:
       - vpn
     secrets:

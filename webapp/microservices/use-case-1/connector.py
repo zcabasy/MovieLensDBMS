@@ -9,10 +9,11 @@ try:
     conn = mariadb.connect(
         user="safebrowser",
         password="password",
-        host="localhost",
-        port=3308,
+        host="db-1",
+        port=3306,
         database="MovieLensDB"
     )
+    print("connected 1", flush=True)
     
 except mariadb.Error as e:
     print(f"Error connecting to MariaDB Platform: {e}")

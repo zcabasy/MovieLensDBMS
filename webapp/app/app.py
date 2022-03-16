@@ -1,11 +1,20 @@
 from ast import Pass
 import requests
 from flask import Flask, render_template, request
+from flask_caching import Cache
 
 app = Flask(__name__)
 
+app.config['CACHE_TYPE'] = 'SimpleCache'
+app.config['CACHE_DEFAULT_TIMEOUT'] = 300
+app.config['CACHE_THRESHOLD'] = 500
+cache = Cache()
+cache.init_app(app)
+
 @app.route("/", methods=["GET", "POST"])
+# @cache.cached(timeout=300)
 @app.route("/use-case-1.html",  methods=["GET", "POST"])
+# @cache.cached(timeout=300)
 def use_case_1():
     if request.method == "POST":
         # req = request.form
@@ -14,11 +23,11 @@ def use_case_1():
         # genre = req.get("genre")
         # rating = req.get("rating")
 
-        movieTitle = "toy story"
-        genre = "adventure,action"
+        movieTitle = "toy story 2"
+        genre = "adventure"
         min_rating = 0
         max_rating = 5
-        tag = "adventure,action"
+        tag = "animation"
         sort_by = "title ASC"
         
         form_data = {'title': movieTitle, 

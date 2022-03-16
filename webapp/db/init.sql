@@ -71,8 +71,8 @@ ENGINE = InnoDB;
 -- Table Links
 CREATE TABLE IF NOT EXISTS `MovieLensDB`.`Links` (
   `movieId` INT NOT NULL,
-  `imdbId` INT NOT NULL,
-  `tmdbId` INT NOT NULL,
+  `imdbId` TEXT NOT NULL,
+  `tmdbId` TEXT NULL,
   PRIMARY KEY (`movieId`),
   CONSTRAINT `links.movieId`
     FOREIGN KEY (`movieId`)

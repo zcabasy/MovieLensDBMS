@@ -5,26 +5,21 @@ import sys
 
 use_case_1 = Flask(__name__)
 
-use_case_1.config['CACHE_TYPE'] = 'SimpleCache'
-use_case_1.config['CACHE_DEFAULT_TIMEOUT'] = 300
-use_case_1.config['CACHE_THRESHOLD'] = 500
-cache = Cache()
-cache.init_app(use_case_1)
-
 def connect():
         # f = open("mysql-user-db1.txt")
         # pwd = f.read()
         # f.close()
         pwd = "password"
-
+        
         try:
             conn = mariadb.connect(
-                user="safebrowser",
+                user="root",
                 password=pwd,
-                host="localhost",
-                port=3308,
+                host="db-1",
+                port=3306,
                 database="MovieLensDB"
             )
+            print("connected 1", flush=True)
             return conn
             
         except mariadb.Error as e:
@@ -32,7 +27,6 @@ def connect():
             sys.exit(1)
         
 @use_case_1.route("/",  methods=["POST"])
-# @cache.cached(timeout=300)
 def query_table():
     data = request.form
     title = "%" + data["title"] + "%"
@@ -58,12 +52,17 @@ def query_table():
     
     conn = connect()
     cur = conn.cursor()
-    cur.execute("SELECT movieId, title, tag, rating, genre FROM movielens \
-        WHERE title LIKE %s AND \
-        (tag LIKE %s)  AND \
-        (genre LIKE %s) AND \
-        rating BETWEEN %s AND %s \
-        ORDER BY %s;", (title, tag, genre, rating_lower, rating_upper, sort_by))
+    cur.execute("SELECT Movies.movieId, Movies.title, GROUP_CONCAT(DISTINCT Tags.tag), AVG(Ratings.rating), GROUP_CONCAT(DISTINCT Genres.genre) FROM Movies \
+                LEFT JOIN Tags ON Movies.movieId = Tags.movieId \
+                LEFT JOIN Ratings ON Movies.movieId = Ratings.movieId \
+                LEFT JOIN Links ON Movies.movieId = Links.movieId \
+                LEFT JOIN Movie_Genres ON Movies.movieId = Movie_Genres.movieId \
+                INNER JOIN Genres ON Movie_Genres.genreId = Genres.genreId \
+                WHERE title LIKE %s AND \
+                (tag LIKE %s)  AND \
+                (genre LIKE %s) AND \
+                (rating BETWEEN %s AND %s) \
+                ORDER BY %s;", (title, tag, genre, rating_lower, rating_upper, sort_by))
     
     # Parse response and package into something that can be returned e.g., JSON
     response = ""
@@ -73,5 +72,4 @@ def query_table():
     return response
 
 if __name__ == '__main__':
-    
     use_case_1.run(debug = True, port = 5002, host="0.0.0.0")
