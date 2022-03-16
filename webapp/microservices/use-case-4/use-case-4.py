@@ -26,12 +26,13 @@ def connect():
 
     try:
         conn = mariadb.connect(
-            user="safeuser",
+            user="safebrowser",
             password=pwd,
-            host="localhost",
-            port=33084,
+            host="db-4",
+            port=3306,
             database="MovieLensDB"
         )
+        print("connected 4", flush=True)
         return conn
         
     except mariadb.Error as e:

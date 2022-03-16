@@ -10,15 +10,16 @@ def connect():
         # pwd = f.read()
         # f.close()
         pwd = "password"
-
+        
         try:
             conn = mariadb.connect(
-                user="root",
+                user="safebrowser",
                 password=pwd,
-                host="localhost",
-                port=3308,
+                host="db-1",
+                port=3306,
                 database="MovieLensDB"
             )
+            print("connected 1", flush=True)
             return conn
             
         except mariadb.Error as e:
@@ -66,5 +67,4 @@ def query_table():
     return response
 
 if __name__ == '__main__':
-    
     use_case_1.run(debug = True, port = 5002, host="0.0.0.0")
