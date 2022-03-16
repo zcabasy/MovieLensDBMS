@@ -61,7 +61,7 @@ def query_table():
                 WHERE title LIKE %s AND \
                 (tag LIKE %s)  AND \
                 (genre LIKE %s) AND \
-                rating BETWEEN %s AND %s \
+                (rating BETWEEN %s AND %s) \
                 ORDER BY %s;", (title, tag, genre, rating_lower, rating_upper, sort_by))
     
     # Parse response and package into something that can be returned e.g., JSON
