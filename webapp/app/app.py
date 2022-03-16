@@ -24,10 +24,10 @@ def use_case_1():
         # rating = req.get("rating")
 
         movieTitle = "toy story"
-        genre = "adventure,action"
+        genre = "adventure,animation"
         min_rating = 0
         max_rating = 5
-        tag = "adventure,action"
+        tag = "fun,pixar"
         sort_by = "title ASC"
         
         form_data = {'title': movieTitle, 

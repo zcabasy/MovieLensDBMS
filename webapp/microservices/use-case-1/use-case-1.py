@@ -13,7 +13,7 @@ def connect():
         
         try:
             conn = mariadb.connect(
-                user="safebrowser",
+                user="root",
                 password=pwd,
                 host="db-1",
                 port=3306,
@@ -52,12 +52,17 @@ def query_table():
     
     conn = connect()
     cur = conn.cursor()
-    cur.execute("SELECT movieId, title, tag, rating, genre FROM movielens \
-        WHERE title LIKE %s AND \
-        (tag LIKE %s)  AND \
-        (genre LIKE %s) AND \
-        rating BETWEEN %s AND %s \
-        ORDER BY %s;", (title, tag, genre, rating_lower, rating_upper, sort_by))
+    cur.execute("SELECT Movies.movieId, Movies.title, GROUP_CONCAT(DISTINCT Tags.tag), AVG(Ratings.rating), GROUP_CONCAT(DISTINCT Genres.genre) FROM Movies \
+                LEFT JOIN Tags ON Movies.movieId = Tags.movieId \
+                LEFT JOIN Ratings ON Movies.movieId = Ratings.movieId \
+                LEFT JOIN Links ON Movies.movieId = Links.movieId \
+                LEFT JOIN Movie_Genres ON Movies.movieId = Movie_Genres.movieId \
+                INNER JOIN Genres ON Movie_Genres.genreId = Genres.genreId \
+                WHERE title LIKE %s AND \
+                (tag LIKE %s)  AND \
+                (genre LIKE %s) AND \
+                rating BETWEEN %s AND %s \
+                ORDER BY %s;", (title, tag, genre, rating_lower, rating_upper, sort_by))
     
     # Parse response and package into something that can be returned e.g., JSON
     response = ""
