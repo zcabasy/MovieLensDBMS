@@ -64,7 +64,6 @@ def query_table():
 
     #Parse response
     polarising_response  = ""
-
     
     return [popular_response, polarising_response]
 
