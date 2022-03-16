@@ -76,7 +76,7 @@ def use_case_4():
     return render_template("use-case-4.html")
 
 
-@app.route("/use-case-5.html", methods=["POST"])
+@app.route("/use-case-5.html", methods=["GET", "POST"])
 def use_case_5():
     if request.method == "POST":
         req = request.form
@@ -92,7 +92,7 @@ def use_case_5():
     return render_template("use-case-5.html")
 
 
-@app.route("/use-case-6.html", methods=["POST"])
+@app.route("/use-case-6.html", methods=["GET", "POST"])
 def use_case_6(): 
     if request.method == "POST":
         req = request.form
