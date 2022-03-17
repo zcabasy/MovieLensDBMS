@@ -17,18 +17,22 @@ cache.init_app(app)
 # @cache.cached(timeout=300)
 def use_case_1():
     if request.method == "POST":
-        # req = request.form
+        req = request.form
+        
+        movieTitle = req.get("movieTitle")
+        genre = req.getlist("genre") 
+        min_rating = req.get("min_rating")
+        max_rating = req.get("max_rating")
+        tag = req.get("tag")
+        sort_by = req.get("sort_by") # value 1 - 4
 
-        # movieTitle = req.get("movieTitle")
-        # genre = req.get("genre")
-        # rating = req.get("rating")
-
-        movieTitle = "toy story 2"
-        genre = "adventure"
-        min_rating = 0
-        max_rating = 5
-        tag = "animation"
-        sort_by = "title ASC"
+        # dummy data
+        # movieTitle = "toy story 2"
+        # genre = "adventure"
+        # min_rating = 0
+        # max_rating = 5
+        # tag = "animation"
+        # sort_by = "title ASC"
         
         form_data = {'title': movieTitle, 
                     'genre': genre,

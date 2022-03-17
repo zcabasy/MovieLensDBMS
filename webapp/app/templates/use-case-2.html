@@ -120,7 +120,7 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script type="text/javascript"
         src="https://unpkg.com/@sgratzl/chartjs-chart-boxplot@3.7.0/build/index.umd.min.js"> </script>
-    
+
     <div class="content">
         <div class="page-inner">
             <h4 class="page-title">Boxplot Report</h4>
@@ -128,12 +128,12 @@
                 their <a href="https://grouplens.org/datasets/movielens/" target="_blank">full documentation</a>.</div>
             <div class="card-body">
                 <div class="chart-container">
-                    <canvas id="boxPlot"></canvas>
+                    <canvas id="myChart"></canvas>
                 </div>
             </div>
         </div>
     </div>
-    
+
     <script>
 
         const data = {
@@ -181,7 +181,7 @@
         }
 
 
-        const boxPlot = new Chart(
+        const myChart = new Chart(
             document.getElementById('myChart'),
             config
         );
@@ -191,9 +191,10 @@
     <div class="content html-content" id="chart-container">
         <div class="page-inner">
             <h4 class="page-title">Film Report</h4>
-        <h4 class="page-title">Other aggregated findings</h4>
-        <div class="page-category">Our team generated additional charts based on user and clsasmate profile reviews. Do let us know if
-            they are of any use.</a></div>
+            <h4 class="page-title">Other aggregated findings</h4>
+            <div class="page-category">Our team generated additional charts based on user and clsasmate profile reviews.
+                Do let us know if
+                they are of any use.</a></div>
             <div class="row">
                 <div class="col-md-6">
                     <div class="card">
@@ -354,7 +355,7 @@
                 multipleBarChart = document.getElementById('multipleBarChart').getContext('2d'),
                 htmlLegendsChart = document.getElementById('htmlLegendsChart').getContext('2d');
 
-            
+
 
             var myLineChart = new Chart(lineChart, {
                 type: 'line',
@@ -399,8 +400,8 @@
                     }
                 }
             });
-            
-           var myBarChart = new Chart(barChart, {
+
+            var myBarChart = new Chart(barChart, {
                 type: 'bar',
                 data: {
                     labels: ["0", "1", "2", "3", "4", "5"],
