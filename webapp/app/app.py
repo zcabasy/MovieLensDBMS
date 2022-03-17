@@ -20,7 +20,7 @@ def use_case_1():
         req = request.form
         
         movieTitle = req.get("movieTitle")
-        genre = req.getlist("genre") 
+        genre = (','.join(req.getlist("genre")))
         min_rating = req.get("min_rating")
         max_rating = req.get("max_rating")
         tag = req.get("tag")
@@ -40,8 +40,8 @@ def use_case_1():
                     'min_rating': min_rating, 
                     'max_rating': max_rating, 
                     'sort_by': sort_by}
-
-        response = requests.post('http://use-case-1:5002/', form_data)
+        print(form_data)
+        # response = requests.post('http://use-case-1:5002/', form_data)
         #render response in web page
 
     return render_template("use-case-1.html")
@@ -58,10 +58,10 @@ def use_case_2():
         movieId = 1
         form_data = {'movieId': movieId}
 
-        response = requests.post('http://use-case-2:5003/', form_data)
+        # response = requests.post('http://use-case-2:5003/', form_data)
         #render response
 
-    return render_template("use-case-2.html")
+    return render_template("test.html")
 
 
 @app.route("/use-case-3.html", methods=["GET", "POST"])

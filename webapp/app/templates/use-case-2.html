@@ -66,14 +66,14 @@
 
         <div class="row">
             <div class="col">
-                <form action="#" method="POST">
+                <form action="" method="POST">
                     <div class="input-group">
                         <!-- <div class="form-outline"> -->
                         <input type="search" id="movieName" name="movieName" class="form-control" />
 
                         <!-- <label class="form-label" for="formOne">Search</label> -->
                         <!-- </div> -->
-                        <button type="submit" class="btn btn-primary">
+                        <button type="submit" id="submitBtn" name="submitBtn" class="btn btn-primary">
                             <i class="fas fa-search"></i>
                         </button>
                     </div>
@@ -336,14 +336,54 @@
 
     <!-- Atlantis DEMO methods, don't include it in your project! -->
     <script src="/static/assets/js/setting-demo2.js"></script>
+    
     <script>
 
         let filename = 'https://raw.githubusercontent.com/zcabasy/MovieLensDBMS/main/webapp/data/ratings.csv'
+        
+        let submit = document.getElementById('submitBtn').addEventListener('click', search);
+
+        async function search() {
+            let searchText = document.getElementById('movieName').value.split(' ').join('+');
+            let omdbAPI = 'https://www.omdbapi.com/?t=' + searchText + '/&apikey=ba751858';
+            console.log('fuck sake');
+            alert(omdbAPI);
+             $.getJSON(omdbAPI, function (data) {
+                var display = `Title: ${data.Title}<br> 
+                Released: ${data.Released}<br>
+                Ratings: ${data.Ratings}<br>
+                IMDB_ID: ${data.imdbID}`
+                $(".display").html(display);
+
+            });
+        }
+
+        function afterClick() {
+                // changed target to focus search
+                let searchText = document.getElementById('movieName').value.split(' ').join('+');
+                alert(searchText);
+                var request = new XMLHttpRequest();
+                // request.addEventListener('load', afterLoad);
+                request.open('GET', 'https://www.omdbapi.com/?t=' + searchText + '/&apikey=ba751858');
+                request.send();
+
+            }
+        // function afterLoad() {
+        //         var data = JSON.parse(this.responseText);
+        //         var image = document.createElement('img');
+        //         console.log(data);
+        //         image.src = data.data[0].images.original.url;
+        //         document.body.appendChild(image);
+        //     }
+
+
         d3.csv(filename)
             .then(makeChart);
         function makeChart(data) {
-            var movieId = data.map(function (d) { return d.movieId });
-            var rating = data.map(function (d) { return d.rating; });
+            var movieId = data.slice(0, 100).map(function (d) { return d.movieId });
+            var rating = data.slice(0, 100).map(function (d) { return d.rating; });
+            
+            //$.getJSON('https://www.omdbapi.com/?t=hunger+games&apikey=ba751858')
 
             var lineChart = document.getElementById('lineChart').getContext('2d'),
                 barChart = document.getElementById('barChart').getContext('2d'),
@@ -360,9 +400,10 @@
             var myLineChart = new Chart(lineChart, {
                 type: 'line',
                 data: {
-                    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                    // labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                    labels: movieId,
                     datasets: [{
-                        label: "Active Users",
+                        label: "Individual Ratings",
                         borderColor: "#1d7af3",
                         pointBorderColor: "#FFF",
                         pointBackgroundColor: "#1d7af3",
@@ -373,7 +414,8 @@
                         backgroundColor: 'transparent',
                         fill: true,
                         borderWidth: 2,
-                        data: [542, 480, 430, 550, 530, 453, 380, 434, 568, 610, 700, 900]
+                        // data: [542, 480, 430, 550, 530, 453, 380, 434, 568, 610, 700, 900]
+                        data: rating
                     }]
                 },
                 options: {
