@@ -16,7 +16,7 @@ def connect():
     # f = open("mysql-user-db3.txt")
     # pwd = f.read()
     # f.close()
-    pwd = "X8Nq;JbPtf#%?QK5*)yZBtjZSUezn6TV"
+    pwd = "CNuDHdcW3DIc5DL37ZDZpnwYQO4ONp3n"
 
     try:
         conn = mariadb.connect(

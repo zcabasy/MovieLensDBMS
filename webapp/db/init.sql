@@ -185,26 +185,26 @@ LOAD DATA INFILE '/data/personality_data/personality-predictions.csv' INTO TABLE
 LOAD DATA INFILE '/data/personality_data/ratings.csv' INTO TABLE RatingsForPersonality FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
 
 -- Create indexes for faster searching
-CREATE INDEX titleIndex
-ON Movies (title);
+-- CREATE INDEX title_idx
+-- ON Movies (title);
 
-CREATE INDEX tagIndex
-ON Tags (tag);
+-- CREATE INDEX tag_idx
+-- ON Tags (tag);
 
-CREATE INDEX genreIndex
-ON Movie_Genres (genreId);
+-- CREATE INDEX genreId_idx
+-- ON Movie_Genres (genreId);
 
-CREATE INDEX metricIndex
-ON Personality (`assigned metric`);
+-- CREATE INDEX metricId_idx
+-- ON Personality (`assigned metric`);
 
-CREATE INDEX conditionIndex
-ON Personality (`assigned condition`);
+-- CREATE INDEX conditionId_idx
+-- ON Personality (`assigned condition`);
 
-CREATE INDEX enjoyedIndex
-ON `Personality-Predictions` (enjoy_watching);
+-- CREATE INDEX enjoy_watching_idx
+-- ON `Personality-Predictions` (enjoy_watching);
 
-CREATE INDEX personalisedIndex
-ON `Personality-Predictions` (is_personalized);
+-- CREATE INDEX is_personalised_idx
+-- ON `Personality-Predictions` (is_personalized);
 
 -- Setup permissions for safeuser
 REVOKE ALL PRIVILEGES, GRANT OPTION FROM 'safebrowser';
