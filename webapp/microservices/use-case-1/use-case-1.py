@@ -9,7 +9,7 @@ def connect():
         # f = open("mysql-user-db1.txt")
         # pwd = f.read()
         # f.close()
-        pwd = "password"
+        pwd = "Z}p6MYVvY`/4e.@LF*tTx2esyY~eqE4#"
         
         try:
             conn = mariadb.connect(

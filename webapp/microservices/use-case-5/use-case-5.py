@@ -9,6 +9,7 @@ from sklearn.metrics import mean_absolute_error
 import sys
 from joblib import dump, load
 from os.path import exists
+import statistics
 
 use_case_5 = Flask(__name__)
 
@@ -22,7 +23,7 @@ def connect():
     # f = open("mysql-user-db1.txt")
     # pwd = f.read()
     # f.close()
-    pwd = "password"
+    pwd = "$B:-P,>9BYQQ95qBh:!Q9BE^qaB]ft'y"
 
     try:
         conn = mariadb.connect(
@@ -40,18 +41,201 @@ def connect():
         sys.exit(1)
 
 
-def subset_preds():
-    # Using a subset of viewers, what is the average rating predicted for the entire subset
-    pass
-
-def person_traits_agg():
+def person_traits_agg(movieId):
     # Return aggregate stats on personality traits of users who gave the film a high rating
-    pass
+    
+    conn = connect()
+    cur = conn.cursor()
+    cur.execute("SELECT GROUP_CONCAT(Personality.openness), \
+                GROUP_CONCAT(Personality.agreeableness), GROUP_CONCAT(Personality.emotional_stability), GROUP_CONCAT(Personality.conscientiousness), \
+                GROUP_CONCAT(Personality.extraversion), \
+                GROUP_CONCAT(Metrics.metric), GROUP_CONCAT(Conditions.Condition) \
+                FROM Personality \
+                INNER JOIN RatingsForPersonality ON RatingsForPersonality.userId = Personality.userId\
+                INNER JOIN Metrics ON Metrics.metricId = Personality.`assigned metric` \
+                INNER JOIN Conditions ON Conditions.conditionId = Personality.`assigned condition` \
+                WHERE RatingsForPersonality.movieId = %s AND RatingsForPersonality.rating >= 4;", (movieId,))
+    openness = []
+    agreeableness = []
+    emotional_stability = []
+    conscientiousness = []
+    extraversion = []
+    metric = []
+    condition = []
+    
+    for row in cur:
+        openness = list(map(float, row[0].split(",")))
+        agreeableness = list(map(float, row[1].split(",")))
+        emotional_stability = list(map(float, row[2].split(",")))
+        conscientiousness = list(map(float, row[3].split(",")))
+        extraversion = list(map(float, row[4].split(",")))
+        metric = row[5].split(",")
+        condition = row[6].split(",")
 
-@use_case_5.route("/")
+    openness = np.median(openness)
+    agreeableness = np.median(agreeableness)
+    emotional_stability = np.median(emotional_stability)
+    conscientiousness = np.median(conscientiousness)
+    extraversion = np.median(extraversion)
+    metric = statistics.mode(metric)
+    condition = statistics.mode(condition)
+    
+    conn.close()
+
+    return [openness, agreeableness, emotional_stability, conscientiousness, extraversion, metric, condition]  
+
+def person_traits_enjoy_and_personalized():
+    # Which personality traits is it easiest to provide movies for which they will enjoy and they feel is personalised?
+    
+    conn = connect()
+    cur = conn.cursor()
+    df = pd.DataFrame()
+    cur.execute("SELECT Personality.openness, \
+                Personality.agreeableness, Personality.emotional_stability, Personality.conscientiousness, Personality.extraversion, \
+                Metrics.metric, Conditions.Condition \
+                FROM Personality \
+                INNER JOIN `Personality-Predictions` ON `Personality-Predictions`.userId = Personality.userId \
+                INNER JOIN Metrics ON Metrics.metricId = Personality.`assigned metric` \
+                INNER JOIN Conditions ON Conditions.conditionId = Personality.`assigned condition` \
+                WHERE enjoy_watching >= 4 AND is_personalized >= 4;")
+
+    for row in cur:
+        openness = float(row[0])
+        agreeableness = float(row[1])
+        emotional_stability = float(row[2])
+        conscientiousness = float(row[3])
+        extraversion = float(row[4])
+        metric = row[5]
+        condition = row[6]
+
+        row = pd.Series([openness, agreeableness, emotional_stability, conscientiousness, extraversion, metric, condition])
+        row_df = pd.DataFrame([row])
+        df = pd.concat([df, row_df], ignore_index=True)
+    
+    openness = np.median(openness)
+    agreeableness = np.median(agreeableness)
+    emotional_stability = np.median(emotional_stability)
+    conscientiousness = np.median(conscientiousness)
+    extraversion = np.median(extraversion)
+    metric = statistics.mode(metric)
+    condition = statistics.mode(condition)
+    
+    conn.close()
+
+    return [openness, agreeableness, emotional_stability, conscientiousness, extraversion, metric, condition]
+
+def train_nn():
+    #custom nn -> look at jupyter notebook for ml module
+    if exists('dataset-5.csv'):
+        df = pd.read_csv('dataset-5.csv')
+        X = df.drop('Rating', axis=1)
+        y = df.pop('Rating')
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42, shuffle = True)
+    else:
+        X_train, X_test, y_train, y_test = gen_dataset()
+    
+    nn = MLPRegressor(random_state=1, max_iter=1000).fit(X_train, y_train)
+    
+    y_pred = nn.predict(X_test)
+    score = mean_absolute_error(y_test, y_pred)
+    return nn, score
+
+def gen_dataset():
+    conn = connect()
+    cur = conn.cursor()
+    df = pd.DataFrame()
+    cur.execute("SELECT RatingsForPersonality.movieId, Personality.openness, \
+                Personality.agreeableness, Personality.emotional_stability, Personality.conscientiousness, Personality.extraversion, \
+                Personality.`assigned metric`, Personality.`assigned condition`, RatingsForPersonality.rating \
+                FROM RatingsForPersonality \
+                INNER JOIN Personality ON Personality.userId = RatingsForPersonality.userId;")
+    
+    for row in cur:
+        movieId = int(row[0])
+        openness = float(row[1])
+        agreeableness = float(row[2])
+        emotional_stability = float(row[3])
+        conscientiousness = float(row[4])
+        extraversion = float(row[5])
+        metric = int(row[6])
+        condition = int(row[7])
+        rating = float(row[8])
+        row = pd.Series([movieId, openness, agreeableness, emotional_stability, conscientiousness, extraversion, metric, condition, rating])
+        row_df = pd.DataFrame([row])
+        df = pd.concat([df, row_df], ignore_index=True)
+
+    conn.close()        
+    df.columns = ['Movie', 'Open', 'Agreeable', 'Emotional', 'Conscientious', 'Extraverted', 'Metric', 'Condition', 'Rating']
+    
+    
+    df.to_csv('dataset-5.csv', index=False)
+    
+    X = df.drop('Rating', axis=1)
+    y = df.pop('Rating')
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42, shuffle = True)
+
+    return X_train, X_test, y_train, y_test
+        
+
+def get_film_viewers(movieId):
+    conn = connect()
+    cur = conn.cursor()
+    df = pd.DataFrame()
+    cur.execute("SELECT RatingsForPersonality.movieId, Personality.openness, \
+                Personality.agreeableness, Personality.emotional_stability, Personality.conscientiousness, Personality.extraversion, \
+                Personality.`assigned metric`, Personality.`assigned condition`, RatingsForPersonality.rating \
+                FROM RatingsForPersonality \
+                INNER JOIN Personality ON Personality.userId = RatingsForPersonality.userId WHERE movieId = %s", (movieId,))
+
+    for row in cur:
+        movieId = int(row[0])
+        openness = float(row[1])
+        agreeableness = float(row[2])
+        emotional_stability = float(row[3])
+        conscientiousness = float(row[4])
+        extraversion = float(row[5])
+        metric = int(row[6])
+        condition = int(row[7])
+        rating = float(row[8])
+        row = pd.Series([movieId, openness, agreeableness, emotional_stability, conscientiousness, extraversion, metric, condition, rating])
+        row_df = pd.DataFrame([row])
+        df = pd.concat([df, row_df], ignore_index=True)
+
+    conn.close()
+    df.columns = ['Movie', 'Open', 'Agreeable', 'Emotional', 'Conscientious', 'Extraverted', 'Metric', 'Condition', 'Rating']
+
+    avg_rating = df['Rating'].mean()
+    X = df.drop('Rating', axis=1)
+    y = df.pop('Rating')
+    
+    return X, y, avg_rating
+
+
+@use_case_5.route("/", methods=["GET", "POST"])
 def query():
+    # Using the trained ML model, can we predict the actual average mean rating?
+    data = request.form
+    movieId = int(data["movieId"])
 
-    pass
+    cached_val = cache.get(movieId)
+    if cached_val != None:
+        return cached_val
+    
+    if exists('nn.joblib'):
+        nn = load('nn.joblib')
+    else:
+        nn, score = train_nn()
+        dump(nn, 'nn.joblib')
+
+    X, y, avg_rating = get_film_viewers(movieId)
+    y_pred = nn.predict(X)
+
+    predicted_avg = np.mean(y_pred)
+    score = mean_absolute_error(y, y_pred)
+
+    return_val = [avg_rating, predicted_avg, score]
+    cache.set(movieId, return_val)
+    return return_val
 
 if __name__ == '__main__':
     use_case_5.run(debug = True, port = 5006, host="0.0.0.0")
