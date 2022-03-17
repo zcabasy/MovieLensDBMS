@@ -17,5 +17,5 @@ $ docker exec -it db-1 bash
 
 Once in the container's bash terminal, the MySQL shell can be run using:
 ```
-$ mysql -uroot -ppassword
+$ mysql -usafebrowser -pZ}p6MYVvY`/4e.@LF*tTx2esyY~eqE4#
 ```
