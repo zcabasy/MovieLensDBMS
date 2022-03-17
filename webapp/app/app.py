@@ -92,12 +92,12 @@ def use_case_5():
 
         form5 = req.get("form5") 
 
-        # POST request to microservices
-        # 1. serialize dict to JSON
-        # 2. write correct MIME type ('application/json') in the HTTP header
-        # res = requests.post('http://localhost:5006/', json=req)
-        # print('Response from server: ', res.text)
+        movieId = 1
+        form_data = {'movieId': movieId}
 
+        response = requests.post('http://use-case-5:5006/', form_data)
+        #render response
+        
     return render_template("use-case-5.html")
 
 
@@ -108,11 +108,12 @@ def use_case_6():
 
         form6 = req.get("form6")
 
-        # POST request to microservices
-        # 1. serialize dict to JSON
-        # 2. write correct MIME type ('application/json') in the HTTP header
-        # res = requests.post('http://localhost:5007/', json=req)
-        # print('Response from server: ', res.text)
+        movieId = 1
+        form_data = {'movieId': movieId}
+
+        response = requests.post('http://use-case-6:5007/', form_data)
+        #render response
+
 
     return render_template("use-case-6.html")
 

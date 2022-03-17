@@ -90,7 +90,7 @@ def person_traits_enjoy_and_personalized():
     conn = connect()
     cur = conn.cursor()
     cur.execute("SELECT GROUP_CONCAT(Personality.openness), \
-                GROUP_CONCAT(Personality.agreeableness), GROUP_CONCATPersonality.emotional_stability), GROUP_CONCAT(Personality.conscientiousness), GROUP_CONCATPersonality.extraversion), \
+                GROUP_CONCAT(Personality.agreeableness), GROUP_CONCAT(Personality.emotional_stability), GROUP_CONCAT(Personality.conscientiousness), GROUP_CONCAT(Personality.extraversion), \
                 GROUP_CONCAT(Metrics.metric), GROUP_CONCAT(Conditions.Condition) \
                 FROM Personality \
                 INNER JOIN `Personality-Predictions` ON `Personality-Predictions`.userId = Personality.userId \
