@@ -34,6 +34,7 @@
 
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/0.71/jquery.csv-0.71.min.js"></script>
 
 
     <!-- Custom styles for this template -->
@@ -69,7 +70,7 @@
                 <form action="" method="POST">
                     <div class="input-group">
                         <!-- <div class="form-outline"> -->
-                        <input type="search" id="movieName" name="movieName" class="form-control" />
+                        <input type="search" id="movieSearch" name="movieSearch" class="form-control" />
 
                         <!-- <label class="form-label" for="formOne">Search</label> -->
                         <!-- </div> -->
@@ -85,7 +86,7 @@
             <div class="col">
                 <div class="media mt-4">
                     <div class="media-body">
-                        <h5 class="mt-0">Movie Name Here</h5>
+                        <h5 class="mt-0" id="movieName">Movie Name Here</h5>
                         Viewer reactions described here, or as a list
                         <ul>
                             <li>Like this</li>
@@ -215,7 +216,7 @@
                         </div>
                         <div class="card-body">
                             <div class="chart-container">
-                                <canvas id="barChart"></canvas>
+                                <canvas id="histChart"></canvas>
                             </div>
                         </div>
                     </div>
@@ -283,11 +284,11 @@
                 <div class="col-md-6">
                     <div class="card">
                         <div class="card-header">
-                            <div class="card-title">Multiple Bar Chart</div>
+                            <div class="card-title">Ratings across different Companies</div>
                         </div>
                         <div class="card-body">
                             <div class="chart-container">
-                                <canvas id="multipleBarChart"></canvas>
+                                <canvas id="barChart"></canvas>
                             </div>
                         </div>
                     </div>
@@ -331,41 +332,61 @@
     <script src="/static/assets/js/setting-demo2.js"></script>
     
     <script>
-
-        let filename = 'https://raw.githubusercontent.com/zcabasy/MovieLensDBMS/main/webapp/data/ratings.csv'
-        
+       
         let submit = document.getElementById('submitBtn').addEventListener('click', search);
+        let ratingsCSV = 'https://raw.githubusercontent.com/zcabasy/MovieLensDBMS/main/webapp/data/ratings.csv';
+        let linksCSV = 'https://raw.githubusercontent.com/zcabasy/MovieLensDBMS/main/webapp/data/links.csv';
 
         async function search() {
-            let movieSearch = document.getElementById('movieName').value.split(' ').join('+');
-            let omdbAPI = 'https://www.omdbapi.com/?t=' + movieSearch + '/&apikey=ba751858';
-            alert(omdbAPI);
-            $.getJSON(omdbAPI, function (data) {
-                var display = `Title: ${data.Title}<br> 
-                Released: ${data.Released}<br>
-                Ratings: [${data.Metascore / 10}, ${data.Ratings[1].Value.replace('%', '') / 10}, ${data.imdbRating}]<br>
-                IMDB_ID: ${data.imdbID}`
-                $(".display").html(display);
+
+            // let searchMovie = document.getElementById('movieSearch').value.split(' ').join('+'); // Movie Title Search
+            let searchMovie = document.getElementById('movieSearch').value; // Movie ID Search
+            var data, omdbAPI, searchIMDB;   
+
+            d3.csv(linksCSV)
+                    .then(function(data){
+                    let searchIMDB = data.filter(x => x.movieId === searchMovie).map(x => x.imdbId);
+                    alert(searchIMDB);
+                    omdbAPI = 'https://www.omdbapi.com/?i=tt' + searchIMDB + '&apikey=ba751858';
+                    alert(omdbAPI); 
+                
+                }
+            );
+
+            var Title, Released, Ratings, IMDB_ID;
+            
+             $.getJSON(omdbAPI, function (data) {
+                Title = data.Title;
+                Released = data.Released;
+                Ratings = [data.Metascore / 10, data.Ratings[1].Value.replace('%', '') / 10, data.imdbRating];
+                IMDB_ID = data.imdbID;
 
             });
+            
+            
+
+           
         }
 
+        
 
-        d3.csv(filename)
+        d3.csv(ratingsCSV)
             .then(makeChart);
+
         function makeChart(data) {
             var movieId = data.slice(0, 100).map(function (d) { return d.movieId });
             var rating = data.slice(0, 100).map(function (d) { return d.rating; });
             
 
             var lineChart = document.getElementById('lineChart').getContext('2d'),
-                barChart = document.getElementById('barChart').getContext('2d'),
+                histChart = document.getElementById('histChart').getContext('2d'),
                 pieChart = document.getElementById('pieChart').getContext('2d'),
                 doughnutChart = document.getElementById('doughnutChart').getContext('2d'),
                 radarChart = document.getElementById('radarChart').getContext('2d'),
                 bubbleChart = document.getElementById('bubbleChart').getContext('2d'),
                 multipleLineChart = document.getElementById('multipleLineChart').getContext('2d'),
-                multipleBarChart = document.getElementById('multipleBarChart').getContext('2d'),
+                // multipleBarChart = document.getElementById('multipleBarChart').getContext('2d'),
+                barChart = document.getElementById('barChart').getContext('2d');
                 htmlLegendsChart = document.getElementById('htmlLegendsChart').getContext('2d');
 
 
@@ -416,7 +437,7 @@
                 }
             });
 
-            var myBarChart = new Chart(barChart, {
+            var myHistChart = new Chart(histChart, {
                 type: 'bar',
                 data: {
                     labels: ["0", "1", "2", "3", "4", "5"],
@@ -489,29 +510,29 @@
                 }
             });
 
-            // var myBarChart = new Chart(barChart, {
-            // 		type: 'bar',
-            // 		data: {
-            // 			labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-            // 			datasets: [{
-            // 				label: "Sales",
-            // 				backgroundColor: 'rgb(23, 125, 255)',
-            // 				borderColor: 'rgb(23, 125, 255)',
-            // 				data: [3, 2, 9, 5, 4, 6, 4, 6, 7, 8, 7, 4],
-            // 			}],
-            // 		},
-            // 		options: {
-            // 			responsive: true,
-            // 			maintainAspectRatio: false,
-            // 			scales: {
-            // 				yAxes: [{
-            // 					ticks: {
-            // 						beginAtZero: true
-            // 					}
-            // 				}]
-            // 			},
-            // 		}
-            // 	});
+            var myBarChart = new Chart(barChart, {
+            		type: 'bar',
+            		data: {
+            			labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+            			datasets: [{
+            				label: "Sales",
+            				backgroundColor: 'rgb(23, 125, 255)',
+            				borderColor: 'rgb(23, 125, 255)',
+            				data: [3, 2, 9, 5, 4, 6, 4, 6, 7, 8, 7, 4],
+            			}],
+            		},
+            		options: {
+            			responsive: true,
+            			maintainAspectRatio: false,
+            			scales: {
+            				yAxes: [{
+            					ticks: {
+            						beginAtZero: true
+            					}
+            				}]
+            			},
+            		}
+            	});
 
             var myPieChart = new Chart(pieChart, {
                 type: 'pie',
@@ -716,52 +737,52 @@
                 }
             });
 
-            var myMultipleBarChart = new Chart(multipleBarChart, {
-                type: 'bar',
-                data: {
-                    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-                    datasets: [{
-                        label: "First time visitors",
-                        backgroundColor: '#59d05d',
-                        borderColor: '#59d05d',
-                        data: [95, 100, 112, 101, 144, 159, 178, 156, 188, 190, 210, 245],
-                    }, {
-                        label: "Visitors",
-                        backgroundColor: '#fdaf4b',
-                        borderColor: '#fdaf4b',
-                        data: [145, 256, 244, 233, 210, 279, 287, 253, 287, 299, 312, 356],
-                    }, {
-                        label: "Pageview",
-                        backgroundColor: '#177dff',
-                        borderColor: '#177dff',
-                        data: [185, 279, 273, 287, 234, 312, 322, 286, 301, 320, 346, 399],
-                    }],
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    legend: {
-                        position: 'bottom'
-                    },
-                    title: {
-                        display: true,
-                        text: 'Traffic Stats'
-                    },
-                    tooltips: {
-                        mode: 'index',
-                        intersect: false
-                    },
-                    responsive: true,
-                    scales: {
-                        xAxes: [{
-                            stacked: true,
-                        }],
-                        yAxes: [{
-                            stacked: true
-                        }]
-                    }
-                }
-            });
+            // var myMultipleBarChart = new Chart(multipleBarChart, {
+            //     type: 'bar',
+            //     data: {
+            //         labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+            //         datasets: [{
+            //             label: "First time visitors",
+            //             backgroundColor: '#59d05d',
+            //             borderColor: '#59d05d',
+            //             data: [95, 100, 112, 101, 144, 159, 178, 156, 188, 190, 210, 245],
+            //         }, {
+            //             label: "Visitors",
+            //             backgroundColor: '#fdaf4b',
+            //             borderColor: '#fdaf4b',
+            //             data: [145, 256, 244, 233, 210, 279, 287, 253, 287, 299, 312, 356],
+            //         }, {
+            //             label: "Pageview",
+            //             backgroundColor: '#177dff',
+            //             borderColor: '#177dff',
+            //             data: [185, 279, 273, 287, 234, 312, 322, 286, 301, 320, 346, 399],
+            //         }],
+            //     },
+            //     options: {
+            //         responsive: true,
+            //         maintainAspectRatio: false,
+            //         legend: {
+            //             position: 'bottom'
+            //         },
+            //         title: {
+            //             display: true,
+            //             text: 'Traffic Stats'
+            //         },
+            //         tooltips: {
+            //             mode: 'index',
+            //             intersect: false
+            //         },
+            //         responsive: true,
+            //         scales: {
+            //             xAxes: [{
+            //                 stacked: true,
+            //             }],
+            //             yAxes: [{
+            //                 stacked: true
+            //             }]
+            //         }
+            //     }
+            // });
 
             // Chart with HTML Legends
 
