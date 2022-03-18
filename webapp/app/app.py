@@ -2,6 +2,8 @@ from ast import Pass
 import requests
 from flask import Flask, render_template, request
 from flask_caching import Cache
+import html
+
 
 app = Flask(__name__)
 
@@ -24,11 +26,12 @@ def use_case_1():
 
     elif request.method == "POST":
         req = request.form
-        movieTitle = req.get("movieTitle")
+        movieTitle = sanitize(req.get("movieTitle"))
+
         genre = req.getlist("genre") 
         min_rating = req.get("min_rating")
         max_rating = req.get("max_rating")
-        tag = req.get("tags")
+        tag = sanitize(req.get("tags"))
         sort_by = req.get("sort_by") 
 
         # dummy data
@@ -121,6 +124,11 @@ def use_case_6():
 
 
     return render_template("use-case-6.html")
+
+def sanitize(data):
+    output = html.escape(data)
+    print("OUTPUT: "+output, flush=True)
+    return output
 
 if __name__ == '__main__':
     app.run(debug = True, port = 5001, host="0.0.0.0")
