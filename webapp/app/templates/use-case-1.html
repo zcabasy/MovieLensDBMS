@@ -77,106 +77,12 @@
         {% if genres %}
         <div name="genre" id="genre">
           <label for="genre">Genre</label>
-<<<<<<< HEAD
-
-          <div class="form-check col-sm">
-            <input class="form-check-input" type="checkbox" name="genre" value="Action" id="flexCheckDefault">
-            <label class="form-check-label" for="flexCheckDefault">
-              Action
-            </label>
-          </div>
-          <div class="form-check col-sm">
-            <input class="form-check-input" type="checkbox" name="genre" value="Adventure" id="flexCheckDefault">
-            <label class="form-check-label" for="flexCheckDefault">
-              Adventure
-            </label>
-          </div>
-
-          <div class="form-check col-sm">
-            <input class="form-check-input" type="checkbox" name="genre" value="Animation" id="flexCheckDefault">
-            <label class="form-check-label" for="flexCheckDefault">
-              Animation
-            </label>
-          </div>
-          <div class="form-check col-sm">
-            <input class="form-check-input" type="checkbox" name="genre" value="Children" id="flexCheckDefault">
-            <label class="form-check-label" for="flexCheckDefault">
-              Children
-            </label>
-          </div>
-
-          <div class="form-group row">
-
-          <div class="form-check col-sm">
-            <input class="form-check-input" type="checkbox" name="genre" value="Comedy" id="flexCheckDefault">
-            <label class="form-check-label" for="flexCheckDefault">
-              Comedy
-            </label>
-          </div>
-          <div class="form-check col-sm">
-            <input class="form-check-input" type="checkbox" name="genre" value="Crime" id="flexCheckDefault">
-            <label class="form-check-label" for="flexCheckDefault">
-              Crime
-            </label>
-          </div>
-
-          <div class="form-check col-sm">
-            <input class="form-check-input" type="checkbox" name="genre" value="Documentary" id="flexCheckDefault">
-            <label class="form-check-label" for="flexCheckDefault">
-              Documentary
-            </label>
-          </div>
-          <div class="form-check col-sm">
-            <input class="form-check-input" type="checkbox" name="genre" value="Drama" id="flexCheckDefault">
-            <label class="form-check-label" for="flexCheckDefault">
-              Drama
-            </label>
-          </div>
-
-          </div>
-          <div class="form-group row">
-
-          <div class="form-check col-sm">
-            <input class="form-check-input" type="checkbox" name="genre" value="Fantasy" id="flexCheckDefault">
-            <label class="form-check-label" for="flexCheckDefault">
-              Fantasy
-            </label>
-          </div>
-          <div class="form-check col-sm">
-            <input class="form-check-input" type="checkbox" name="genre" value="Film-Noir" id="flexCheckDefault">
-            <label class="form-check-label" for="flexCheckDefault">
-              Film-Noir
-            </label>
-          </div>
-
-          <div class="form-check col-sm">
-            <input class="form-check-input" type="checkbox" name="genre" value="Horror" id="flexCheckDefault">
-            <label class="form-check-label" for="flexCheckDefault">
-              Horror
-            </label>
-          </div>
-          <div class="form-check col-sm">
-            <input class="form-check-input" type="checkbox" name="genre" value="IMAX" id="flexCheckDefault">
-            <label class="form-check-label" for="flexCheckDefault">
-              IMAX
-            </label>
-          </div>
-
-        </div>
-        <div class="form-group row">
-
-          <div class="form-check col-sm">
-            <input class="form-check-input" type="checkbox" name="genre" value="Musical" id="flexCheckDefault">
-            <label class="form-check-label" for="flexCheckDefault">
-              Musical
-=======
           <ul style="list-style-type:none">
             {% for genre in genres %}
             <li>
             <input class="form-check-input" type="checkbox" name="genre" value="{{ genre }}" id="check{{ genre }}">
             <label class="form-check-label" for="check{{ genre }}">
             {{ genre }}
->>>>>>> 9bfce8833be8f4be89f1c0d3c73ca15435183902
             </label>
             </li>
             {% endfor %}
