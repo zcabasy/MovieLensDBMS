@@ -28,12 +28,12 @@ def use_case_1():
         genre = req.getlist("genre") 
         min_rating = req.get("min_rating")
         max_rating = req.get("max_rating")
-        tag = req.get("tag")
-        sort_by = req.get("sort_by") # value 1 - 4
+        tag = req.get("tags")
+        sort_by = req.get("sort_by") 
 
         # dummy data
-        movieTitle = "toy story 2"; genre = "adventure"; min_rating = 0;
-        max_rating = 5; tag = "animation"; sort_by = "title ASC"
+        # movieTitle = "toy story 2"; genre = "adventure"; min_rating = 0;
+        # max_rating = 5; tag = "animation"; sort_by = "title ASC";
         
         form_data = {'title': movieTitle, 
                     'genre': genre,
@@ -44,7 +44,7 @@ def use_case_1():
 
         response = requests.post('http://use-case-1:5002/', form_data)
         movies = response.json()['movies']
-
+        
     return render_template("use-case-1.html", movies=movies)
 
 
