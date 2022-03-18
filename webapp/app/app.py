@@ -129,7 +129,7 @@ def sanitize(data):
     output = html.escape(data)
 
     #blacklisted keys that could be used for sql injection
-    punc = '''-;\,%*_'''
+    punc = '''-;\%*_'''
     for ele in output:
         if ele in punc:
             output = output.replace(ele, "")
