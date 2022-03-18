@@ -25,7 +25,17 @@ def connect():
         except mariadb.Error as e:
             print(f"Error connecting to MariaDB Platform: {e}")
             sys.exit(1)
-        
+
+@use_case_1.route("/",  methods=["GET"])
+def get_genres():
+    conn = connect()
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM Genres")
+    genres = []
+    for row in cur:
+        genres.append(row[1].strip())
+    return {'genres': genres}
+
 @use_case_1.route("/",  methods=["POST"])
 def query_table():
     data = request.form
@@ -52,6 +62,7 @@ def query_table():
     
     conn = connect()
     cur = conn.cursor()
+    print('Executing')
     cur.execute("SELECT Movies.movieId, Movies.title, GROUP_CONCAT(DISTINCT Tags.tag), AVG(Ratings.rating), GROUP_CONCAT(DISTINCT Genres.genre) FROM Movies \
                 LEFT JOIN Tags ON Movies.movieId = Tags.movieId \
                 LEFT JOIN Ratings ON Movies.movieId = Ratings.movieId \
@@ -64,12 +75,18 @@ def query_table():
                 (rating BETWEEN %s AND %s) \
                 ORDER BY %s;", (title, tag, genre, rating_lower, rating_upper, sort_by))
     
-    # Parse response and package into something that can be returned e.g., JSON
-    response = ""
-    
+    movies = []
+    for row in cur:
+        movie = {
+            'movieId': row[0],
+            'title': row[1],
+            'tags': row[2].split(","),
+            'rating': row[3],
+            'genres': row[4].split(",")
+        }
+        movies.append(movie)
     conn.close()
-    
-    return response
+    return {'movies': movies}
 
 if __name__ == '__main__':
     use_case_1.run(debug = True, port = 5002, host="0.0.0.0")

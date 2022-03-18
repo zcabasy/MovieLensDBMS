@@ -16,9 +16,14 @@ cache.init_app(app)
 @app.route("/use-case-1.html",  methods=["GET", "POST"])
 # @cache.cached(timeout=300)
 def use_case_1():
-    if request.method == "POST":
+    if request.method == "GET":
+        response = requests.get("http://use-case-1:5002/")
+        print(response.json()['genres'])
+        genres = response.json()['genres']
+        return render_template("use-case-1.html", genres=genres)
+
+    elif request.method == "POST":
         req = request.form
-        
         movieTitle = req.get("movieTitle")
         genre = req.getlist("genre") 
         min_rating = req.get("min_rating")
@@ -27,12 +32,8 @@ def use_case_1():
         sort_by = req.get("sort_by") # value 1 - 4
 
         # dummy data
-        # movieTitle = "toy story 2"
-        # genre = "adventure"
-        # min_rating = 0
-        # max_rating = 5
-        # tag = "animation"
-        # sort_by = "title ASC"
+        movieTitle = "toy story 2"; genre = "adventure"; min_rating = 0;
+        max_rating = 5; tag = "animation"; sort_by = "title ASC"
         
         form_data = {'title': movieTitle, 
                     'genre': genre,
@@ -42,9 +43,9 @@ def use_case_1():
                     'sort_by': sort_by}
 
         response = requests.post('http://use-case-1:5002/', form_data)
-        #render response in web page
+        movies = response.json()['movies']
 
-    return render_template("use-case-1.html")
+    return render_template("use-case-1.html", movies=movies)
 
 
 @app.route("/use-case-2.html",  methods=["GET", "POST"])
