@@ -56,7 +56,7 @@ def use_case_2():
     if request.method == "POST":
         # req = request.form
 
-        # movieName = req.get("movieName")
+        # movieSearch = req.get("movieSearch")
 
         movieId = 1
         form_data = {'movieId': movieId}
