@@ -74,8 +74,9 @@ def query_table():
                 (genre LIKE %s) AND \
                 (rating BETWEEN %s AND %s) \
                 ORDER BY %s;", (title, tag, genre, rating_lower, rating_upper, sort_by))
-    
     movies = []
+    print(f"CURSOR: {list(cur)}")
+
     for row in cur:
         movie = {
             'movieId': row[0],
