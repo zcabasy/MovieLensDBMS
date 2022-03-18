@@ -23,7 +23,7 @@ def connect():
     # f = open("mysql-user-db1.txt")
     # pwd = f.read()
     # f.close()
-    pwd = "$B:-P,>9BYQQ95qBh:!Q9BE^qaB]ft'y"
+    pwd = "X1xJwU5ub1amEbzoVr6Ln3STx7lwfA4D"
 
     try:
         conn = mariadb.connect(
@@ -89,28 +89,31 @@ def person_traits_enjoy_and_personalized():
     
     conn = connect()
     cur = conn.cursor()
-    df = pd.DataFrame()
-    cur.execute("SELECT Personality.openness, \
-                Personality.agreeableness, Personality.emotional_stability, Personality.conscientiousness, Personality.extraversion, \
-                Metrics.metric, Conditions.Condition \
+    cur.execute("SELECT GROUP_CONCAT(Personality.openness), \
+                GROUP_CONCAT(Personality.agreeableness), GROUP_CONCAT(Personality.emotional_stability), GROUP_CONCAT(Personality.conscientiousness), GROUP_CONCAT(Personality.extraversion), \
+                GROUP_CONCAT(Metrics.metric), GROUP_CONCAT(Conditions.Condition) \
                 FROM Personality \
                 INNER JOIN `Personality-Predictions` ON `Personality-Predictions`.userId = Personality.userId \
                 INNER JOIN Metrics ON Metrics.metricId = Personality.`assigned metric` \
                 INNER JOIN Conditions ON Conditions.conditionId = Personality.`assigned condition` \
                 WHERE enjoy_watching >= 4 AND is_personalized >= 4;")
 
-    for row in cur:
-        openness = float(row[0])
-        agreeableness = float(row[1])
-        emotional_stability = float(row[2])
-        conscientiousness = float(row[3])
-        extraversion = float(row[4])
-        metric = row[5]
-        condition = row[6]
+    openness = []
+    agreeableness = []
+    emotional_stability = []
+    conscientiousness = []
+    extraversion = []
+    metric = []
+    condition = []
 
-        row = pd.Series([openness, agreeableness, emotional_stability, conscientiousness, extraversion, metric, condition])
-        row_df = pd.DataFrame([row])
-        df = pd.concat([df, row_df], ignore_index=True)
+    for row in cur:
+        openness = list(map(float, row[0].split(",")))
+        agreeableness = list(map(float, row[1].split(",")))
+        emotional_stability = list(map(float, row[2].split(",")))
+        conscientiousness = list(map(float, row[3].split(",")))
+        extraversion = list(map(float, row[4].split(",")))
+        metric = row[5].split(",")
+        condition = row[6].split(",")
     
     openness = np.median(openness)
     agreeableness = np.median(agreeableness)
@@ -221,6 +224,7 @@ def query():
     if cached_val != None:
         return cached_val
     
+    #Predicting avg rating based on subset of users
     if exists('nn.joblib'):
         nn = load('nn.joblib')
     else:
@@ -233,7 +237,12 @@ def query():
     predicted_avg = np.mean(y_pred)
     score = mean_absolute_error(y, y_pred)
 
-    return_val = [avg_rating, predicted_avg, score]
+    #Personality traits of users who enjoyed the movie the most
+    person_traits_most_enjoyed = person_traits_agg(movieId)
+    #Extra SQL Data Analysis
+    easy_to_predict_users_peron_traits = person_traits_enjoy_and_personalized()
+
+    return_val = [avg_rating, predicted_avg, score, person_traits_most_enjoyed, easy_to_predict_users_peron_traits]
     cache.set(movieId, return_val)
     return return_val
 

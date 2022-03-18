@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en" class="h-100">
-  <head>
+
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
@@ -10,779 +11,974 @@
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/cover/">
 
-    
+
 
 
     <!-- Bootstrap core CSS -->
 
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js" integrity="sha512-QSkVNOCYLtj73J4hbmVoOV6KVZuMluZlioC+trLpewV8qMjsWqlIQvkn1KGX2StWvPMdWGBqim1xlC8krl1EKQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
-	
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"
+        integrity="sha512-QSkVNOCYLtj73J4hbmVoOV6KVZuMluZlioC+trLpewV8qMjsWqlIQvkn1KGX2StWvPMdWGBqim1xlC8krl1EKQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
 
 
-<link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://kit.fontawesome.com/62896aab70.js" crossorigin="anonymous"></script>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+    <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/62896aab70.js" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
 
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-    
+
     <!-- Custom styles for this template -->
     <link href="../static/cover.css" rel="stylesheet">
-  </head>
-  <body class="d-flex h-100 text-center text-white bg-dark">
-    
-<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-  <header class="mb-auto">
-    <div>
-      <h3 class="float-md-start mb-0">Team 1</h3>
-      <nav class="nav nav-masthead justify-content-center float-md-end">
-        <a class="nav-link" href="./use-case-1.html">Case 1</a>
-        <a class="nav-link active" aria-current="page" href="./use-case-2.html">Case 2</a>
-        <a class="nav-link" href="./use-case-3.html">Case 3</a>
-        <a class="nav-link" href="./use-case-4.html">Case 4</a>
-        <a class="nav-link" href="./use-case-5.html">Case 5</a>
-        <a class="nav-link" href="./use-case-6.html">Case 6</a>
+</head>
+
+<body class="d-flex h-100 text-center text-white bg-dark">
+
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+        <header class="mb-auto">
+            <div>
+                <h3 class="float-md-start mb-0">Team 1</h3>
+                <nav class="nav nav-masthead justify-content-center float-md-end">
+                    <a class="nav-link" href="./use-case-1.html">Case 1</a>
+                    <a class="nav-link active" aria-current="page" href="./use-case-2.html">Case 2</a>
+                    <a class="nav-link" href="./use-case-3.html">Case 3</a>
+                    <a class="nav-link" href="./use-case-4.html">Case 4</a>
+                    <a class="nav-link" href="./use-case-5.html">Case 5</a>
+                    <a class="nav-link" href="./use-case-6.html">Case 6</a>
 
 
 
-      </nav>
+                </nav>
+            </div>
+        </header>
+
+
+        <h1>Case 2</h1>
+
+
+        <div class="row">
+            <div class="col">
+                <form action="" method="POST">
+                    <div class="input-group">
+                        <!-- <div class="form-outline"> -->
+                        <input type="search" id="movieName" name="movieName" class="form-control" />
+
+                        <!-- <label class="form-label" for="formOne">Search</label> -->
+                        <!-- </div> -->
+                        <button type="submit" id="submitBtn" name="submitBtn" class="btn btn-primary">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <div class="media mt-4">
+                    <div class="media-body">
+                        <h5 class="mt-0">Movie Name Here</h5>
+                        Viewer reactions described here, or as a list
+                        <ul>
+                            <li>Like this</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br>
+        <button onclick="saveAsPDF();">save as pdf</button>
+
+
+
+
+
+
+        <footer class="mt-auto text-white-50">
+        </footer>
     </div>
-  </header>
 
+    {% extends "layouts/base.html" %}
 
-      <h1>Case 2</h1>
- 
+    {% block title %} Charts {% endblock %}
 
-      <div class="row">
-        <div class="col">
-          <form action="#" method="POST">
-        <div class="input-group">
-          <!-- <div class="form-outline"> -->
-            <input type="search" id="movieName" name="movieName" class="form-control" />
-  
-            <!-- <label class="form-label" for="formOne">Search</label> -->
-          <!-- </div> -->
-          <button type="submit" class="btn btn-primary">
-            <i class="fas fa-search"></i>
-          </button>
+    <!-- Specific Page CSS goes HERE  -->
+    {% block stylesheets %}{% endblock stylesheets %}
+
+    {% block content %}
+
+    <!-- BoxPlot JS  -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="text/javascript"
+        src="https://unpkg.com/@sgratzl/chartjs-chart-boxplot@3.7.0/build/index.umd.min.js"> </script>
+
+    <div class="content">
+        <div class="page-inner">
+            <h4 class="page-title">Boxplot Report</h4>
+            <div class="page-category">Simple yet flexible charting based on the MovieLens dataset. Please checkout
+                their <a href="https://grouplens.org/datasets/movielens/" target="_blank">full documentation</a>.</div>
+            <div class="card-body">
+                <div class="chart-container">
+                    <canvas id="myChart"></canvas>
+                </div>
+            </div>
         </div>
-      </form>
-      </div>
-      </div>
+    </div>
 
-      <div class="row">
-        <div class="col">
-      <div class="media mt-4">
-        <div class="media-body">
-          <h5 class="mt-0">Movie Name Here</h5>
-          Viewer reactions described here, or as a list
-          <ul>
-            <li>Like this</li>
-          </ul>
-        </div>
-      </div>
-        </div>
-      </div>
+    <script>
 
-	  <br>
-	  <button class="btn btn-primary" onclick="saveAsPDF();">save as pdf</button>
+        const data = {
+            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            datasets: [{
+                label: 'Ticket Sales',
+                outlierColor: '#999999',
+                padding: 0,
+                itemRadius: 0,
+                data: [
+                    randomValues(100, 0, 100),
+                    randomValues(100, 0, 20),
+                    randomValues(100, 20, 70),
+                    randomValues(100, 60, 100),
+                    randomValues(40, 50, 100),
+                    randomValues(100, 60, 120),
+                    randomValues(100, 80, 100),
+                ],// data: [18, 12, 6, 9, 12, 3, 9],
 
+                backgroundColor:
+                    'rgba(255, 26, 104, 0.2)'
+                ,
+                borderColor:
+                    'rgba(255, 26, 104, 1)'
+                ,
+                borderWidth: 1
+            }]
+        };
 
-  
+        const config = {
+            type: 'boxplot',
+            data,
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        };
 
-
-
-  <footer class="mt-auto text-white-50">
-  </footer>
-</div>
-
-{% extends "layouts/base.html" %}
-
-{% block title %} Charts {% endblock %} 
-
-<!-- Specific Page CSS goes HERE  -->
-{% block stylesheets %}{% endblock stylesheets %}
-
-{% block content %}
-
-	<div class="content html-content" id="chart-container">
-		<div class="page-inner">
-			<h4 class="page-title">Film Report</h4>
-			<div class="page-category">Simple yet flexible charting based on the MovieLens dataset. Please checkout their <a href="https://grouplens.org/datasets/movielens/" target="_blank">full documentation</a>.</div>
-			<div class="row">
-				<div class="col-md-6">
-					<div class="card">
-						<div class="card-header">
-							<div class="card-title">Line Chart</div>
-						</div>
-						<div class="card-body">
-							<div class="chart-container">
-								<canvas id="lineChart"></canvas>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-6">
-					<div class="card">
-						<div class="card-header">
-							<div class="card-title">Bar Chart</div>
-						</div>
-						<div class="card-body">
-							<div class="chart-container">
-								<canvas id="barChart"></canvas>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-6">
-					<div class="card">
-						<div class="card-header">
-							<div class="card-title">Pie Chart</div>
-						</div>
-						<div class="card-body">
-							<div class="chart-container">
-								<canvas id="pieChart" style="width: 50%; height: 50%"></canvas>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-6">
-					<div class="card">
-						<div class="card-header">
-							<div class="card-title">Doughnut Chart</div>
-						</div>
-						<div class="card-body">
-							<div class="chart-container">
-								<canvas id="doughnutChart" style="width: 50%; height: 50%"></canvas>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-6">
-					<div class="card">
-						<div class="card-header">
-							<div class="card-title">Radar Chart</div>
-						</div>
-						<div class="card-body">
-							<div class="chart-container">
-								<canvas id="radarChart"></canvas>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-6">
-					<div class="card">
-						<div class="card-header">
-							<div class="card-title">Bubble Chart</div>
-						</div>
-						<div class="card-body">
-							<div class="chart-container">
-								<canvas id="bubbleChart"></canvas>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-6">
-					<div class="card">
-						<div class="card-header">
-							<div class="card-title">Multiple Line Chart</div>
-						</div>
-						<div class="card-body">
-							<div class="chart-container">
-								<canvas id="multipleLineChart"></canvas>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-6">
-					<div class="card">
-						<div class="card-header">
-							<div class="card-title">Multiple Bar Chart</div>
-						</div>
-						<div class="card-body">
-							<div class="chart-container">
-								<canvas id="multipleBarChart"></canvas>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-12">
-					<div class="card">
-						<div class="card-header">
-							<div class="card-title">Chart with HTML Legends</div>
-						</div>
-						<div class="card-body">
-							<div class="card-sub">
-								Sometimes you need a very complex legend. In these cases, it makes sense to generate an HTML legend. Charts provide a generateLegend() method on their prototype that returns an HTML string for the legend.
-							</div>
-							<div class="chart-container">
-								<canvas id="htmlLegendsChart"></canvas>
-							</div>
-							<div id="myChartLegend"></div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<br>
-
-
-
-{% endblock content %}
-
-<!-- Specific Page JS goes HERE  -->
-
-<!-- Page downloader js -->
-
-<script>
-	//Create PDf from HTML...
-
-
-
-</script>
-
-{% block javascripts %}
-
-	
-	<!-- Atlantis DEMO methods, don't include it in your project! -->
-	<script src="/static/assets/js/setting-demo2.js"></script>
-	<script>
-		
-		let filename = 'https://raw.githubusercontent.com/zcabasy/MovieLensDBMS/main/webapp/data/ratings.csv'
-		d3.csv(filename)
-				.then(makeChart);
-		function makeChart(data) {
-			var movieId = data.map(function (d) { return d.movieId });
-			var rating = data.map(function (d) { return d.rating; });
-
-		var lineChart = document.getElementById('lineChart').getContext('2d'),
-		barChart = document.getElementById('barChart').getContext('2d'),
-		pieChart = document.getElementById('pieChart').getContext('2d'),
-		doughnutChart = document.getElementById('doughnutChart').getContext('2d'),
-		radarChart = document.getElementById('radarChart').getContext('2d'),
-		bubbleChart = document.getElementById('bubbleChart').getContext('2d'),
-		multipleLineChart = document.getElementById('multipleLineChart').getContext('2d'),
-		multipleBarChart = document.getElementById('multipleBarChart').getContext('2d'),
-		htmlLegendsChart = document.getElementById('htmlLegendsChart').getContext('2d');
-		
-	
-		
-		var myLineChart = new Chart(lineChart, {
-				type: 'line',
-				data: {
-					labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-					datasets: [{
-						label: "Active Users",
-						borderColor: "#1d7af3",
-						pointBorderColor: "#FFF",
-						pointBackgroundColor: "#1d7af3",
-						pointBorderWidth: 2,
-						pointHoverRadius: 4,
-						pointHoverBorderWidth: 1,
-						pointRadius: 4,
-						backgroundColor: 'transparent',
-						fill: true,
-						borderWidth: 2,
-						data: [542, 480, 430, 550, 530, 453, 380, 434, 568, 610, 700, 900]
-					}]
-				},
-				options: {
-					responsive: true,
-					maintainAspectRatio: false,
-					legend: {
-						position: 'bottom',
-						labels: {
-							padding: 10,
-							fontColor: '#1d7af3',
-						}
-					},
-					tooltips: {
-						bodySpacing: 4,
-						mode: "nearest",
-						intersect: 0,
-						position: "nearest",
-						xPadding: 10,
-						yPadding: 10,
-						caretPadding: 10
-					},
-					layout: {
-						padding: { left: 15, right: 15, top: 15, bottom: 15 }
-					}
-				}
-			});
-
-		var myBarChart = new Chart(barChart, {
-			type: 'bar',
-			data: {
-				labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-				datasets : [{
-					label: "Sales",
-					backgroundColor: 'rgb(23, 125, 255)',
-					borderColor: 'rgb(23, 125, 255)',
-					data: [3, 2, 9, 5, 4, 6, 4, 6, 7, 8, 7, 4],
-				}],
-			},
-			options: {
-				responsive: true, 
-				maintainAspectRatio: false,
-				scales: {
-					yAxes: [{
-						ticks: {
-							beginAtZero:true
-						}
-					}]
-				},
-			}
-		});
-
-		var myPieChart = new Chart(pieChart, {
-			type: 'pie',
-			data: {
-				datasets: [{
-					data: [50, 35, 15],
-					backgroundColor :["#1d7af3","#f3545d","#fdaf4b"],
-					borderWidth: 0
-				}],
-				labels: ['New Visitors', 'Subscribers', 'Active Users'] 
-			},
-			options : {
-				responsive: true, 
-				maintainAspectRatio: false,
-				legend: {
-					position : 'bottom',
-					labels : {
-						fontColor: 'rgb(154, 154, 154)',
-						fontSize: 11,
-						usePointStyle : true,
-						padding: 20
-					}
-				},
-				pieceLabel: {
-					render: 'percentage',
-					fontColor: 'white',
-					fontSize: 14,
-				},
-				tooltips: false,
-				layout: {
-					padding: {
-						left: 20,
-						right: 20,
-						top: 20,
-						bottom: 20
-					}
-				}
-			}
-		})
-
-		var myDoughnutChart = new Chart(doughnutChart, {
-			type: 'doughnut',
-			data: {
-				datasets: [{
-					data: [10, 20, 30],
-					backgroundColor: ['#f3545d','#fdaf4b','#1d7af3']
-				}],
-
-				labels: [
-				'Red',
-				'Yellow',
-				'Blue'
-				]
-			},
-			options: {
-				responsive: true, 
-				maintainAspectRatio: false,
-				legend : {
-					position: 'bottom'
-				},
-				layout: {
-					padding: {
-						left: 20,
-						right: 20,
-						top: 20,
-						bottom: 20
-					}
-				}
-			}
-		});
-
-		var myRadarChart = new Chart(radarChart, {
-			type: 'radar',
-			data: {
-				labels: ['Running', 'Swimming', 'Eating', 'Cycling', 'Jumping'],
-				datasets: [{
-					data: [20, 10, 30, 2, 30],
-					borderColor: '#1d7af3',
-					backgroundColor : 'rgba(29, 122, 243, 0.25)',
-					pointBackgroundColor: "#1d7af3",
-					pointHoverRadius: 4,
-					pointRadius: 3,
-					label: 'Team 1'
-				}, {
-					data: [10, 20, 15, 30, 22],
-					borderColor: '#716aca',
-					backgroundColor: 'rgba(113, 106, 202, 0.25)',
-					pointBackgroundColor: "#716aca",
-					pointHoverRadius: 4,
-					pointRadius: 3,
-					label: 'Team 2'
-				},
-				]
-			},
-			options : {
-				responsive: true, 
-				maintainAspectRatio: false,
-				legend : {
-					position: 'bottom'
-				}
-			}
-		});
-
-		var myBubbleChart = new Chart(bubbleChart,{
-			type: 'bubble',
-			data: {
-				datasets:[{
-					label: "Car", 
-					data:[{x:25,y:17,r:25},{x:30,y:25,r:28}, {x:35,y:30,r:8}], 
-					backgroundColor:"#716aca"
-				},
-				{
-					label: "Motorcycles", 
-					data:[{x:10,y:17,r:20},{x:30,y:10,r:7}, {x:35,y:20,r:10}], 
-					backgroundColor:"#1d7af3"
-				}],
-			},
-			options: {
-				responsive: true, 
-				maintainAspectRatio: false,
-				legend: {
-					position: 'bottom'
-				},
-				scales: {
-					yAxes: [{
-						ticks: {
-							beginAtZero:true
-						}
-					}],
-					xAxes: [{
-						ticks: {
-							beginAtZero:true
-						}
-					}]
-				},
-			}
-		});
-
-		var myMultipleLineChart = new Chart(multipleLineChart, {
-			type: 'line',
-			data: {
-				labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-				datasets: [{
-					label: "Python",
-					borderColor: "#1d7af3",
-					pointBorderColor: "#FFF",
-					pointBackgroundColor: "#1d7af3",
-					pointBorderWidth: 2,
-					pointHoverRadius: 4,
-					pointHoverBorderWidth: 1,
-					pointRadius: 4,
-					backgroundColor: 'transparent',
-					fill: true,
-					borderWidth: 2,
-					data: [30, 45, 45, 68, 69, 90, 100, 158, 177, 200, 245, 256]
-				},{
-					label: "PHP",
-					borderColor: "#59d05d",
-					pointBorderColor: "#FFF",
-					pointBackgroundColor: "#59d05d",
-					pointBorderWidth: 2,
-					pointHoverRadius: 4,
-					pointHoverBorderWidth: 1,
-					pointRadius: 4,
-					backgroundColor: 'transparent',
-					fill: true,
-					borderWidth: 2,
-					data: [10, 20, 55, 75, 80, 48, 59, 55, 23, 107, 60, 87]
-				}, {
-					label: "Ruby",
-					borderColor: "#f3545d",
-					pointBorderColor: "#FFF",
-					pointBackgroundColor: "#f3545d",
-					pointBorderWidth: 2,
-					pointHoverRadius: 4,
-					pointHoverBorderWidth: 1,
-					pointRadius: 4,
-					backgroundColor: 'transparent',
-					fill: true,
-					borderWidth: 2,
-					data: [10, 30, 58, 79, 90, 105, 117, 160, 185, 210, 185, 194]
-				}]
-			},
-			options : {
-				responsive: true, 
-				maintainAspectRatio: false,
-				legend: {
-					position: 'top',
-				},
-				tooltips: {
-					bodySpacing: 4,
-					mode:"nearest",
-					intersect: 0,
-					position:"nearest",
-					xPadding:10,
-					yPadding:10,
-					caretPadding:10
-				},
-				layout:{
-					padding:{left:15,right:15,top:15,bottom:15}
-				}
-			}
-		});
-
-		var myMultipleBarChart = new Chart(multipleBarChart, {
-			type: 'bar',
-			data: {
-				labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-				datasets : [{
-					label: "First time visitors",
-					backgroundColor: '#59d05d',
-					borderColor: '#59d05d',
-					data: [95, 100, 112, 101, 144, 159, 178, 156, 188, 190, 210, 245],
-				},{
-					label: "Visitors",
-					backgroundColor: '#fdaf4b',
-					borderColor: '#fdaf4b',
-					data: [145, 256, 244, 233, 210, 279, 287, 253, 287, 299, 312,356],
-				}, {
-					label: "Pageview",
-					backgroundColor: '#177dff',
-					borderColor: '#177dff',
-					data: [185, 279, 273, 287, 234, 312, 322, 286, 301, 320, 346, 399],
-				}],
-			},
-			options: {
-				responsive: true, 
-				maintainAspectRatio: false,
-				legend: {
-					position : 'bottom'
-				},
-				title: {
-					display: true,
-					text: 'Traffic Stats'
-				},
-				tooltips: {
-					mode: 'index',
-					intersect: false
-				},
-				responsive: true,
-				scales: {
-					xAxes: [{
-						stacked: true,
-					}],
-					yAxes: [{
-						stacked: true
-					}]
-				}
-			}
-		});
-
-		// Chart with HTML Legends
-
-		var gradientStroke = htmlLegendsChart.createLinearGradient(500, 0, 100, 0);
-		gradientStroke.addColorStop(0, '#177dff');
-		gradientStroke.addColorStop(1, '#80b6f4');
-
-		var gradientFill = htmlLegendsChart.createLinearGradient(500, 0, 100, 0);
-		gradientFill.addColorStop(0, "rgba(23, 125, 255, 0.7)");
-		gradientFill.addColorStop(1, "rgba(128, 182, 244, 0.3)");
-
-		var gradientStroke2 = htmlLegendsChart.createLinearGradient(500, 0, 100, 0);
-		gradientStroke2.addColorStop(0, '#f3545d');
-		gradientStroke2.addColorStop(1, '#ff8990');
-
-		var gradientFill2 = htmlLegendsChart.createLinearGradient(500, 0, 100, 0);
-		gradientFill2.addColorStop(0, "rgba(243, 84, 93, 0.7)");
-		gradientFill2.addColorStop(1, "rgba(255, 137, 144, 0.3)");
-
-		var gradientStroke3 = htmlLegendsChart.createLinearGradient(500, 0, 100, 0);
-		gradientStroke3.addColorStop(0, '#fdaf4b');
-		gradientStroke3.addColorStop(1, '#ffc478');
-
-		var gradientFill3 = htmlLegendsChart.createLinearGradient(500, 0, 100, 0);
-		gradientFill3.addColorStop(0, "rgba(253, 175, 75, 0.7)");
-		gradientFill3.addColorStop(1, "rgba(255, 196, 120, 0.3)");
-
-		var myHtmlLegendsChart = new Chart(htmlLegendsChart, {
-			type: 'line',
-			data: {
-				labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-				datasets: [ {
-					label: "Subscribers",
-					borderColor: gradientStroke2,
-					pointBackgroundColor: gradientStroke2,
-					pointRadius: 0,
-					backgroundColor: gradientFill2,
-					legendColor: '#f3545d',
-					fill: true,
-					borderWidth: 1,
-					data: [154, 184, 175, 203, 210, 231, 240, 278, 252, 312, 320, 374]
-				}, {
-					label: "New Visitors",
-					borderColor: gradientStroke3,
-					pointBackgroundColor: gradientStroke3,
-					pointRadius: 0,
-					backgroundColor: gradientFill3,
-					legendColor: '#fdaf4b',
-					fill: true,
-					borderWidth: 1,
-					data: [256, 230, 245, 287, 240, 250, 230, 295, 331, 431, 456, 521]
-				}, {
-					label: "Active Users",
-					borderColor: gradientStroke,
-					pointBackgroundColor: gradientStroke,
-					pointRadius: 0,
-					backgroundColor: gradientFill,
-					legendColor: '#177dff',
-					fill: true,
-					borderWidth: 1,
-					data: [542, 480, 430, 550, 530, 453, 380, 434, 568, 610, 700, 900]
-				}]
-			},
-			options : {
-				responsive: true, 
-				maintainAspectRatio: false,
-				legend: {
-					display: false
-				},
-				tooltips: {
-					bodySpacing: 4,
-					mode:"nearest",
-					intersect: 0,
-					position:"nearest",
-					xPadding:10,
-					yPadding:10,
-					caretPadding:10
-				},
-				layout:{
-					padding:{left:15,right:15,top:15,bottom:15}
-				},
-				scales: {
-					yAxes: [{
-						ticks: {
-							fontColor: "rgba(0,0,0,0.5)",
-							fontStyle: "500",
-							beginAtZero: false,
-							maxTicksLimit: 5,
-							padding: 20
-						},
-						gridLines: {
-							drawTicks: false,
-							display: false
-						}
-					}],
-					xAxes: [{
-						gridLines: {
-							zeroLineColor: "transparent"
-						},
-						ticks: {
-							padding: 20,
-							fontColor: "rgba(0,0,0,0.5)",
-							fontStyle: "500"
-						}
-					}]
-				}, 
-				legendCallback: function(chart) { 
-					var text = []; 
-					text.push('<ul class="' + chart.id + '-legend html-legend">'); 
-					for (var i = 0; i < chart.data.datasets.length; i++) { 
-						text.push('<li><span style="background-color:' + chart.data.datasets[i].legendColor + '"></span>'); 
-						if (chart.data.datasets[i].label) { 
-							text.push(chart.data.datasets[i].label); 
-						} 
-						text.push('</li>'); 
-					} 
-					text.push('</ul>'); 
-					return text.join(''); 
-				}  
-			}
-		});
-
-		var myLegendContainer = document.getElementById("myChartLegend");
-
-		// generate HTML legend
-		myLegendContainer.innerHTML = myHtmlLegendsChart.generateLegend();
-
-		// bind onClick event to all LI-tags of the legend
-		var legendItems = myLegendContainer.getElementsByTagName('li');
-		for (var i = 0; i < legendItems.length; i += 1) {
-			legendItems[i].addEventListener("click", legendClickCallback, false);
-		}
-	}
-
-// 	function CreatePDFfromHTML() {
-//     var HTML_Width = $(".html-content").width();
-//     var HTML_Height = $(".html-content").height();
-//     var top_left_margin = 15;
-//     var PDF_Width = HTML_Width + (top_left_margin * 2);
-//     var PDF_Height = (PDF_Width * 1.5) + (top_left_margin * 2);
-//     var canvas_image_width = HTML_Width;
-//     var canvas_image_height = HTML_Height;
-
-//     var totalPDFPages = Math.ceil(HTML_Height / PDF_Height) - 1;
-
-//     html2canvas($(".html-content")[0]).then(function (canvas) {
-//         var imgData = canvas.toDataURL("image/jpeg", 1.0);
-//         var pdf = new jsPDF('p', 'pt', [PDF_Width, PDF_Height]);
-//         pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin, canvas_image_width, canvas_image_height);
-//         for (var i = 1; i <= totalPDFPages; i++) { 
-//             pdf.addPage(PDF_Width, PDF_Height);
-//             pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height*i)+(top_left_margin*4),canvas_image_width,canvas_image_height);
-//         }
-//         pdf.save("Your_PDF_Name.pdf");
-//         $(".html-content").hide();
-//     });
-
-// }
-
-
-function saveAsPDF() {
-
-	var HTML_Width = $(".html-content").width();
-    var HTML_Height = $(".html-content").height();
-    var top_left_margin = 15;
-    var PDF_Width = HTML_Width + (top_left_margin * 2);
-    var PDF_Height = (PDF_Width * 1.5) + (top_left_margin * 2);
-    var canvas_image_width = HTML_Width;
-    var canvas_image_height = HTML_Height;
-
-    var totalPDFPages = Math.ceil(HTML_Height / PDF_Height) - 1;
-
-   html2canvas(document.getElementById("chart-container"), {
-      onrendered: function(canvas) {
-         var img = canvas.toDataURL("image/jpeg", 1.0); //image data of canvas
-         var doc = new jsPDF('p', 'pt', [PDF_Width, PDF_Height]);
-         doc.addImage(img, 'JPG', top_left_margin, top_left_margin, canvas_image_width, canvas_image_height);
-		 for (var i = 1; i <= totalPDFPages; i++) { 
-			doc.addPage(PDF_Width, PDF_Height);
-            doc.addImage(img, 'JPG', top_left_margin, -(PDF_Height*i)+(top_left_margin*4),canvas_image_width,canvas_image_height);
+        function randomValues(count, min, max) {
+            const delta = max - min;
+            return Array.from({ length: count }).map(() => Math.random() * delta + min);
         }
-         doc.save('report.pdf');
-      }
-   });
-}
+
+
+        const myChart = new Chart(
+            document.getElementById('myChart'),
+            config
+        );
+    </script>
+
+
+    <div class="content html-content" id="chart-container">
+        <div class="page-inner">
+            <h4 class="page-title">Film Report</h4>
+            <h4 class="page-title">Other aggregated findings</h4>
+            <div class="page-category">Our team generated additional charts based on user and clsasmate profile reviews.
+                Do let us know if
+                they are of any use.</a></div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Line Chart</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-container">
+                                <canvas id="lineChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Histogram Chart</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-container">
+                                <canvas id="barChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Pie Chart</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-container">
+                                <canvas id="pieChart" style="width: 50%; height: 50%"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Doughnut Chart</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-container">
+                                <canvas id="doughnutChart" style="width: 50%; height: 50%"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Radar Chart</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-container">
+                                <canvas id="radarChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Bubble Chart</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-container">
+                                <canvas id="bubbleChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Multiple Line Chart</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-container">
+                                <canvas id="multipleLineChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Multiple Bar Chart</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-container">
+                                <canvas id="multipleBarChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Chart with HTML Legends</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-sub">
+                                Sometimes you need a very complex legend. In these cases, it makes sense to generate an
+                                HTML legend. Charts provide a generateLegend() method on their prototype that returns an
+                                HTML string for the legend.
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="htmlLegendsChart"></canvas>
+                            </div>
+                            <div id="myChartLegend"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br>
 
 
 
+    {% endblock content %}
 
-	</script>
+    <!-- Specific Page JS goes HERE  -->
 
-{% endblock javascripts %}
+    <!-- Page downloader js -->
 
+    {% block javascripts %}
+
+
+    <!-- Atlantis DEMO methods, don't include it in your project! -->
+    <script src="/static/assets/js/setting-demo2.js"></script>
     
-  </body>
+    <script>
+
+        let filename = 'https://raw.githubusercontent.com/zcabasy/MovieLensDBMS/main/webapp/data/ratings.csv'
+        
+        let submit = document.getElementById('submitBtn').addEventListener('click', search);
+
+        async function search() {
+            let movieSearch = document.getElementById('movieName').value.split(' ').join('+');
+            let omdbAPI = 'https://www.omdbapi.com/?t=' + movieSearch + '/&apikey=ba751858';
+            alert(omdbAPI);
+            $.getJSON(omdbAPI, function (data) {
+                var display = `Title: ${data.Title}<br> 
+                Released: ${data.Released}<br>
+                Ratings: [${data.Metascore / 10}, ${data.Ratings[1].Value.replace('%', '') / 10}, ${data.imdbRating}]<br>
+                IMDB_ID: ${data.imdbID}`
+                $(".display").html(display);
+
+            });
+        }
+
+
+        d3.csv(filename)
+            .then(makeChart);
+        function makeChart(data) {
+            var movieId = data.slice(0, 100).map(function (d) { return d.movieId });
+            var rating = data.slice(0, 100).map(function (d) { return d.rating; });
+            
+
+            var lineChart = document.getElementById('lineChart').getContext('2d'),
+                barChart = document.getElementById('barChart').getContext('2d'),
+                pieChart = document.getElementById('pieChart').getContext('2d'),
+                doughnutChart = document.getElementById('doughnutChart').getContext('2d'),
+                radarChart = document.getElementById('radarChart').getContext('2d'),
+                bubbleChart = document.getElementById('bubbleChart').getContext('2d'),
+                multipleLineChart = document.getElementById('multipleLineChart').getContext('2d'),
+                multipleBarChart = document.getElementById('multipleBarChart').getContext('2d'),
+                htmlLegendsChart = document.getElementById('htmlLegendsChart').getContext('2d');
+
+
+
+            var myLineChart = new Chart(lineChart, {
+                type: 'line',
+                data: {
+                    // labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                    labels: movieId,
+                    datasets: [{
+                        label: "Individual Ratings",
+                        borderColor: "#1d7af3",
+                        pointBorderColor: "#FFF",
+                        pointBackgroundColor: "#1d7af3",
+                        pointBorderWidth: 2,
+                        pointHoverRadius: 4,
+                        pointHoverBorderWidth: 1,
+                        pointRadius: 4,
+                        backgroundColor: 'transparent',
+                        fill: true,
+                        borderWidth: 2,
+                        // data: [542, 480, 430, 550, 530, 453, 380, 434, 568, 610, 700, 900]
+                        data: rating
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            padding: 10,
+                            fontColor: '#1d7af3',
+                        }
+                    },
+                    tooltips: {
+                        bodySpacing: 4,
+                        mode: "nearest",
+                        intersect: 0,
+                        position: "nearest",
+                        xPadding: 10,
+                        yPadding: 10,
+                        caretPadding: 10
+                    },
+                    layout: {
+                        padding: { left: 15, right: 15, top: 15, bottom: 15 }
+                    }
+                }
+            });
+
+            var myBarChart = new Chart(barChart, {
+                type: 'bar',
+                data: {
+                    labels: ["0", "1", "2", "3", "4", "5"],
+                    datasets: [{
+                        label: "Sales",
+                        backgroundColor: 'rgb(23, 125, 255)',
+                        borderColor: 'rgb(23, 125, 255)',
+                        borderRadius: 5,
+                        data: [
+                            { x: 0.5, y: 45 },
+                            { x: 1.5, y: 50 },
+                            { x: 2.5, y: 10 },
+                            { x: 3.5, y: 20 },
+                            { x: 4.5, y: 30 },
+                            { x: 5.5, y: 5 },
+                        ],
+
+                    }],
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        xAxes: [{
+                            display: false,
+                            barPercentage: 1.3,
+                            ticks: {
+                                max: 4,
+                            },
+                            title: {
+                                display: true,
+                                text: 'Ratings'
+                            }
+                        }, {
+                            display: true,
+                            ticks: {
+                                autoSkip: false,
+                                max: 5,
+                            }
+                        }],
+                        yAxes: [{
+                            title: {
+                                display: true,
+                                text: 'Frequency'
+                            },
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                title: (items) => {
+                                    if (!items.length) {
+                                        return '';
+                                    }
+                                    const item = items[0];
+                                    const x = item.parsed.x;
+                                    const min = x - 1;
+                                    const max = x + 1;
+                                    return `Ratings: ${min} - ${max}`;
+                                }
+                            }
+                        }
+                    },
+                }
+            });
+
+            // var myBarChart = new Chart(barChart, {
+            // 		type: 'bar',
+            // 		data: {
+            // 			labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+            // 			datasets: [{
+            // 				label: "Sales",
+            // 				backgroundColor: 'rgb(23, 125, 255)',
+            // 				borderColor: 'rgb(23, 125, 255)',
+            // 				data: [3, 2, 9, 5, 4, 6, 4, 6, 7, 8, 7, 4],
+            // 			}],
+            // 		},
+            // 		options: {
+            // 			responsive: true,
+            // 			maintainAspectRatio: false,
+            // 			scales: {
+            // 				yAxes: [{
+            // 					ticks: {
+            // 						beginAtZero: true
+            // 					}
+            // 				}]
+            // 			},
+            // 		}
+            // 	});
+
+            var myPieChart = new Chart(pieChart, {
+                type: 'pie',
+                data: {
+                    datasets: [{
+                        data: [50, 35, 15],
+                        backgroundColor: ["#1d7af3", "#f3545d", "#fdaf4b"],
+                        borderWidth: 0
+                    }],
+                    labels: ['New Visitors', 'Subscribers', 'Active Users']
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            fontColor: 'rgb(154, 154, 154)',
+                            fontSize: 11,
+                            usePointStyle: true,
+                            padding: 20
+                        }
+                    },
+                    pieceLabel: {
+                        render: 'percentage',
+                        fontColor: 'white',
+                        fontSize: 14,
+                    },
+                    tooltips: false,
+                    layout: {
+                        padding: {
+                            left: 20,
+                            right: 20,
+                            top: 20,
+                            bottom: 20
+                        }
+                    }
+                }
+            })
+
+            var myDoughnutChart = new Chart(doughnutChart, {
+                type: 'doughnut',
+                data: {
+                    datasets: [{
+                        data: [10, 20, 30],
+                        backgroundColor: ['#f3545d', '#fdaf4b', '#1d7af3']
+                    }],
+
+                    labels: [
+                        'Red',
+                        'Yellow',
+                        'Blue'
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    legend: {
+                        position: 'bottom'
+                    },
+                    layout: {
+                        padding: {
+                            left: 20,
+                            right: 20,
+                            top: 20,
+                            bottom: 20
+                        }
+                    }
+                }
+            });
+
+            var myRadarChart = new Chart(radarChart, {
+                type: 'radar',
+                data: {
+                    labels: ['Running', 'Swimming', 'Eating', 'Cycling', 'Jumping'],
+                    datasets: [{
+                        data: [20, 10, 30, 2, 30],
+                        borderColor: '#1d7af3',
+                        backgroundColor: 'rgba(29, 122, 243, 0.25)',
+                        pointBackgroundColor: "#1d7af3",
+                        pointHoverRadius: 4,
+                        pointRadius: 3,
+                        label: 'Team 1'
+                    }, {
+                        data: [10, 20, 15, 30, 22],
+                        borderColor: '#716aca',
+                        backgroundColor: 'rgba(113, 106, 202, 0.25)',
+                        pointBackgroundColor: "#716aca",
+                        pointHoverRadius: 4,
+                        pointRadius: 3,
+                        label: 'Team 2'
+                    },
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            });
+
+            var myBubbleChart = new Chart(bubbleChart, {
+                type: 'bubble',
+                data: {
+                    datasets: [{
+                        label: "Car",
+                        data: [{ x: 25, y: 17, r: 25 }, { x: 30, y: 25, r: 28 }, { x: 35, y: 30, r: 8 }],
+                        backgroundColor: "#716aca"
+                    },
+                    {
+                        label: "Motorcycles",
+                        data: [{ x: 10, y: 17, r: 20 }, { x: 30, y: 10, r: 7 }, { x: 35, y: 20, r: 10 }],
+                        backgroundColor: "#1d7af3"
+                    }],
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    legend: {
+                        position: 'bottom'
+                    },
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }],
+                        xAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    },
+                }
+            });
+
+            var myMultipleLineChart = new Chart(multipleLineChart, {
+                type: 'line',
+                data: {
+                    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                    datasets: [{
+                        label: "Python",
+                        borderColor: "#1d7af3",
+                        pointBorderColor: "#FFF",
+                        pointBackgroundColor: "#1d7af3",
+                        pointBorderWidth: 2,
+                        pointHoverRadius: 4,
+                        pointHoverBorderWidth: 1,
+                        pointRadius: 4,
+                        backgroundColor: 'transparent',
+                        fill: true,
+                        borderWidth: 2,
+                        data: [30, 45, 45, 68, 69, 90, 100, 158, 177, 200, 245, 256]
+                    }, {
+                        label: "PHP",
+                        borderColor: "#59d05d",
+                        pointBorderColor: "#FFF",
+                        pointBackgroundColor: "#59d05d",
+                        pointBorderWidth: 2,
+                        pointHoverRadius: 4,
+                        pointHoverBorderWidth: 1,
+                        pointRadius: 4,
+                        backgroundColor: 'transparent',
+                        fill: true,
+                        borderWidth: 2,
+                        data: [10, 20, 55, 75, 80, 48, 59, 55, 23, 107, 60, 87]
+                    }, {
+                        label: "Ruby",
+                        borderColor: "#f3545d",
+                        pointBorderColor: "#FFF",
+                        pointBackgroundColor: "#f3545d",
+                        pointBorderWidth: 2,
+                        pointHoverRadius: 4,
+                        pointHoverBorderWidth: 1,
+                        pointRadius: 4,
+                        backgroundColor: 'transparent',
+                        fill: true,
+                        borderWidth: 2,
+                        data: [10, 30, 58, 79, 90, 105, 117, 160, 185, 210, 185, 194]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltips: {
+                        bodySpacing: 4,
+                        mode: "nearest",
+                        intersect: 0,
+                        position: "nearest",
+                        xPadding: 10,
+                        yPadding: 10,
+                        caretPadding: 10
+                    },
+                    layout: {
+                        padding: { left: 15, right: 15, top: 15, bottom: 15 }
+                    }
+                }
+            });
+
+            var myMultipleBarChart = new Chart(multipleBarChart, {
+                type: 'bar',
+                data: {
+                    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                    datasets: [{
+                        label: "First time visitors",
+                        backgroundColor: '#59d05d',
+                        borderColor: '#59d05d',
+                        data: [95, 100, 112, 101, 144, 159, 178, 156, 188, 190, 210, 245],
+                    }, {
+                        label: "Visitors",
+                        backgroundColor: '#fdaf4b',
+                        borderColor: '#fdaf4b',
+                        data: [145, 256, 244, 233, 210, 279, 287, 253, 287, 299, 312, 356],
+                    }, {
+                        label: "Pageview",
+                        backgroundColor: '#177dff',
+                        borderColor: '#177dff',
+                        data: [185, 279, 273, 287, 234, 312, 322, 286, 301, 320, 346, 399],
+                    }],
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    legend: {
+                        position: 'bottom'
+                    },
+                    title: {
+                        display: true,
+                        text: 'Traffic Stats'
+                    },
+                    tooltips: {
+                        mode: 'index',
+                        intersect: false
+                    },
+                    responsive: true,
+                    scales: {
+                        xAxes: [{
+                            stacked: true,
+                        }],
+                        yAxes: [{
+                            stacked: true
+                        }]
+                    }
+                }
+            });
+
+            // Chart with HTML Legends
+
+            var gradientStroke = htmlLegendsChart.createLinearGradient(500, 0, 100, 0);
+            gradientStroke.addColorStop(0, '#177dff');
+            gradientStroke.addColorStop(1, '#80b6f4');
+
+            var gradientFill = htmlLegendsChart.createLinearGradient(500, 0, 100, 0);
+            gradientFill.addColorStop(0, "rgba(23, 125, 255, 0.7)");
+            gradientFill.addColorStop(1, "rgba(128, 182, 244, 0.3)");
+
+            var gradientStroke2 = htmlLegendsChart.createLinearGradient(500, 0, 100, 0);
+            gradientStroke2.addColorStop(0, '#f3545d');
+            gradientStroke2.addColorStop(1, '#ff8990');
+
+            var gradientFill2 = htmlLegendsChart.createLinearGradient(500, 0, 100, 0);
+            gradientFill2.addColorStop(0, "rgba(243, 84, 93, 0.7)");
+            gradientFill2.addColorStop(1, "rgba(255, 137, 144, 0.3)");
+
+            var gradientStroke3 = htmlLegendsChart.createLinearGradient(500, 0, 100, 0);
+            gradientStroke3.addColorStop(0, '#fdaf4b');
+            gradientStroke3.addColorStop(1, '#ffc478');
+
+            var gradientFill3 = htmlLegendsChart.createLinearGradient(500, 0, 100, 0);
+            gradientFill3.addColorStop(0, "rgba(253, 175, 75, 0.7)");
+            gradientFill3.addColorStop(1, "rgba(255, 196, 120, 0.3)");
+
+            var myHtmlLegendsChart = new Chart(htmlLegendsChart, {
+                type: 'line',
+                data: {
+                    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                    datasets: [{
+                        label: "Subscribers",
+                        borderColor: gradientStroke2,
+                        pointBackgroundColor: gradientStroke2,
+                        pointRadius: 0,
+                        backgroundColor: gradientFill2,
+                        legendColor: '#f3545d',
+                        fill: true,
+                        borderWidth: 1,
+                        data: [154, 184, 175, 203, 210, 231, 240, 278, 252, 312, 320, 374]
+                    }, {
+                        label: "New Visitors",
+                        borderColor: gradientStroke3,
+                        pointBackgroundColor: gradientStroke3,
+                        pointRadius: 0,
+                        backgroundColor: gradientFill3,
+                        legendColor: '#fdaf4b',
+                        fill: true,
+                        borderWidth: 1,
+                        data: [256, 230, 245, 287, 240, 250, 230, 295, 331, 431, 456, 521]
+                    }, {
+                        label: "Active Users",
+                        borderColor: gradientStroke,
+                        pointBackgroundColor: gradientStroke,
+                        pointRadius: 0,
+                        backgroundColor: gradientFill,
+                        legendColor: '#177dff',
+                        fill: true,
+                        borderWidth: 1,
+                        data: [542, 480, 430, 550, 530, 453, 380, 434, 568, 610, 700, 900]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    legend: {
+                        display: false
+                    },
+                    tooltips: {
+                        bodySpacing: 4,
+                        mode: "nearest",
+                        intersect: 0,
+                        position: "nearest",
+                        xPadding: 10,
+                        yPadding: 10,
+                        caretPadding: 10
+                    },
+                    layout: {
+                        padding: { left: 15, right: 15, top: 15, bottom: 15 }
+                    },
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                fontColor: "rgba(0,0,0,0.5)",
+                                fontStyle: "500",
+                                beginAtZero: false,
+                                maxTicksLimit: 5,
+                                padding: 20
+                            },
+                            gridLines: {
+                                drawTicks: false,
+                                display: false
+                            }
+                        }],
+                        xAxes: [{
+                            gridLines: {
+                                zeroLineColor: "transparent"
+                            },
+                            ticks: {
+                                padding: 20,
+                                fontColor: "rgba(0,0,0,0.5)",
+                                fontStyle: "500"
+                            }
+                        }]
+                    },
+                    legendCallback: function (chart) {
+                        var text = [];
+                        text.push('<ul class="' + chart.id + '-legend html-legend">');
+                        for (var i = 0; i < chart.data.datasets.length; i++) {
+                            text.push('<li><span style="background-color:' + chart.data.datasets[i].legendColor + '"></span>');
+                            if (chart.data.datasets[i].label) {
+                                text.push(chart.data.datasets[i].label);
+                            }
+                            text.push('</li>');
+                        }
+                        text.push('</ul>');
+                        return text.join('');
+                    }
+                }
+            });
+
+            var myLegendContainer = document.getElementById("myChartLegend");
+
+            // generate HTML legend
+            myLegendContainer.innerHTML = myHtmlLegendsChart.generateLegend();
+
+            // bind onClick event to all LI-tags of the legend
+            var legendItems = myLegendContainer.getElementsByTagName('li');
+            for (var i = 0; i < legendItems.length; i += 1) {
+                legendItems[i].addEventListener("click", legendClickCallback, false);
+            }
+        }
+
+        // 	function CreatePDFfromHTML() {
+        //     var HTML_Width = $(".html-content").width();
+        //     var HTML_Height = $(".html-content").height();
+        //     var top_left_margin = 15;
+        //     var PDF_Width = HTML_Width + (top_left_margin * 2);
+        //     var PDF_Height = (PDF_Width * 1.5) + (top_left_margin * 2);
+        //     var canvas_image_width = HTML_Width;
+        //     var canvas_image_height = HTML_Height;
+
+        //     var totalPDFPages = Math.ceil(HTML_Height / PDF_Height) - 1;
+
+        //     html2canvas($(".html-content")[0]).then(function (canvas) {
+        //         var imgData = canvas.toDataURL("image/jpeg", 1.0);
+        //         var pdf = new jsPDF('p', 'pt', [PDF_Width, PDF_Height]);
+        //         pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin, canvas_image_width, canvas_image_height);
+        //         for (var i = 1; i <= totalPDFPages; i++) { 
+        //             pdf.addPage(PDF_Width, PDF_Height);
+        //             pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height*i)+(top_left_margin*4),canvas_image_width,canvas_image_height);
+        //         }
+        //         pdf.save("Your_PDF_Name.pdf");
+        //         $(".html-content").hide();
+        //     });
+
+        // }
+
+
+        function saveAsPDF() {
+
+            var HTML_Width = $(".html-content").width();
+            var HTML_Height = $(".html-content").height();
+            var top_left_margin = 15;
+            var PDF_Width = HTML_Width + (top_left_margin * 2);
+            var PDF_Height = (PDF_Width * 1.5) + (top_left_margin * 2);
+            var canvas_image_width = HTML_Width;
+            var canvas_image_height = HTML_Height;
+
+            var totalPDFPages = Math.ceil(HTML_Height / PDF_Height) - 1;
+
+            html2canvas(document.getElementById("chart-container"), {
+                onrendered: function (canvas) {
+                    var img = canvas.toDataURL("image/jpeg", 1.0); //image data of canvas
+                    var doc = new jsPDF('p', 'pt', [PDF_Width, PDF_Height]);
+                    doc.addImage(img, 'JPG', top_left_margin, top_left_margin, canvas_image_width, canvas_image_height);
+                    for (var i = 1; i <= totalPDFPages; i++) {
+                        doc.addPage(PDF_Width, PDF_Height);
+                        doc.addImage(img, 'JPG', top_left_margin, -(PDF_Height * i) + (top_left_margin * 4), canvas_image_width, canvas_image_height);
+                    }
+                    doc.save('test.pdf');
+                }
+            });
+        }
+
+        function CreatePDFfromHTML() {
+            var HTML_Width = $(".html-content").width();
+            var HTML_Height = $(".html-content").height();
+            var top_left_margin = 15;
+            var PDF_Width = HTML_Width + (top_left_margin * 2);
+            var PDF_Height = (PDF_Width * 1.5) + (top_left_margin * 2);
+            var canvas_image_width = HTML_Width;
+            var canvas_image_height = HTML_Height;
+
+            var totalPDFPages = Math.ceil(HTML_Height / PDF_Height) - 1;
+
+            html2canvas($(".html-content")[0]).then(function (canvas) {
+                var imgData = canvas.toDataURL("image/jpeg", 1.0);
+                var pdf = new jsPDF('p', 'pt', [PDF_Width, PDF_Height]);
+                pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin, canvas_image_width, canvas_image_height);
+                for (var i = 1; i <= totalPDFPages; i++) {
+                    pdf.addPage(PDF_Width, PDF_Height);
+                    pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height * i) + (top_left_margin * 4), canvas_image_width, canvas_image_height);
+                }
+                pdf.save("Your_PDF_Name.pdf");
+                $(".html-content").hide();
+            });
+        }
+
+
+
+    </script>
+
+    {% endblock javascripts %}
+
+
+</body>
+
 </html>
