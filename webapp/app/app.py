@@ -127,7 +127,13 @@ def use_case_6():
 
 def sanitize(data):
     output = html.escape(data)
-    print("OUTPUT: "+output, flush=True)
+
+    #blacklisted keys that could be used for sql injection
+    punc = '''-;\,%*_'''
+    for ele in output:
+        if ele in punc:
+            output = output.replace(ele, "")
+    print("FINAL OUTPUT: "+output, flush=True)
     return output
 
 if __name__ == '__main__':
