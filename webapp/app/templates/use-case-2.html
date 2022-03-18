@@ -96,7 +96,7 @@
         </div>
 
         <br>
-        <button onclick="saveAsPDF();">save as pdf</button>
+        <button class="btn btn-primary"onclick="saveAsPDF();">save as pdf</button>
 
 
 
@@ -919,7 +919,7 @@
                         doc.addPage(PDF_Width, PDF_Height);
                         doc.addImage(img, 'JPG', top_left_margin, -(PDF_Height * i) + (top_left_margin * 4), canvas_image_width, canvas_image_height);
                     }
-                    doc.save('test.pdf');
+                    doc.save('report.pdf');
                 }
             });
         }
