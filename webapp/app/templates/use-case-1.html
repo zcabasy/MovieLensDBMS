@@ -71,7 +71,7 @@
 
       <h1>Case 1</h1>
 
-    
+    {% if not movies %}
      <br>
       <h3>Form:</h3>
       <br><br>
@@ -87,144 +87,22 @@
 
 
         <!-- TODO: Replace the options with genres by scraping from genres table-->
-        <div class="form-group row" name="genre" id="genre">
+        {% if genres %}
+        <div name="genre" id="genre">
           <label for="genre">Genre</label>
-
-          <div class="form-check col-sm">
-            <input class="form-check-input" type="checkbox" name="genre" value="Action" id="flexCheckDefault">
-            <label class="form-check-label" for="flexCheckDefault">
-              Action
+          <ul style="list-style-type:none">
+            {% for genre in genres %}
+            <li>
+            <input class="form-check-input" type="checkbox" name="genre" value="{{ genre }}" id="check{{ genre }}">
+            <label class="form-check-label" for="check{{ genre }}">
+            {{ genre }}
             </label>
-          </div>
-          <div class="form-check col-sm">
-            <input class="form-check-input" type="checkbox" name="genre" value="Adventure" id="flexCheckDefault">
-            <label class="form-check-label" for="flexCheckDefault">
-              Adventure
-            </label>
-          </div>
-
-          <div class="form-check col-sm">
-            <input class="form-check-input" type="checkbox" name="genre" value="Animation" id="flexCheckDefault">
-            <label class="form-check-label" for="flexCheckDefault">
-              Animation
-            </label>
-          </div>
-          <div class="form-check col-sm">
-            <input class="form-check-input" type="checkbox" name="genre" value="Children
-            </label>" id="flexCheckDefault">
-            <label class="form-check-label" for="flexCheckDefault">
-              Children
-            </label>
-          </div>
-
-          <div class="form-group row">
-
-          <div class="form-check col-sm">
-            <input class="form-check-input" type="checkbox" name="genre" value="Comedy" id="flexCheckDefault">
-            <label class="form-check-label" for="flexCheckDefault">
-              Comedy
-            </label>
-          </div>
-          <div class="form-check col-sm">
-            <input class="form-check-input" type="checkbox" name="genre" value="Crime" id="flexCheckDefault">
-            <label class="form-check-label" for="flexCheckDefault">
-              Crime
-            </label>
-          </div>
-
-          <div class="form-check col-sm">
-            <input class="form-check-input" type="checkbox" name="genre" value="Documentary" id="flexCheckDefault">
-            <label class="form-check-label" for="flexCheckDefault">
-              Documentary
-            </label>
-          </div>
-          <div class="form-check col-sm">
-            <input class="form-check-input" type="checkbox" name="genre" value="Drama" id="flexCheckDefault">
-            <label class="form-check-label" for="flexCheckDefault">
-              Drama
-            </label>
-          </div>
-
-          </div>
-          <div class="form-group row">
-
-          <div class="form-check col-sm">
-            <input class="form-check-input" type="checkbox" name="genre" value="Fantasy" id="flexCheckDefault">
-            <label class="form-check-label" for="flexCheckDefault">
-              Fantasy
-            </label>
-          </div>
-          <div class="form-check col-sm">
-            <input class="form-check-input" type="checkbox" name="genre" value="Film-Noir" id="flexCheckDefault">
-            <label class="form-check-label" for="flexCheckDefault">
-              Film-Noir
-            </label>
-          </div>
-
-          <div class="form-check col-sm">
-            <input class="form-check-input" type="checkbox" name="genre" value="Horror" id="flexCheckDefault">
-            <label class="form-check-label" for="flexCheckDefault">
-              Horror
-            </label>
-          </div>
-          <div class="form-check col-sm">
-            <input class="form-check-input" type="checkbox" name="genre" value="IMAX" id="flexCheckDefault">
-            <label class="form-check-label" for="flexCheckDefault">
-              IMAX
-            </label>
-          </div>
-
+            </li>
+            {% endfor %}
+          </ul>
         </div>
-        <div class="form-group row">
-
-          <div class="form-check col-sm">
-            <input class="form-check-input" type="checkbox" name="genre" value="Musical" id="flexCheckDefault">
-            <label class="form-check-label" for="flexCheckDefault">
-              Musical
-            </label>
-          </div>
-          <div class="form-check col-sm">
-            <input class="form-check-input" type="checkbox" name="genre" value="Mystery" id="flexCheckDefault">
-            <label class="form-check-label" for="flexCheckDefault">
-              Mystery
-            </label>
-          </div>
-
-          <div class="form-check col-sm">
-            <input class="form-check-input" type="checkbox" name="genre" value="Romance" id="flexCheckDefault">
-            <label class="form-check-label" for="flexCheckDefault">
-              Romance
-            </label>
-          </div>
-          <div class="form-check col-sm">
-            <input class="form-check-input" type="checkbox" name="genre" value="Sci-Fi" id="flexCheckDefault">
-            <label class="form-check-label" for="flexCheckDefault">
-              Sci-Fi
-            </label>
-          </div>
-
-        </div>
-        <div class="form-group row">
-
-          <div class="form-check col-sm">
-            <input class="form-check-input" type="checkbox" name="genre" value="Thriller" id="flexCheckDefault">
-            <label class="form-check-label" for="flexCheckDefault">
-              Thriller
-            </label>
-          </div>
-          <div class="form-check col-sm">
-            <input class="form-check-input" type="checkbox" name="genre" value="War" id="flexCheckDefault">
-            <label class="form-check-label" for="flexCheckDefault">
-              War
-            </label>
-          </div>
-          <div class="form-check col-sm">
-            <input class="form-check-input" type="checkbox" name="genre" value="Western" id="flexCheckDefault">
-            <label class="form-check-label" for="flexCheckDefault">
-              Western
-            </label>
-          </div>
-        </div>
+        {% endif %}
+        
         <br>
         <br>
 
@@ -305,51 +183,40 @@
 
       <br><br>
 
+    {% endif %}
  
-
       <!-- Filterable Table below -->
 
-      <!-- <div class="container">
-        <h2>Filterable Table</h2>
-        <p>Type something in the input field to search the table for first names, last names or emails:</p>  
+    {% if movies %}
+      <div class="container">
+        <h2>Results</h2>
+        <p>Here are your results! <br> Type something in the search box below to filter the table for title, tags, or genres:</p>  
         <input class="form-control" id="myInput" type="text" placeholder="Search..">
         <br>
         
         <table class="table table-bordered table-striped table-dark">
           <thead>
             <tr>
-              <th>Firstname</th>
-              <th>Lastname</th>
-              <th>Email</th>
+              <th>Title</th>
+              <th>Tags</th>
+              <th>Rating</th>
+              <th>Genres</th>
             </tr>
           </thead>
-          <tbody id="myTable">
+          <tbody id="movieTable">
+            {% for movie in movies %}
             <tr>
-              <td>John</td>
-              <td>Doe</td>
-              <td>john@example.com</td>
+              <td>{{ movie.title }}</td>
+              <td>{% for tag in movie.tags[:-1] %} {{ tag.strip().title() }}, {% endfor %} {{ movie.tags[-1].strip().title() }}</td>
+              <td>{{ movie.rating|round(3) }}</td>
+              <td>{% for gen in movie.genres[:-1] %} {{ gen.strip().title() }}, {% endfor %} {{ movie.genres[-1].strip().title() }}</td>
             </tr>
-            <tr>
-              <td>Mary</td>
-              <td>Moe</td>
-              <td>mary@mail.com</td>
-            </tr>
-            <tr>
-              <td>July</td>
-              <td>Dooley</td>
-              <td>july@greatstuff.com</td>
-            </tr>
-            <tr>
-              <td>Anja</td>
-              <td>Ravendale</td>
-              <td>a_r@test.com</td>
-            </tr>
+            {% endfor %}
           </tbody>
         </table>
-        
-        <p>Note that we start the search in tbody, to prevent filtering the table headers.</p>
       </div>
-       -->
+      {% endif %}
+
       <script>
         //Table filtering code
       $(document).ready(function(){
