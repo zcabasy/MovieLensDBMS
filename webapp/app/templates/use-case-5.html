@@ -79,9 +79,32 @@
           </button>
         </div>
       </form>
-
-
-
+      <div class="row">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Predicted User Subset</div>
+            </div>
+            <div class="card-body">
+              <div class="chart-container">
+                <canvas id="barChart1"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">High Rating Users</div>
+            </div>
+            <div class="card-body">
+              <div class="chart-container">
+                <canvas id="barChart2"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
   <footer class="mt-auto text-white-50">
   </footer>
@@ -99,7 +122,66 @@
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
-{% block javascripts %}{% endblock javascripts %}
+{% block javascripts %}
+<script>
+var barChart1 = document.getElementById('barChart1').getContext('2d'),
+    barChart2 = document.getElementById('barChart2').getContext('2d');
+
+  var myBarChart1 = new Chart(barChart1, {
+      type: 'bar',
+      data: {
+        labels: ["Tom", "May", "Susan", "Peter", "Wang", "Josh", "Ollie", "Chris", "Matt", "Dillon", "Alexander", "Napoleon"],
+        datasets: [{
+          label: "Sales",
+          backgroundColor:
+            'rgba(255, 26, 104, 0.2)',
+          borderColor:
+            'rgba(255, 26, 104, 1)',
+          borderWidth: 1,
+          data: [23, 12, 29, 5, 4, 36, 4, 36, 7, 58, 27, 34],
+        }],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        },
+      }
+    });
+    
+    var myBarChart2 = new Chart(barChart2, {
+        type: 'bar',
+        data: {
+          labels: ["Jaden", "Fabian", "Marcus", "Aster", "May", "Jake", "Juliet", "Augustine", "Semphis", "Ohana", "Nat", "Dill"],
+          datasets: [{
+            label: "Sales",
+            backgroundColor: 'rgb(23, 125, 255)',
+            borderColor: 'rgb(23, 125, 255)',
+            borderWidth: 1,
+            data: [13, 2, 19, 5, 34, 16, 14, 56, 7, 8, 27, 4],
+          }],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: true
+              }
+            }]
+          },
+        }
+      });
+
+</script>
+
+{% endblock javascripts %}
     
   </body>
 </html>
