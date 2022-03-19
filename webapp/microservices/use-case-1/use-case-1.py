@@ -38,7 +38,6 @@ def get_genres():
 
 def proc_params(data):
     title = "%" + data["title"] + "%"
-    print("Final title: "+title, flush=True)
     rating_lower = int(data["min_rating"])
     rating_upper = int(data["max_rating"])
     sort_by = data["sort_by"]

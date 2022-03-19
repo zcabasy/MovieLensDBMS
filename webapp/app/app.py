@@ -71,12 +71,12 @@ def use_case_2():
 @app.route("/use-case-3.html", methods=["GET", "POST"])
 def use_case_3():
     response = requests.get('http://use-case-3:5004/')
-    popular_movies = response.json()['popular_movies']
-    polarising_movies = response.json()['polarising_movies']
+    popular_genres = response.json()['popular_genres']
+    polarising_genres = response.json()['polarising_genres']
 
     return render_template("use-case-3.html",
-                           popular_movies=popular_movies,
-                           polarising_movies=polarising_movies)
+                           popular_genres=popular_genres,
+                           polarising_genres=polarising_genres)
 
 
 @app.route("/use-case-4.html", methods=["GET", "POST"])
@@ -135,7 +135,6 @@ def sanitize(data):
     for ele in output:
         if ele in punc:
             output = output.replace(ele, "")
-    print(f"FINAL OUTPUT: {output}", flush=True)
     return output
 
 if __name__ == '__main__':

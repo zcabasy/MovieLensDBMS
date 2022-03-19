@@ -36,25 +36,24 @@ def connect():
 @cache.cached(timeout=300)
 def query_table():
     if request.method == "GET":
-        print('GET REQ', flush=True)
-        # get 10 popular and polarising movies
-        return get_popular_and_polarising_movies(10)
+        # get 10 popular and polarising genres
+        return get_popular_and_polarising_genres(10)
     elif request.method == "POST":
-        print('POST REQ', flush=True)
-        # get user-requested-number of popular and polarising movies
-        req = request.form
-        num = req.get("num")
-        return get_popular_and_polarising_movies(num)
+        pass
+        # # get user-requested-number of popular and polarising genres
+        # req = request.form
+        # num = req.get("num")
+        # return get_popular_and_polarising_genres(num)
     
-def get_popular_and_polarising_movies(num):
-    popular_movies = get_popular_movies(num)
-    polarising_movies = get_polarising_movies(num)
+def get_popular_and_polarising_genres(num):
+    popular_genres = get_popular_genres(num)
+    polarising_genres = get_polarising_genres(num)
     return {
-        "popular_movies": popular_movies,
-        "polarising_movies": polarising_movies
+        "popular_genres": popular_genres,
+        "polarising_genres": polarising_genres
     }
 
-def get_popular_movies(num):
+def get_popular_genres(num):
     query = f"SELECT Genres.genre, AVG(Ratings.rating) AS rating, stddev(Ratings.rating) as std_rating, \
         MIN(Ratings.rating) as min_rating, MAX(Ratings.rating) as max_rating, COUNT(Ratings.rating) as num_ratings \
         FROM Genres INNER JOIN Movie_Genres ON Genres.genreId = Movie_Genres.genreId \
@@ -62,9 +61,9 @@ def get_popular_movies(num):
         GROUP BY genre \
         ORDER BY rating DESC, std_rating ASC, min_rating DESC, max_rating DESC, num_ratings DESC \
         LIMIT {num};"
-    return get_movies(query)
+    return get_genres(query, "popular")
 
-def get_polarising_movies(num):
+def get_polarising_genres(num):
     query = f"SELECT Genres.genre, AVG(Ratings.rating) AS rating, stddev(Ratings.rating) as std_rating, \
         MIN(Ratings.rating) as min_rating, MAX(Ratings.rating) as max_rating, MAX(Ratings.rating) - MIN(Ratings.rating) as range_rating, \
         COUNT(Ratings.rating) as num_ratings \
@@ -74,26 +73,30 @@ def get_polarising_movies(num):
         GROUP BY genre \
         ORDER BY std_rating DESC, range_rating DESC, num_ratings DESC \
         LIMIT {num};"
-    return get_movies(query)
+    return get_genres(query, "polarising")
 
-def get_movies(query):
-    print('QUERY:', query)
+def get_genres(query, popular_or_polarising):
     conn = connect()
     cur = conn.cursor()
     cur.execute(query)
-    movies = []
+    genres = []
     for row in cur:
-        movie = {
-            'movieId': row[0],
-            'title': row[1],
-            'tags': row[2].strip().split(","),
-            'rating': row[3],
-            'genres': row[4].strip().split(",")
+        print('ROW', row, flush=True)
+        genre = {
+            "genre": row[0].strip(),
+            "rating": row[1],
+            "std_rating": row[2],
+            "min_rating": row[3],
+            "max_rating": row[4],
+            "num_ratings": row[5] if popular_or_polarising == "popular" else row[6]
         }
-        movies.append(movie)
+        if popular_or_polarising == "polarising":
+            genre["range_rating"] = row[5]
+        print('ROW DONE')
+        genres.append(genre)
     cur.close()
     
-    return movies
+    return genres
 
 
 if __name__ == '__main__':
