@@ -63,9 +63,8 @@ def use_case_2():
         form_data = {'movieId': movieId}
 
         response = requests.post('http://use-case-2:5003/', form_data)
-        #render response
-
-    return render_template("use-case-2.html")
+        data = response.json()
+    return render_template("use-case-2.html", data=data)
 
 
 @app.route("/use-case-3.html", methods=["GET", "POST"])

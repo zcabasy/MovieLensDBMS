@@ -60,17 +60,15 @@ def query_table():
     min = np.min(ratings_list)
     max = np.max(ratings_list)
     median = np.median(ratings_list)
-    #Mode was not included here as a metric since ratings can take any continuous value so it is not very useful here
-    
-    #return_val = [ratings_list, mean, std_dev, min, max, median]
+   # Mode was not included here as a metric since ratings can take any continuous value so it is not very useful here
     return_val = {
         "ratings_list": ratings_list,
         "std_dev": std_dev,
         "min": min,
-        "max":max,
-        "median":median
+        "max": max,
+        "median": median
     }
-    cache.set(movieId, return_val)
+    cache.set(movieId, list(return_val.values()))
     return return_val
 
 if __name__ == '__main__':
