@@ -62,7 +62,14 @@ def query_table():
     median = np.median(ratings_list)
     #Mode was not included here as a metric since ratings can take any continuous value so it is not very useful here
     
-    return_val = [ratings_list, mean, std_dev, min, max, median]
+    #return_val = [ratings_list, mean, std_dev, min, max, median]
+    return_val = {
+        "ratings_list": ratings_list,
+        "std_dev": std_dev,
+        "min": min,
+        "max":max,
+        "median":median
+    }
     cache.set(movieId, return_val)
     return return_val
 

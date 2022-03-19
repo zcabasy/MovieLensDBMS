@@ -62,6 +62,7 @@ def use_case_2():
         form_data = {'movieId': movieId}
 
         response = requests.post('http://use-case-2:5003/', form_data)
+        
         #render response
 
     return render_template("use-case-2.html")
@@ -134,12 +135,7 @@ def sanitize(data):
     for ele in output:
         if ele in punc:
             output = output.replace(ele, "")
-<<<<<<< HEAD
-
-    print("FINAL OUTPUT: "+output, flush=True)
-=======
     print(f"FINAL OUTPUT: {output}", flush=True)
->>>>>>> 2d1afee979b6ea10d3bda2f50ec845c805be4736
     return output
 
 if __name__ == '__main__':
