@@ -133,6 +133,7 @@ def sanitize(data):
     for ele in output:
         if ele in punc:
             output = output.replace(ele, "")
+
     print("FINAL OUTPUT: "+output, flush=True)
     return output
 

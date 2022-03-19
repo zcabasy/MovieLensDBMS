@@ -40,6 +40,7 @@ def get_genres():
 def query_table():
     data = request.form
     title = "%" + data["title"] + "%"
+    print("Final title: "+title, flush=True)
     rating_lower = int(data["min_rating"])
     rating_upper = int(data["max_rating"])
     sort_by = data["sort_by"]
@@ -70,7 +71,7 @@ def query_table():
                 LEFT JOIN Movie_Genres ON Movies.movieId = Movie_Genres.movieId \
                 INNER JOIN Genres ON Movie_Genres.genreId = Genres.genreId \
                 WHERE title LIKE %s AND \
-                (tag LIKE %s)  AND \
+                (tag LIKE %s) AND \
                 (genre LIKE %s) AND \
                 (rating BETWEEN %s AND %s) \
                 ORDER BY %s;", (title, tag, genre, rating_lower, rating_upper, sort_by))
@@ -87,6 +88,8 @@ def query_table():
         movies.append(movie)
     conn.close()
     return {'movies': movies}
+
+
 
 if __name__ == '__main__':
     use_case_1.run(debug = True, port = 5002, host="0.0.0.0")

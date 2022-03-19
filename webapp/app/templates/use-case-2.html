@@ -332,13 +332,20 @@
     
     <script>
 
-        let filename = 'https://raw.githubusercontent.com/zcabasy/MovieLensDBMS/main/webapp/data/ratings.csv'
+        let ratingsFile = 'https://raw.githubusercontent.com/zcabasy/MovieLensDBMS/main/webapp/data/ratings.csv'
+		let linksFile = 'https://raw.githubusercontent.com/zcabasy/MovieLensDBMS/main/webapp/data/links.csv'
+
         
         let submit = document.getElementById('submitBtn').addEventListener('click', search);
 
         async function search() {
             let movieSearch = document.getElementById('movieName').value.split(' ').join('+');
-            let omdbAPI = 'https://www.omdbapi.com/?t=' + movieSearch + '/&apikey=ba751858';
+            let omdbAPI = 'https://www.omdbapi.com/?t=' + movieSearch + '&apikey=ba751858';
+
+			d3.csv(linksFile, function(data){
+				console.log(data.movieId);
+			});
+
             alert(omdbAPI);
             $.getJSON(omdbAPI, function (data) {
                 var display = `Title: ${data.Title}<br> 
@@ -351,7 +358,9 @@
         }
 
 
-        d3.csv(filename)
+
+
+        d3.csv(ratingsFile)
             .then(makeChart);
         function makeChart(data) {
             var movieId = data.slice(0, 100).map(function (d) { return d.movieId });

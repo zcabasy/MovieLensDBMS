@@ -226,27 +226,7 @@
 
 
 
-//Sample code Syed requested, 3.
 
-function getImdbID(movieID) {
-
-var data;
-	$.ajax({
-	  type: "GET",  
-	  url: "https://raw.githubusercontent.com/zcabasy/MovieLensDBMS/main/webapp/data/ratings.csv",
-	  dataType: "text",       
-	  success: function(response)  
-	  {
-		data = $.csv.toArrays(response);
-		generateHtmlTable(data);
-	  }   
-	});
-
-return data;
-
-};
-
-console.log( getImdbID(1) );
 
       </script>
 
