@@ -180,15 +180,15 @@ def predict_rating():
     y_pred = clf.predict(X_test)
 
     score = mean_absolute_error(y_test, y_pred)
-    return_val = [score, y_test, y_pred, subset_stats, full_stats]
-    cache.set(movieId, return_val)
-    return {
+    return_val = {
         'score': score,
         'y_test': y_test,
         'y_pred,': y_pred,
         'subset_stats': subset_stats,
         'full_stats': full_stats
     }
+    cache.set(movieId, list(return_val.values()))
+    return return_val
         
 
 if __name__ == '__main__':
