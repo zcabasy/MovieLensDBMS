@@ -27,7 +27,7 @@ def use_case_1():
         req = request.form
         movieTitle = sanitize(req.get("movieTitle"))
 
-        genre = req.getlist("genre") 
+        genre = req.get("genre") 
         min_rating = req.get("min_rating")
         max_rating = req.get("max_rating")
         tag = sanitize(req.get("tags"))
@@ -37,13 +37,14 @@ def use_case_1():
         # movieTitle = "toy story 2"; genre = "adventure"; min_rating = 0;
         # max_rating = 5; tag = "animation"; sort_by = "title ASC";
         
-        form_data = {'title': movieTitle, 
-                    'genre': genre,
-                    'tag': tag,
-                    'min_rating': min_rating, 
-                    'max_rating': max_rating, 
-                    'sort_by': sort_by}
-
+        form_data = {
+            'title': movieTitle, 
+            'genre': genre,
+            'tag': tag,
+            'min_rating': min_rating, 
+            'max_rating': max_rating, 
+            'sort_by': sort_by
+        }
         response = requests.post('http://use-case-1:5002/', form_data)
         movies = response.json()['movies']
         

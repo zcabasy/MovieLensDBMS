@@ -36,9 +36,7 @@ def get_genres():
         genres.append(row[1].strip())
     return {'genres': genres}
 
-@use_case_1.route("/",  methods=["POST"])
-def query_table():
-    data = request.form
+def proc_params(data):
     title = "%" + data["title"] + "%"
     print("Final title: "+title, flush=True)
     rating_lower = int(data["min_rating"])
@@ -60,11 +58,17 @@ def query_table():
             genre += "%" + org_genre[x] + "%"
         else:
             genre += " OR genre LIKE %" + org_genre[x] + "%"
-    
+
+    return title, tag, genre, rating_lower, rating_upper, sort_by
+
+@use_case_1.route("/",  methods=["POST"])
+def query_table():
+    data = request.form
+    title, tag, genre, rating_lower, rating_upper, sort_by = proc_params(data)
     conn = connect()
     cur = conn.cursor()
-    print('Executing')
     cur.execute("SELECT Movies.movieId, Movies.title, GROUP_CONCAT(DISTINCT Tags.tag), AVG(Ratings.rating), GROUP_CONCAT(DISTINCT Genres.genre) FROM Movies \
+<<<<<<< HEAD
                 LEFT JOIN Tags ON Movies.movieId = Tags.movieId \
                 LEFT JOIN Ratings ON Movies.movieId = Ratings.movieId \
                 LEFT JOIN Links ON Movies.movieId = Links.movieId \
@@ -75,16 +79,28 @@ def query_table():
                 (genre LIKE %s) AND \
                 (rating BETWEEN %s AND %s) \
                 ORDER BY %s;", (title, tag, genre, rating_lower, rating_upper, sort_by))
+=======
+        LEFT JOIN Tags ON Movies.movieId = Tags.movieId \
+        LEFT JOIN Ratings ON Movies.movieId = Ratings.movieId \
+        LEFT JOIN Links ON Movies.movieId = Links.movieId \
+        LEFT JOIN Movie_Genres ON Movies.movieId = Movie_Genres.movieId \
+        INNER JOIN Genres ON Movie_Genres.genreId = Genres.genreId \
+        WHERE title LIKE %s AND \
+        (tag LIKE %s)  AND \
+        (genre LIKE %s) AND \
+        (rating BETWEEN %s AND %s) \
+        ORDER BY %s;", (title, tag, genre, rating_lower, rating_upper, sort_by))
+>>>>>>> 6bc25165e96358c552e32b569baa69769558395f
     movies = []
-    print(f"CURSOR: {list(cur)}")
+    # print(f"CURSOR: {list(cur)}", flush=True)
 
     for row in cur:
         movie = {
             'movieId': row[0],
             'title': row[1],
-            'tags': row[2].split(","),
+            'tags': row[2].strip().split(","),
             'rating': row[3],
-            'genres': row[4].split(",")
+            'genres': row[4].strip().split(",")
         }
         movies.append(movie)
     conn.close()
