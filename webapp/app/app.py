@@ -63,7 +63,6 @@ def use_case_2():
         form_data = {'movieId': movieId}
 
         response = requests.post('http://use-case-2:5003/', form_data)
-        
         #render response
 
     return render_template("use-case-2.html")
@@ -71,7 +70,7 @@ def use_case_2():
 
 @app.route("/use-case-3.html", methods=["GET", "POST"])
 def use_case_3():
-    response = requests.post('http://use-case-3:5004/')
+    response = requests.get('http://use-case-3:5004/')
     popular_movies = response.json()['popular_movies']
     polarising_movies = response.json()['polarising_movies']
 

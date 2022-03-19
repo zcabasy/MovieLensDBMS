@@ -36,9 +36,11 @@ def connect():
 @cache.cached(timeout=300)
 def query_table():
     if request.method == "GET":
+        print('GET REQ', flush=True)
         # get 10 popular and polarising movies
         return get_popular_and_polarising_movies(10)
     elif request.method == "POST":
+        print('POST REQ', flush=True)
         # get user-requested-number of popular and polarising movies
         req = request.form
         num = req.get("num")
@@ -75,6 +77,7 @@ def get_polarising_movies(num):
     return get_movies(query)
 
 def get_movies(query):
+    print('QUERY:', query)
     conn = connect()
     cur = conn.cursor()
     cur.execute(query)

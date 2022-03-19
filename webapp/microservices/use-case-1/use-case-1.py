@@ -68,18 +68,6 @@ def query_table():
     conn = connect()
     cur = conn.cursor()
     cur.execute("SELECT Movies.movieId, Movies.title, GROUP_CONCAT(DISTINCT Tags.tag), AVG(Ratings.rating), GROUP_CONCAT(DISTINCT Genres.genre) FROM Movies \
-<<<<<<< HEAD
-                LEFT JOIN Tags ON Movies.movieId = Tags.movieId \
-                LEFT JOIN Ratings ON Movies.movieId = Ratings.movieId \
-                LEFT JOIN Links ON Movies.movieId = Links.movieId \
-                LEFT JOIN Movie_Genres ON Movies.movieId = Movie_Genres.movieId \
-                INNER JOIN Genres ON Movie_Genres.genreId = Genres.genreId \
-                WHERE title LIKE %s AND \
-                (tag LIKE %s) AND \
-                (genre LIKE %s) AND \
-                (rating BETWEEN %s AND %s) \
-                ORDER BY %s;", (title, tag, genre, rating_lower, rating_upper, sort_by))
-=======
         LEFT JOIN Tags ON Movies.movieId = Tags.movieId \
         LEFT JOIN Ratings ON Movies.movieId = Ratings.movieId \
         LEFT JOIN Links ON Movies.movieId = Links.movieId \
@@ -90,10 +78,7 @@ def query_table():
         (genre LIKE %s) AND \
         (rating BETWEEN %s AND %s) \
         ORDER BY %s;", (title, tag, genre, rating_lower, rating_upper, sort_by))
->>>>>>> 6bc25165e96358c552e32b569baa69769558395f
     movies = []
-    # print(f"CURSOR: {list(cur)}", flush=True)
-
     for row in cur:
         movie = {
             'movieId': row[0],
