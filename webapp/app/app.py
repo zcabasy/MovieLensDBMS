@@ -20,7 +20,6 @@ cache.init_app(app)
 def use_case_1():
     if request.method == "GET":
         response = requests.get("http://use-case-1:5002/")
-        print(response.json()['genres'])
         genres = response.json()['genres']
         return render_template("use-case-1.html", genres=genres)
 
@@ -57,7 +56,7 @@ def use_case_2():
     if request.method == "POST":
         # req = request.form
 
-        # movieName = req.get("movieName")
+        # movieSearch = req.get("movieSearch")
 
         movieId = 1
         form_data = {'movieId': movieId}
@@ -70,11 +69,13 @@ def use_case_2():
 
 @app.route("/use-case-3.html", methods=["GET", "POST"])
 def use_case_3():
-    if request.method == "POST":
-        response = requests.post('http://use-case-3:5004/')
-        #render response
+    response = requests.post('http://use-case-3:5004/')
+    popular_movies = response.json()['popular_movies']
+    polarising_movies = response.json()['polarising_movies']
 
-    return render_template("use-case-3.html")
+    return render_template("use-case-3.html",
+                           popular_movies=popular_movies,
+                           polarising_movies=polarising_movies)
 
 
 @app.route("/use-case-4.html", methods=["GET", "POST"])
@@ -128,13 +129,17 @@ def use_case_6():
 def sanitize(data):
     output = html.escape(data)
 
-    #blacklisted keys that could be used for sql injection
+    # blacklisted keys that could be used for sql injection
     punc = '''-;\%*_'''
     for ele in output:
         if ele in punc:
             output = output.replace(ele, "")
+<<<<<<< HEAD
 
     print("FINAL OUTPUT: "+output, flush=True)
+=======
+    print(f"FINAL OUTPUT: {output}", flush=True)
+>>>>>>> 2d1afee979b6ea10d3bda2f50ec845c805be4736
     return output
 
 if __name__ == '__main__':

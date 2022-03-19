@@ -21,8 +21,7 @@
 <script src="https://kit.fontawesome.com/62896aab70.js" crossorigin="anonymous"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-
-
+<script src="/static/assets/js/setting-demo2.js"></script>
 
     
     <!-- Custom styles for this template -->
@@ -48,10 +47,9 @@
     </div>
   </header>
 
-
       <h1>Case 3</h1>
 
-    <h4>Or by table</h4>
+    <h4>Showing the {{ popular_movies|length }} most popular and {{ polarising|length }} most polarising movies</h4>
     <div class='row'>
       <div class='col'>
       
@@ -60,70 +58,49 @@
           <table class="table table-bordered table-striped table-dark">
             <thead>
               <tr>
-                <th>Firstname</th>
-                <th>Lastname</th>
-                <th>Email</th>
+                <th>Title</th>
+                <th>Tags</th>
+                <th>Rating</th>
+                <th>Genres</th>
               </tr>
             </thead>
-            <tbody id="myTable">
+            <tbody id="popularMovies">
+              {% for movie in popular_movies %}
               <tr>
-                <td>John</td>
-                <td>Doe</td>
-                <td>john@example.com</td>
+                <td>{{ movie.title }}</td>
+                <td>{% for tag in movie.tags[:-1] %} {{ tag.title() }}, {% endfor %} {{ movie.tags[-1].title() }}</td>
+                <td id="popRating">{{ movie.rating|round(3) }}</td>
+
+                <td>{% for gen in movie.genres[:-1] %} {{ gen.title() }}, {% endfor %} {{ movie.genres[-1].title() }}</td>
               </tr>
-              <tr>
-                <td>Mary</td>
-                <td>Moe</td>
-                <td>mary@mail.com</td>
-              </tr>
-              <tr>
-                <td>July</td>
-                <td>Dooley</td>
-                <td>july@greatstuff.com</td>
-              </tr>
-              <tr>
-                <td>Anja</td>
-                <td>Ravendale</td>
-                <td>a_r@test.com</td>
-              </tr>
+              {% endfor %}
             </tbody>
           </table>
           
         </div>
 
       <div class='col'>
-        <h3>Unpopular movies</h3>
+        <h3>Polarising movies</h3>
 
           
           <table class="table table-bordered table-striped table-dark">
             <thead>
               <tr>
-                <th>Firstname</th>
-                <th>Lastname</th>
-                <th>Email</th>
+                <th>Title</th>
+                <th>Tags</th>
+                <th>Rating</th>
+                <th>Genres</th>
               </tr>
             </thead>
-            <tbody id="myTable">
+            <tbody id="polarisingMovies">
+              {% for movie in popular_movies %}
               <tr>
-                <td>John</td>
-                <td>Doe</td>
-                <td>john@example.com</td>
+                <td>{{ movie.title }}</td>
+                <td>{% for tag in movie.tags[:-1] %} {{ tag.title() }}, {% endfor %} {{ movie.tags[-1].title() }}</td>
+                <td id="polRating">{{ movie.rating|round(3) }}</td>
+                <td>{% for gen in movie.genres[:-1] %} {{ gen.title() }}, {% endfor %} {{ movie.genres[-1].title() }}</td>
               </tr>
-              <tr>
-                <td>Mary</td>
-                <td>Moe</td>
-                <td>mary@mail.com</td>
-              </tr>
-              <tr>
-                <td>July</td>
-                <td>Dooley</td>
-                <td>july@greatstuff.com</td>
-              </tr>
-              <tr>
-                <td>Anja</td>
-                <td>Ravendale</td>
-                <td>a_r@test.com</td>
-              </tr>
+              {% endfor %}
             </tbody>
           </table>
           
@@ -136,8 +113,22 @@
 
       <div class="form-group row">
         <div class="col-sm-10">
-          <button type="submit"
+          <button type="submit" onclick="charting(document.getElementById('popRating').value, document.getElementById('polRating').value)"
           class="btn btn-primary">Submit</button>
+        </div>
+      </div>
+      <div class="row" >
+        <div class="col-md-6">
+          <div class="card" style="text-align: center;">
+            <div class="card-header">
+              <div class="card-title">Bar Chart</div>
+            </div>
+            <div class="card-body">
+              <div class="chart-container">
+                <canvas id="barChart"></canvas>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </form>
@@ -146,12 +137,86 @@
  
 
 
-
   <footer class="mt-auto text-white-50">
   </footer>
 </div>
 
+{% extends "layouts/base.html" %}
 
-    
+{% block title %} Case 3 {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+
   </body>
+
+{% endblock content %}
+  <!-- Specific Page JS goes HERE  -->
+  {% block javascripts %}
+  
+  <script>
+    let filename = 'https://raw.githubusercontent.com/zcabasy/MovieLensDBMS/main/webapp/data/ratings.csv';
+    var popChart, polChart;
+
+    function charting(popRating, polRating) {
+      popChart = popRating;
+      polChart = polRating;
+    }
+
+    d3.csv(filename)
+      .then(makeChart);
+    
+
+    function makeChart(data) {
+
+      var movieId = data.map(function (d) { return d.movieId });
+      var rating = data.map(function (d) { return d.rating; });
+      var barChart = document.getElementById('barChart').getContext('2d');
+
+      var myBarChart = new Chart(barChart, {
+        type: 'bar',
+        data: {
+          labels: ['Movie #1', 'Movie #2', 'Movie #3', 'Movie #4', 'Movie #5', 'Movie #6', 'Movie #7'],
+          datasets: [{
+            label: 'Popular Rating',
+            // data: popRating,
+            data: [18, 12, 6, 9, 12, 3, 9],
+            backgroundColor: 
+              'rgba(255, 26, 104, 0.2)',
+            borderColor: 
+              'rgba(255, 26, 104, 1)',
+            borderWidth: 1
+          },
+          {
+              label: 'Polarising Rating',
+              // data: polRating,
+              data: [18, 12, 6, 9, 12, 3, 9],
+              backgroundColor: 
+                'rgba(54, 162, 235, 0.2)',
+              borderColor: 
+                'rgba(54, 162, 235, 1)',
+              borderWidth: 1
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: true
+              }
+            }]
+          },
+        }
+      });
+    }
+
+  </script>
+  
+{% endblock javascripts %}
 </html>

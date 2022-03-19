@@ -79,7 +79,22 @@
           </button>
         </div>
       </form>
-
+      
+        <div class="row">
+          <div class="d-flex w-100 h-100 p-3 mx-auto flex-column">
+            <div class="card" style="text-align: center;">
+              <div class="card-header">
+                <div class="card-title">Subset stacked against Full Ratings</div>
+              </div>
+              <div class="card-body">
+                <div class="chart-container">
+                  <canvas id="multipleBarChart"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    
 
 
 
@@ -87,6 +102,90 @@
   </footer>
 </div>
 
+{% extends "layouts/base.html" %}
+
+{% block title %} Case 4 {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+<script>
+  let filename = 'https://raw.githubusercontent.com/zcabasy/MovieLensDBMS/main/webapp/data/ratings.csv';
+  var popChart, polChart;
+
+  function charting(popRating, polRating) {
+    popChart = popRating;
+    polChart = polRating;
+  }
+
+  d3.csv(filename)
+    .then(makeChart);
+
+
+  function makeChart(data) {
+
+    var movieId = data.map(function (d) { return d.movieId });
+    var rating = data.map(function (d) { return d.rating; });
+    var multipleBarChart = document.getElementById('multipleBarChart').getContext('2d');
+
+     var myMultipleBarChart = new Chart(multipleBarChart, {
+                type: 'bar',
+                data: {
+                    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                    datasets: [{
+                        label: "First time visitors",
+                        backgroundColor: '#59d05d',
+                        borderColor: '#59d05d',
+                        data: [95, 100, 112, 101, 144, 159, 178, 156, 188, 190, 210, 245],
+                    }, {
+                        label: "Visitors",
+                        backgroundColor: '#fdaf4b',
+                        borderColor: '#fdaf4b',
+                        data: [145, 256, 244, 233, 210, 279, 287, 253, 287, 299, 312, 356],
+                    }, {
+                        label: "Pageview",
+                        backgroundColor: '#177dff',
+                        borderColor: '#177dff',
+                        data: [185, 279, 273, 287, 234, 312, 322, 286, 301, 320, 346, 399],
+                    }],
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    legend: {
+                        position: 'bottom'
+                    },
+                    title: {
+                        display: true,
+                        text: 'Traffic Stats'
+                    },
+                    tooltips: {
+                        mode: 'index',
+                        intersect: false
+                    },
+                    responsive: true,
+                    scales: {
+                        xAxes: [{
+                            stacked: true,
+                        }],
+                        yAxes: [{
+                            stacked: true
+                        }]
+                    }
+                }
+            });
+  }
+
+</script>
+
+{% endblock javascripts %}
 
     
   </body>
