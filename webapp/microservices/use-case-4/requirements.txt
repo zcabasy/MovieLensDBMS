@@ -3,4 +3,4 @@ Flask-Caching
 mariadb
 numpy
 pandas
-scikit-learn
+scikit-learn == 1.0

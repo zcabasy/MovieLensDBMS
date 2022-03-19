@@ -9,13 +9,15 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_absolute_error
 from joblib import dump, load
 from os.path import exists
+import os
 from sklearn.preprocessing import StandardScaler
 from sklearn.naive_bayes import GaussianNB
 from sklearn.metrics import confusion_matrix, accuracy_score
 from sklearn.feature_extraction.text import CountVectorizer
 import re
 import nltk
-nltk.download('stopwords')
+# nltk.download('stopwords')
+nltk.data.path.append("/microservices/use-case-6/nltk_data")
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
 import pickle
