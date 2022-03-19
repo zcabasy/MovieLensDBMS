@@ -148,10 +148,10 @@ def gen_dataset():
     cur = conn.cursor()
     df = pd.DataFrame()
     cur.execute("SELECT RatingsForPersonality.movieId, Personality.openness, \
-                Personality.agreeableness, Personality.emotional_stability, Personality.conscientiousness, Personality.extraversion, \
-                Personality.`assigned metric`, Personality.`assigned condition`, RatingsForPersonality.rating \
-                FROM RatingsForPersonality \
-                INNER JOIN Personality ON Personality.userId = RatingsForPersonality.userId;")
+        Personality.agreeableness, Personality.emotional_stability, Personality.conscientiousness, Personality.extraversion, \
+        Personality.`assigned metric`, Personality.`assigned condition`, RatingsForPersonality.rating \
+        FROM RatingsForPersonality \
+        INNER JOIN Personality ON Personality.userId = RatingsForPersonality.userId;")
     
     for row in cur:
         movieId = int(row[0])
@@ -242,8 +242,14 @@ def query():
     #Extra SQL Data Analysis
     easy_to_predict_users_peron_traits = person_traits_enjoy_and_personalized()
 
-    return_val = [avg_rating, predicted_avg, score, person_traits_most_enjoyed, easy_to_predict_users_peron_traits]
-    cache.set(movieId, return_val)
+    return_val = {
+        'avg_rating': avg_rating,
+        'predicted_avg': predicted_avg,
+        'score': score,
+        'person_traits_most_enjoyed': person_traits_most_enjoyed,
+        'easy_to_predict_users_peron_traits': easy_to_predict_users_peron_traits
+    }
+    cache.set(movieId, list(return_val.values()))
     return return_val
 
 if __name__ == '__main__':
