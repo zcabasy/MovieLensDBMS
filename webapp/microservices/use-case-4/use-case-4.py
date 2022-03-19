@@ -155,7 +155,7 @@ def data_for_given_movie(movieId):
         return [X, y, subset_stats, full_stats]
 
 
-@use_case_4.route("/", methods=["GET", "POST"])
+@use_case_4.route("/", methods=["POST"])
 def predict_rating():
     
     data = request.form
@@ -182,8 +182,14 @@ def predict_rating():
     score = mean_absolute_error(y_test, y_pred)
     return_val = [score, y_test, y_pred, subset_stats, full_stats]
     cache.set(movieId, return_val)
-    return return_val
-    
+    return {
+        'score': score,
+        'y_test': y_test,
+        'y_pred,': y_pred,
+        'subset_stats': subset_stats,
+        'full_stats': full_stats
+    }
+        
 
 if __name__ == '__main__':
     use_case_4.run(debug = True, port = 5005, host="0.0.0.0")
