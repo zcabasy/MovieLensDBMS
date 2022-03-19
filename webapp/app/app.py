@@ -123,7 +123,8 @@ def use_case_6():
         form_data = {'movieId': movieId}
 
         response = requests.post('http://use-case-6:5007/', form_data)
-        #render response
+        data = response.json()
+        return render_template("use-case-6.html", data=data)
 
 
     return render_template("use-case-6.html")

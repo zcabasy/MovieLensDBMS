@@ -252,8 +252,12 @@ def query():
         prediction = models[key].predict(movie_tags)
         traits[key] = prediction
 
-    return_val = [traits, y, tags]
-    cache.set(movieId, return_val)
+    return_val = {
+        'traits': traits,
+        'y': y,
+        'tags': tags
+    }
+    cache.set(movieId, list(return_val.values()))
     return return_val
 
 if __name__ == '__main__':
