@@ -104,6 +104,15 @@ def query_table():
     conn.close()
 
     # cache.set(str([title, tag, genre, rating_lower, rating_upper, sort_by]), {'movies': movies})
+    
+    if sort_by == 'rating DESC':
+        movies = sorted(movies, key=lambda d: d['rating'], reverse=True)
+    elif sort_by == 'rating ASC':
+        movies = sorted(movies, key=lambda d: d['rating'])
+    elif sort_by == 'title ASC':
+        movies = sorted(movies, key=lambda d: d['title'])
+    else:
+        movies = sorted(movies, key=lambda d: d['title'], reverse=True)
     return {'movies': movies}
 
 
