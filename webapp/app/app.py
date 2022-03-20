@@ -83,10 +83,7 @@ def use_case_3():
 def use_case_4():
     if request.method == "POST":
         req = request.form
-
-        form4 = req.get("form4")
-
-        movieId = 1
+        movieId = req.get("movieId")
         form_data = {'movieId': movieId}
         print('FORM DATA:', form_data, flush=True)
         response = requests.post('http://use-case-4:5005/', form_data)
@@ -96,12 +93,8 @@ def use_case_4():
         y_pred = response.json()['y_pred']
         subset_stats = response.json()['subset_stats']
         full_stats = response.json()['full_stats']
-        # print('score type', type(score), 'score', score, flush=True)
-        # print('y_test type', type(y_test), 'y_test', y_test, flush=True)
-        # print('y_pred type', type(y_pred), 'y_pred', y_pred, flush=True)
-        # print('subset_stats type', type(subset_stats), 'subset_stats', subset_stats, flush=True)
-        # print('full_stats type', type(full_stats), 'full_stats', full_stats, flush=True)
         return render_template("use-case-4.html",
+                               movieId=movieId,
                                score=score,
                                y_test=y_test,
                                y_pred=y_pred,
@@ -114,15 +107,28 @@ def use_case_4():
 def use_case_5():
     if request.method == "POST":
         req = request.form
-
-        form5 = req.get("form5") 
-
-        movieId = 1
+        movieId = req.get("movieId")
         form_data = {'movieId': movieId}
 
         response = requests.post('http://use-case-5:5006/', form_data)
-        data = response.json()
-        return render_template("use-case-5.html", data=data)
+        avg_rating = response.json()['avg_rating']
+        predicted_avg = response.json()['predicted_avg']
+        score = response.json()['score']
+        person_traits_most_enjoyed = response.json()['person_traits_most_enjoyed']
+        easy_to_predict_users_peron_traits = response.json()['easy_to_predict_users_peron_traits']
+        print(response)
+        print(avg_rating)
+        print(predicted_avg)
+        print(score)
+        print(person_traits_most_enjoyed)
+        print(easy_to_predict_users_peron_traits)
+        return render_template("use-case-5.html",
+                               movieId=movieId,
+                               avg_rating=avg_rating,
+                               predicted_avg=predicted_avg,
+                               score=score,
+                               person_traits_most_enjoyed=person_traits_most_enjoyed,
+                               easy_to_predict_users_peron_traits=easy_to_predict_users_peron_traits)
         
     return render_template("use-case-5.html")
 
