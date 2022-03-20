@@ -5,6 +5,12 @@ import sys
 
 use_case_1 = Flask(__name__)
 
+use_case_1.config['CACHE_TYPE'] = 'SimpleCache'
+use_case_1.config['CACHE_DEFAULT_TIMEOUT'] = 300
+use_case_1.config['CACHE_THRESHOLD'] = 500
+cache = Cache()
+cache.init_app(use_case_1)
+
 def connect():
         # f = open("mysql-user-db1.txt")
         # pwd = f.read()
@@ -27,6 +33,7 @@ def connect():
             sys.exit(1)
 
 @use_case_1.route("/",  methods=["GET"])
+@cache.cached(timeout=300)
 def get_genres():
     conn = connect()
     cur = conn.cursor()
@@ -65,8 +72,11 @@ def proc_params(data):
 def query_table():
     data = request.form
     title, tag, genre, rating_lower, rating_upper, sort_by = proc_params(data)
-    print(rating_lower, flush=True)
-    print(rating_upper, flush=True)
+    
+    cached_val = cache.get(str([title, tag, genre, rating_lower, rating_upper, sort_by]))
+    if cached_val != None:
+        return cached_val
+    
     conn = connect()
     cur = conn.cursor()
     cur.execute("SELECT Movies.movieId, Movies.title, GROUP_CONCAT(DISTINCT Tags.tag) as tags, AVG(Ratings.rating) as rating, GROUP_CONCAT(DISTINCT Genres.genre) as genre FROM Movies \
@@ -98,6 +108,8 @@ def query_table():
         }
         movies.append(movie)
     conn.close()
+
+    cache.set(str([title, tag, genre, rating_lower, rating_upper, sort_by]), {'movies': movies})
     return {'movies': movies}
 
 
