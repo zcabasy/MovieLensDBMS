@@ -192,7 +192,7 @@ def predict_rating():
     # print('y_pred type', type(y_pred), 'y_pred', y_pred, flush=True)
     # print('subset_stats type', type(subset_stats), 'subset_stats', subset_stats, flush=True)
     # print('full_stats type', type(full_stats), 'full_stats', full_stats, flush=True)
-    cache.set(movieId, list(return_val.values()))
+    # cache.set(movieId, list(return_val.values()))
     return return_val
         
 

@@ -224,7 +224,7 @@ def query():
     if cached_val != None:
         return cached_val
     
-    #Predicting avg rating based on subset of users
+    # Predicting avg rating based on subset of users
     if exists('nn.joblib'):
         nn = load('nn.joblib')
     else:
@@ -237,9 +237,9 @@ def query():
     predicted_avg = np.mean(y_pred)
     score = mean_absolute_error(y, y_pred)
 
-    #Personality traits of users who enjoyed the movie the most
+    # Personality traits of users who enjoyed the movie the most
     person_traits_most_enjoyed = person_traits_agg(movieId)
-    #Extra SQL Data Analysis
+    # Extra SQL Data Analysis
     easy_to_predict_users_peron_traits = person_traits_enjoy_and_personalized()
 
     return_val = {
@@ -249,7 +249,6 @@ def query():
         'person_traits_most_enjoyed': person_traits_most_enjoyed,
         'easy_to_predict_users_peron_traits': easy_to_predict_users_peron_traits
     }
-    cache.set(movieId, list(return_val.values()))
     return return_val
 
 if __name__ == '__main__':

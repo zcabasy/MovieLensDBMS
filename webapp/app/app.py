@@ -87,7 +87,6 @@ def use_case_4():
         form_data = {'movieId': movieId}
         print('FORM DATA:', form_data, flush=True)
         response = requests.post('http://use-case-4:5005/', form_data)
-        print('RESPONSE:', response.json().keys(), flush=True)
         score = response.json()['score']
         y_test = response.json()['y_test']
         y_pred = response.json()['y_pred']
@@ -107,21 +106,14 @@ def use_case_4():
 def use_case_5():
     if request.method == "POST":
         req = request.form
-        movieId = req.get("movieId")
+        movieId = 1 # req.get("movieId")
         form_data = {'movieId': movieId}
-
         response = requests.post('http://use-case-5:5006/', form_data)
         avg_rating = response.json()['avg_rating']
         predicted_avg = response.json()['predicted_avg']
         score = response.json()['score']
         person_traits_most_enjoyed = response.json()['person_traits_most_enjoyed']
         easy_to_predict_users_peron_traits = response.json()['easy_to_predict_users_peron_traits']
-        print(response)
-        print(avg_rating)
-        print(predicted_avg)
-        print(score)
-        print(person_traits_most_enjoyed)
-        print(easy_to_predict_users_peron_traits)
         return render_template("use-case-5.html",
                                movieId=movieId,
                                avg_rating=avg_rating,
