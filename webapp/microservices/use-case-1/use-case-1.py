@@ -2,6 +2,8 @@ from flask import Flask
 from flask_caching import Cache, request
 import mariadb
 import sys
+from itertools import permutations
+import itertools
 
 use_case_1 = Flask(__name__)
 
@@ -49,22 +51,8 @@ def proc_params(data):
     rating_upper = int(data["max_rating"])
     sort_by = data["sort_by"]
 
-    org_tag = data["tag"].split(",")
-    print(data["sort_by"], flush=True)
-    tag = ""
-    for x in range(len(org_tag)):
-        if x == 0:
-            tag += "%" + org_tag[x] + "%"
-        else:
-            tag += " OR tag LIKE %" + org_tag[x] + "%"
-    
-    org_genre = data["genre"].split(",")
-    genre = ""
-    for x in range(len(org_genre)):
-        if x == 0:
-            genre += "%" + org_genre[x] + "%"
-        else:
-            genre += " OR genre LIKE %" + org_genre[x] + "%"
+    tag = data["tag"].split(",")
+    genre = data["genre"].split(",")
 
     return title, tag, genre, rating_lower, rating_upper, sort_by
 
@@ -73,43 +61,49 @@ def query_table():
     data = request.form
     title, tag, genre, rating_lower, rating_upper, sort_by = proc_params(data)
     
-    cached_val = cache.get(str([title, tag, genre, rating_lower, rating_upper, sort_by]))
-    if cached_val != None:
-        return cached_val
-    
+    # cached_val = cache.get(str([title, tag, genre, rating_lower, rating_upper, sort_by]))
+    # if cached_val != None:
+    #     return cached_val
+    #"%fun%"
     conn = connect()
     cur = conn.cursor()
-    cur.execute("SELECT Movies.movieId, Movies.title, GROUP_CONCAT(DISTINCT Tags.tag) as tags, AVG(Ratings.rating) as rating, GROUP_CONCAT(DISTINCT Genres.genre) as genre FROM Movies \
-                LEFT JOIN Tags ON Movies.movieId = Tags.movieId \
-                LEFT JOIN Ratings ON Movies.movieId = Ratings.movieId \
-                LEFT JOIN Movie_Genres ON Movies.movieId = Movie_Genres.movieId \
-                INNER JOIN Genres ON Movie_Genres.genreId = Genres.genreId \
-                WHERE Movies.movieId IN ( \
-                SELECT Movies.movieId FROM Movies \
-                LEFT JOIN Tags ON Movies.movieId = Tags.movieId \
-                LEFT JOIN Movie_Genres ON Movies.movieId = Movie_Genres.movieId \
-                INNER JOIN Genres ON Movie_Genres.genreId = Genres.genreId \
-                WHERE title LIKE %s AND \
-                (Tags.tag LIKE %s)  AND \
-                (Genres.genre LIKE %s) \
-                GROUP BY Movies.movieId \
-                ) \
-                AND (rating BETWEEN %s AND %s) \
-                GROUP BY Movies.movieId \
-                ORDER BY %s;", (title, tag, genre, rating_lower, rating_upper, sort_by))
     movies = []
-    for row in cur:
-        movie = {
-            'movieId': row[0],
-            'title': row[1],
-            'tags': row[2].strip().split(","),
-            'rating': row[3],
-            'genres': row[4].strip().split(",")
-        }
-        movies.append(movie)
+
+    params = [(x,y) for x in tag for y in genre]
+    for param in params:
+        cur.execute("SELECT Movies.movieId, Movies.title, GROUP_CONCAT(DISTINCT Tags.tag) as tags, AVG(Ratings.rating) as rating, GROUP_CONCAT(DISTINCT Genres.genre) as genre FROM Movies \
+                    LEFT JOIN Tags ON Movies.movieId = Tags.movieId \
+                    LEFT JOIN Ratings ON Movies.movieId = Ratings.movieId \
+                    LEFT JOIN Movie_Genres ON Movies.movieId = Movie_Genres.movieId \
+                    INNER JOIN Genres ON Movie_Genres.genreId = Genres.genreId \
+                    WHERE Movies.movieId IN ( \
+                    SELECT Movies.movieId FROM Movies \
+                    LEFT JOIN Tags ON Movies.movieId = Tags.movieId \
+                    LEFT JOIN Movie_Genres ON Movies.movieId = Movie_Genres.movieId \
+                    INNER JOIN Genres ON Movie_Genres.genreId = Genres.genreId \
+                    WHERE title LIKE %s AND \
+                    (Tags.tag LIKE %s)  AND \
+                    (Genres.genre LIKE %s) \
+                    GROUP BY Movies.movieId \
+                    ) \
+                    AND (rating BETWEEN %s AND %s) \
+                    GROUP BY Movies.movieId \
+                    ORDER BY %s;", (title, "%"+param[0]+"%", "%"+param[1]+"%", rating_lower, rating_upper, sort_by))
+        
+        for row in cur:
+            movie = {
+                'movieId': row[0],
+                'title': row[1],
+                'tags': row[2].strip().split(","),
+                'rating': row[3],
+                'genres': row[4].strip().split(",")
+            }
+            if movie not in movies:
+                movies.append(movie)
+    
     conn.close()
 
-    cache.set(str([title, tag, genre, rating_lower, rating_upper, sort_by]), {'movies': movies})
+    # cache.set(str([title, tag, genre, rating_lower, rating_upper, sort_by]), {'movies': movies})
     return {'movies': movies}
 
 

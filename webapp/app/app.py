@@ -28,12 +28,12 @@ def use_case_1():
         req = request.form
         movieTitle = sanitize(req.get("movieTitle"))
 
-        genre = req.getlist("genre") 
+        genre = ','.join(req.getlist("genre"))
         min_rating = req.get("min_rating")
         max_rating = req.get("max_rating")
         tag = sanitize(req.get("tags"))
         sort_by = req.get("sort_by") 
-
+        
         # dummy data
         # movieTitle = "toy story 2"; genre = "adventure"; min_rating = 0;
         # max_rating = 5; tag = "animation"; sort_by = "title ASC";
