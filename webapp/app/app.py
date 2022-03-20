@@ -1,4 +1,5 @@
 from ast import Pass
+from re import T
 import requests
 from flask import Flask, render_template, request
 from flask_caching import Cache
@@ -87,10 +88,25 @@ def use_case_4():
 
         movieId = 1
         form_data = {'movieId': movieId}
-
+        print('FORM DATA:', form_data, flush=True)
         response = requests.post('http://use-case-4:5005/', form_data)
-        data = response.json()
-        return render_template("use-case-4.html", data=data)
+        print('RESPONSE:', response.json().keys(), flush=True)
+        score = response.json()['score']
+        y_test = response.json()['y_test']
+        y_pred = response.json()['y_pred']
+        subset_stats = response.json()['subset_stats']
+        full_stats = response.json()['full_stats']
+        # print('score type', type(score), 'score', score, flush=True)
+        # print('y_test type', type(y_test), 'y_test', y_test, flush=True)
+        # print('y_pred type', type(y_pred), 'y_pred', y_pred, flush=True)
+        # print('subset_stats type', type(subset_stats), 'subset_stats', subset_stats, flush=True)
+        # print('full_stats type', type(full_stats), 'full_stats', full_stats, flush=True)
+        return render_template("use-case-4.html",
+                               score=score,
+                               y_test=y_test,
+                               y_pred=y_pred,
+                               subset_stats=subset_stats,
+                               full_stats=full_stats)
     return render_template("use-case-4.html")
 
 

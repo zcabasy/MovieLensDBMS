@@ -182,11 +182,17 @@ def predict_rating():
     score = mean_absolute_error(y_test, y_pred)
     return_val = {
         'score': score,
-        'y_test': y_test,
-        'y_pred,': y_pred,
+        'y_test': y_test.tolist(),
+        'y_pred': y_pred.tolist(),
         'subset_stats': subset_stats,
         'full_stats': full_stats
     }
+    # print('score type', type(score), 'score', score, flush=True)
+    # print('y_test type', type(y_test), 'y_test', y_test, flush=True)
+    # print('y_pred type', type(y_pred), 'y_pred', y_pred, flush=True)
+    # print('subset_stats type', type(subset_stats), 'subset_stats', subset_stats, flush=True)
+    # print('full_stats type', type(full_stats), 'full_stats', full_stats, flush=True)
+    # print('RETURN VALUE: ', return_val, flush=True)
     cache.set(movieId, list(return_val.values()))
     return return_val
         
