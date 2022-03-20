@@ -83,7 +83,7 @@ def use_case_3():
 def use_case_4():
     if request.method == "POST":
         req = request.form
-        movieId = req.get("movieId")
+        movieId = 1 # req.get("movieId")
         form_data = {'movieId': movieId}
         response = requests.post('http://use-case-4:5005/', form_data)
         score = response.json()['score']
