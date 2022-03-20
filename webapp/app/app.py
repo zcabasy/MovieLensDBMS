@@ -34,7 +34,7 @@ def use_case_1():
         min_rating = req.get("min_rating")
         max_rating = req.get("max_rating")
         tag = sanitize(req.get("tags"))
-        sort_by = req.get("sort_by") 
+        sort_by = req.get("sort_by")
         
         # dummy data
         # movieTitle = "toy story 2"; genre = "adventure"; min_rating = 0;
