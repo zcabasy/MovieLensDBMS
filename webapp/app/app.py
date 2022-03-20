@@ -28,7 +28,7 @@ def use_case_1():
         req = request.form
         movieTitle = sanitize(req.get("movieTitle"))
 
-        genre = req.get("genre") 
+        genre = req.getlist("genre") 
         min_rating = req.get("min_rating")
         max_rating = req.get("max_rating")
         tag = sanitize(req.get("tags"))
