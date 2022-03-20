@@ -64,7 +64,6 @@ def query_table():
     # cached_val = cache.get(str([title, tag, genre, rating_lower, rating_upper, sort_by]))
     # if cached_val != None:
     #     return cached_val
-    #"%fun%"
     conn = connect()
     cur = conn.cursor()
     movies = []
@@ -86,9 +85,8 @@ def query_table():
                     (Genres.genre LIKE %s) \
                     GROUP BY Movies.movieId \
                     ) \
-                    AND (rating BETWEEN %s AND %s) \
                     GROUP BY Movies.movieId \
-                    ORDER BY %s;", (title, "%"+param[0]+"%", "%"+param[1]+"%", rating_lower, rating_upper, sort_by))
+                    HAVING AVG(Ratings.rating) BETWEEN %s AND %s;", (title, "%"+param[0]+"%", "%"+param[1]+"%", rating_lower, rating_upper))
         
         for row in cur:
             movie = {
