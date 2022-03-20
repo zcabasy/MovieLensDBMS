@@ -22,8 +22,8 @@ def use_case_1():
     if request.method == "GET":
         response = requests.get("http://use-case-1:5002/")
         genres = response.json()['genres']
-        if 'no_results' in request.args:
-            return render_template("use-case-1.html", genres=genres, no_results=True)
+        if 'error' in request.args:
+            return render_template("use-case-1.html", genres=genres, error=True)
         return render_template("use-case-1.html", genres=genres)
 
     elif request.method == "POST":
@@ -49,9 +49,12 @@ def use_case_1():
             'sort_by': sort_by
         }
         response = requests.post('http://use-case-1:5002/', form_data)
-        movies = response.json()['movies']
+        try:
+            movies = response.json()['movies']
+        except:
+            return redirect(url_for('use_case_1', error=True), code=302)
         if len(movies) < 1:
-            return redirect(url_for('use_case_1', no_results=True), code=302)
+            return redirect(url_for('use_case_1', error=True), code=302)
         
     return render_template("use-case-1.html", movies=movies)
 

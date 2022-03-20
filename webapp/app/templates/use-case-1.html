@@ -59,9 +59,9 @@
       <h1>Case 1</h1>
 
     {% if not movies %}
-    {% if no_results %}
+    {% if error %}
     <div class="alert alert-warning" role="alert">
-      Your search returned no results! Please try again.
+      Your search returned no results.<br>Please ensure you have filled in all fields and try again.
     </div>
     {% endif %}
      <br>
