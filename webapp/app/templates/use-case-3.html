@@ -63,7 +63,7 @@
     <div class='row'>
       <div class='col'>
 
-        <h3>Popular genres</h3>
+        <h3>Popular Movies</h3>
 
         <table class="table table-bordered table-striped table-dark">
           <thead>
@@ -80,7 +80,7 @@
             {% for genre in popular_genres %}
             <tr>
               <td>{{ genre.genre }}</td>
-              <td id="popRating">{{ genre.rating|round(3) }}</td>
+              <td>{{ genre.rating|round(3) }}</td>
               <td>{{ genre.std_rating|round(3) }}</td>
               <td>{{ genre.min_rating }}</td>
               <td>{{ genre.max_rating }}</td>
@@ -89,6 +89,16 @@
             {% endfor %}
           </tbody>
         </table>
+          <div class="card" style="text-align: center;">
+            <div class="card-header">
+              <div class="card-title">Popular Movie Statistics</div>
+            </div>
+            <div class="card-body">
+              <div class="chart-container">
+                <canvas id="popChart"></canvas>
+              </div>
+            </div>
+          </div>
 
       </div>
 
@@ -112,7 +122,7 @@
             {% for genre in polarising_genres %}
             <tr>
               <td>{{ genre.genre }}</td>
-              <td id="polRating">{{ genre.rating|round(3) }}</td>
+              <td>{{ genre.rating|round(3) }}</td>
               <td>{{ genre.std_rating|round(3) }}</td>
               <td>{{ genre.min_rating }}</td>
               <td>{{ genre.max_rating }}</td>
@@ -123,6 +133,16 @@
           </tbody>
         </table>
 
+        <div class="card" style="text-align: center;">
+          <div class="card-header">
+            <div class="card-title">Polarising Movie Statistics</div>
+          </div>
+          <div class="card-body">
+            <div class="chart-container">
+              <canvas id="polChart"></canvas>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -137,19 +157,7 @@
             class="btn btn-primary">Submit</button>
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-6">
-          <div class="card" style="text-align: center;">
-            <div class="card-header">
-              <div class="card-title">Bar Chart</div>
-            </div>
-            <div class="card-body">
-              <div class="chart-container">
-                <canvas id="barChart"></canvas>
-              </div>
-            </div>
-          </div>
-        </div>
+      
       </div>
     </form>
 
@@ -179,13 +187,35 @@
 
 <script>
   let filename = 'https://raw.githubusercontent.com/zcabasy/MovieLensDBMS/main/webapp/data/ratings.csv';
-  var popChart, polChart;
 
-  function charting(popRating, polRating) {
-    popChart = popRating;
-    polChart = polRating;
+  let popData = {{ popular_genres | safe }};
+  let polData = {{ polarising_genres | safe }};
+
+  popData = JSON.parse(JSON.stringify(popData));
+  polData = JSON.parse(JSON.stringify(polData));
+  var polGenre = [];
+  var polRating = [];
+  var polSDeviation = [];
+  var polVotes = [];
+
+  var popGenre = [];
+  var popRating = [];
+  var popSDeviation = [];
+  var popVotes = [];
+  for(var i=0; i < polData.length; i++) {
+    polGenre.push(polData[i].genre);
+    polRating.push(polData[i].rating);
+    polSDeviation.push(polData[i].std_rating);
+    polVotes.push(polData[i].num_ratings/10000)
   }
+   for (var i = 0; i < popData.length; i++) {
+      popGenre.push(popData[i].genre);
+      popRating.push(popData[i].rating);
+      popSDeviation.push(popData[i].std_rating);
+      popVotes.push(popData[i].num_ratings/10000)
+    }
 
+  
   d3.csv(filename)
     .then(makeChart);
 
@@ -194,16 +224,18 @@
 
     var movieId = data.map(function (d) { return d.movieId });
     var rating = data.map(function (d) { return d.rating; });
-    var barChart = document.getElementById('barChart').getContext('2d');
 
-    var myBarChart = new Chart(barChart, {
-      type: 'bar',
+    var popChart = document.getElementById('popChart').getContext('2d'),
+    polChart = document.getElementById('polChart').getContext('2d');
+
+    var myPopChart = new Chart(popChart, {
+      type: 'horizontalBar',
       data: {
-        labels: ['Movie #1', 'Movie #2', 'Movie #3', 'Movie #4', 'Movie #5', 'Movie #6', 'Movie #7'],
+        labels: popGenre,
         datasets: [{
-          label: 'Popular Rating',
-          // data: popRating,
-          data: [18, 12, 6, 9, 12, 3, 9],
+          label: 'Mean Rating',
+          data: popRating,
+          // data: [18, 12, 6, 9, 12, 3, 9],
           backgroundColor:
             'rgba(255, 26, 104, 0.2)',
           borderColor:
@@ -211,15 +243,26 @@
           borderWidth: 1
         },
         {
-          label: 'Polarising Rating',
-          // data: polRating,
-          data: [18, 12, 6, 9, 12, 3, 9],
+          label: 'Standard Deviation',
+          data: popSDeviation,
+          // data: [18, 12, 6, 9, 12, 3, 9],
           backgroundColor:
             'rgba(54, 162, 235, 0.2)',
           borderColor:
             'rgba(54, 162, 235, 1)',
           borderWidth: 1
         },
+        {
+          label: 'Number of Votes (per 10000)',
+            data: popVotes,
+            // data: [18, 12, 6, 9, 12, 3, 9],
+            backgroundColor:
+              'rgba(153, 102, 255, 0.2)',
+            borderColor:
+              'rgba(153, 102, 255, 1)',
+            borderWidth: 1
+          },
+         
         ],
       },
       options: {
@@ -232,10 +275,95 @@
             }
           }]
         },
+        
+        // Elements options apply to all of the options unless overridden in a dataset
+        // In this case, we are setting the border of each horizontal bar to be 2px wide
+        elements: {
+          bar: {
+            borderWidth: 2,
+          }
+        },
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'right',
+          },
+          title: {
+            display: true,
+            text: 'Chart.js Horizontal Bar Chart'
+          }
+        }
       }
     });
-  }
 
+     var myPolChart = new Chart(polChart, {
+        type: 'horizontalBar',
+        data: {
+          labels: polGenre,
+          datasets: [{
+            label: 'Mean Rating',
+            // data: popRating,
+            data: polRating,
+            backgroundColor:
+              'rgba(255, 26, 104, 0.2)',
+            borderColor:
+              'rgba(255, 26, 104, 1)',
+            borderWidth: 1
+          },
+          {
+            label: 'Standard Deviation',
+            // data: polRating,
+            data: polSDeviation,
+            backgroundColor:
+              'rgba(54, 162, 235, 0.2)',
+            borderColor:
+              'rgba(54, 162, 235, 1)',
+            borderWidth: 1
+          },
+          {
+            label: 'Number of Votes (per 10000)',
+            // data: polRating,
+            data: polVotes,
+            backgroundColor:
+              'rgba(153, 102, 255, 0.2)',
+            borderColor:
+              'rgba(153, 102, 255, 1)',
+            borderWidth: 1
+          },
+
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: true
+              }
+            }]
+          },
+
+          // Elements options apply to all of the options unless overridden in a dataset
+          // In this case, we are setting the border of each horizontal bar to be 2px wide
+          elements: {
+            bar: {
+              borderWidth: 2,
+            }
+          },
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'right',
+            },
+            title: {
+              display: true,
+              text: 'Chart.js Horizontal Bar Chart'
+            }
+          }
+        }
+      });
+  }
 </script>
 
 {% endblock javascripts %}
