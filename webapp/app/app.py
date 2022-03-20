@@ -1,7 +1,7 @@
 from ast import Pass
 from re import T
 import requests
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 from flask_caching import Cache
 import html
 
@@ -22,6 +22,8 @@ def use_case_1():
     if request.method == "GET":
         response = requests.get("http://use-case-1:5002/")
         genres = response.json()['genres']
+        if 'no_results' in request.args:
+            return render_template("use-case-1.html", genres=genres, no_results=True)
         return render_template("use-case-1.html", genres=genres)
 
     elif request.method == "POST":
@@ -48,6 +50,8 @@ def use_case_1():
         }
         response = requests.post('http://use-case-1:5002/', form_data)
         movies = response.json()['movies']
+        if len(movies) < 1:
+            return redirect(url_for('use_case_1', no_results=True), code=302)
         
     return render_template("use-case-1.html", movies=movies)
 
