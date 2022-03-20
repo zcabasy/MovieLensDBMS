@@ -128,11 +128,14 @@ def person_traits_enjoy_and_personalized():
     return [openness, agreeableness, emotional_stability, conscientiousness, extraversion, metric, condition]
 
 def train_nn():
-    #custom nn -> look at jupyter notebook for ml module
     if exists('dataset-5.csv'):
         df = pd.read_csv('dataset-5.csv')
         X = df.drop('Rating', axis=1)
         y = df.pop('Rating')
+
+        X = X.drop('Metric', axis=1)
+        X = X.drop('Condition', axis=1)
+
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42, shuffle = True)
     else:
         X_train, X_test, y_train, y_test = gen_dataset()
@@ -175,6 +178,8 @@ def gen_dataset():
     
     X = df.drop('Rating', axis=1)
     y = df.pop('Rating')
+    X = X.drop('Metric', axis=1)
+    X = X.drop('Condition', axis=1)
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42, shuffle = True)
 
     return X_train, X_test, y_train, y_test
@@ -210,6 +215,8 @@ def get_film_viewers(movieId):
     avg_rating = df['Rating'].mean()
     X = df.drop('Rating', axis=1)
     y = df.pop('Rating')
+    X = X.drop('Metric', axis=1)
+    X = X.drop('Condition', axis=1)
     
     return X, y, avg_rating
 
