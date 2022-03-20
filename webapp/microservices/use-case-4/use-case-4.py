@@ -152,6 +152,7 @@ def data_for_given_movie(movieId):
         X = df.drop('Actual', axis=1)
         X = X.drop('Movie', axis=1)
         y = df.pop('Actual')
+        conn.close()
         return [X, y, subset_stats, full_stats]
 
 

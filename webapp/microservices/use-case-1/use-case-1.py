@@ -64,19 +64,30 @@ def proc_params(data):
 def query_table():
     data = request.form
     title, tag, genre, rating_lower, rating_upper, sort_by = proc_params(data)
+    print(genre, flush=True)
     conn = connect()
     cur = conn.cursor()
-    cur.execute("SELECT Movies.movieId, Movies.title, GROUP_CONCAT(DISTINCT Tags.tag), AVG(Ratings.rating), GROUP_CONCAT(DISTINCT Genres.genre) FROM Movies \
-        LEFT JOIN Tags ON Movies.movieId = Tags.movieId \
-        LEFT JOIN Ratings ON Movies.movieId = Ratings.movieId \
-        LEFT JOIN Links ON Movies.movieId = Links.movieId \
-        LEFT JOIN Movie_Genres ON Movies.movieId = Movie_Genres.movieId \
-        INNER JOIN Genres ON Movie_Genres.genreId = Genres.genreId \
-        WHERE title LIKE %s AND \
-        (tag LIKE %s)  AND \
-        (genre LIKE %s) AND \
-        (rating BETWEEN %s AND %s) \
-        ORDER BY %s;", (title, tag, genre, rating_lower, rating_upper, sort_by))
+    cur.execute("SELECT Movies.movieId, Movies.title, GROUP_CONCAT(DISTINCT Tags.tag) as tags, AVG(Ratings.rating) as rating, GROUP_CONCAT(DISTINCT Genres.genre) as genre FROM Movies \
+                LEFT JOIN Tags ON Movies.movieId = Tags.movieId \
+                LEFT JOIN Ratings ON Movies.movieId = Ratings.movieId \
+                LEFT JOIN Links ON Movies.movieId = Links.movieId \
+                LEFT JOIN Movie_Genres ON Movies.movieId = Movie_Genres.movieId \
+                INNER JOIN Genres ON Movie_Genres.genreId = Genres.genreId \
+                WHERE Movies.movieId IN ( \
+                SELECT Movies.movieId FROM Movies \
+                LEFT JOIN Tags ON Movies.movieId = Tags.movieId \
+                LEFT JOIN Ratings ON Movies.movieId = Ratings.movieId \
+                LEFT JOIN Links ON Movies.movieId = Links.movieId \
+                LEFT JOIN Movie_Genres ON Movies.movieId = Movie_Genres.movieId \
+                INNER JOIN Genres ON Movie_Genres.genreId = Genres.genreId \
+                WHERE title LIKE %s AND \
+                (Tags.tag LIKE %s)  AND \
+                (Genres.genre LIKE %s) \
+                GROUP BY Movies.movieId \
+                ) \
+                AND (rating BETWEEN %s AND %s) \
+                GROUP BY Movies.movieId \
+                ORDER BY %s;", (title, tag, genre, rating_lower, rating_upper, sort_by))
     movies = []
     for row in cur:
         movie = {

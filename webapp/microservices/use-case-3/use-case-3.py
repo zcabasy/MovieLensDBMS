@@ -92,7 +92,7 @@ def get_genres(query, popular_or_polarising):
         if popular_or_polarising == "polarising":
             genre["range_rating"] = row[5]
         genres.append(genre)
-    cur.close()
+    conn.close()
     
     return genres
 
