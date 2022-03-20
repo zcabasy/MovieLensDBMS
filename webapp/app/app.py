@@ -85,7 +85,6 @@ def use_case_4():
         req = request.form
         movieId = req.get("movieId")
         form_data = {'movieId': movieId}
-        print('FORM DATA:', form_data, flush=True)
         response = requests.post('http://use-case-4:5005/', form_data)
         score = response.json()['score']
         y_test = response.json()['y_test']
@@ -129,15 +128,21 @@ def use_case_5():
 def use_case_6(): 
     if request.method == "POST":
         req = request.form
-
-        form6 = req.get("form6")
-
-        movieId = 1
+        movieId = 1 # req.get("movieId")
         form_data = {'movieId': movieId}
 
         response = requests.post('http://use-case-6:5007/', form_data)
-        data = response.json()
-        return render_template("use-case-6.html", data=data)
+        # traits is a dict with keys: 'openness', 'agreeable', 'emotional', 'conscientious', 'extraverted'
+        traits = response.json()['traits']
+        # y is a dict witk keys: 'Open', 'Agreeable', 'Emotional', 'Conscientious', 'Extraverted'
+        y = response.json()['y']
+        # tags is a list of strings
+        tags = response.json()['tags']
+        return render_template("use-case-6.html",
+                               movieId=movieId,
+                               traits=traits,
+                               y=y,
+                               tags=tags)
 
 
     return render_template("use-case-6.html")

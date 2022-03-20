@@ -246,18 +246,23 @@ def query():
         return cached_val
     
     models = train_models()
-    movie_tags, tags, y = movie_data(movieId) #Movie_tags is the cv transformed corpus, tags is the original tags, y is the actual personality traits in raw form
+    # Movie_tags is the cv transformed corpus, tags is the original tags, y is the actual personality traits in raw form
+    movie_tags, tags, y = movie_data(movieId)
     traits = {}
     for key in models:
         prediction = models[key].predict(movie_tags)
         traits[key] = prediction
-
+    for key, value in traits.items():
+        traits[key] = int(value[0])
+    y = y.to_dict('list')
+    for key, value in y.items():
+        y[key] = value[0]
     return_val = {
         'traits': traits,
         'y': y,
-        'tags': tags
+        'tags': tags.to_list()
     }
-    cache.set(movieId, list(return_val.values()))
+    cache.set(movieId, return_val)
     return return_val
 
 if __name__ == '__main__':

@@ -249,6 +249,7 @@ def query():
         'person_traits_most_enjoyed': person_traits_most_enjoyed,
         'easy_to_predict_users_peron_traits': easy_to_predict_users_peron_traits
     }
+    cache.set(movieId, return_val)
     return return_val
 
 if __name__ == '__main__':

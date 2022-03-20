@@ -81,7 +81,6 @@ def get_genres(query, popular_or_polarising):
     cur.execute(query)
     genres = []
     for row in cur:
-        print('ROW', row, flush=True)
         genre = {
             "genre": row[0].strip(),
             "rating": row[1],
@@ -92,7 +91,6 @@ def get_genres(query, popular_or_polarising):
         }
         if popular_or_polarising == "polarising":
             genre["range_rating"] = row[5]
-        print('ROW DONE')
         genres.append(genre)
     cur.close()
     
