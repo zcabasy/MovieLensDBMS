@@ -72,7 +72,8 @@ def use_case_2():
 
         response = requests.post('http://use-case-2:5003/', form_data)
         data = response.json()
-    return render_template("use-case-2.html", data=data)
+        return render_template("use-case-2.html", data=data)
+    return render_template("use-case-2.html")
 
 
 @app.route("/use-case-3.html", methods=["GET", "POST"])
