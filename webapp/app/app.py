@@ -94,11 +94,14 @@ def use_case_4():
         movieId = req.get("movieId")
         form_data = {'movieId': movieId}
         response = requests.post('http://use-case-4:5005/', form_data)
-        score = response.json()['score']
-        y_test = response.json()['y_test']
-        y_pred = response.json()['y_pred']
-        subset_stats = response.json()['subset_stats']
-        full_stats = response.json()['full_stats']
+        try:
+            score = response.json()['score']
+            y_test = response.json()['y_test']
+            y_pred = response.json()['y_pred']
+            subset_stats = response.json()['subset_stats']
+            full_stats = response.json()['full_stats']
+        except:
+            return redirect(url_for('use_case_4', error=True), code=302)
         return render_template("use-case-4.html",
                                movieId=movieId,
                                score=score,
@@ -106,6 +109,8 @@ def use_case_4():
                                y_pred=y_pred,
                                subset_stats=subset_stats,
                                full_stats=full_stats)
+    if "error" in request.args:
+        return render_template("use-case-4.html", error=True)
     return render_template("use-case-4.html")
 
 
@@ -116,11 +121,14 @@ def use_case_5():
         movieId = req.get("movieId")
         form_data = {'movieId': movieId}
         response = requests.post('http://use-case-5:5006/', form_data)
-        avg_rating = response.json()['avg_rating']
-        predicted_avg = response.json()['predicted_avg']
-        score = response.json()['score']
-        person_traits_most_enjoyed = response.json()['person_traits_most_enjoyed']
-        easy_to_predict_users_peron_traits = response.json()['easy_to_predict_users_peron_traits']
+        try:
+            avg_rating = response.json()['avg_rating']
+            predicted_avg = response.json()['predicted_avg']
+            score = response.json()['score']
+            person_traits_most_enjoyed = response.json()['person_traits_most_enjoyed']
+            easy_to_predict_users_peron_traits = response.json()['easy_to_predict_users_peron_traits']
+        except:
+            return redirect(url_for('use_case_5', error=True), code=302)
         return render_template("use-case-5.html",
                                movieId=movieId,
                                avg_rating=avg_rating,
@@ -128,7 +136,8 @@ def use_case_5():
                                score=score,
                                person_traits_most_enjoyed=person_traits_most_enjoyed,
                                easy_to_predict_users_peron_traits=easy_to_predict_users_peron_traits)
-        
+    if 'error' in request.args:
+        return render_template("use-case-5.html", error=True)
     return render_template("use-case-5.html")
 
 
@@ -140,19 +149,23 @@ def use_case_6():
         form_data = {'movieId': movieId}
 
         response = requests.post('http://use-case-6:5007/', form_data)
-        # traits is a dict with keys: 'openness', 'agreeable', 'emotional', 'conscientious', 'extraverted'
-        traits = response.json()['traits']
-        # y is a dict witk keys: 'Open', 'Agreeable', 'Emotional', 'Conscientious', 'Extraverted'
-        y = response.json()['y']
-        # tags is a list of strings
-        tags = response.json()['tags']
+        try:
+            # traits is a dict with keys: 'openness', 'agreeable', 'emotional', 'conscientious', 'extraverted'
+            traits = response.json()['traits']
+            # y is a dict witk keys: 'Open', 'Agreeable', 'Emotional', 'Conscientious', 'Extraverted'
+            y = response.json()['y']
+            # tags is a list of strings
+            tags = response.json()['tags']
+        except:
+            return redirect(url_for('use_case_6', error=True), code=302)
+            
         return render_template("use-case-6.html",
                                movieId=movieId,
                                traits=traits,
                                y=y,
                                tags=tags)
-
-
+    if 'error' in request.args:
+        return render_template("use-case-6.html", error=True)
     return render_template("use-case-6.html")
 
 def sanitize(data):
