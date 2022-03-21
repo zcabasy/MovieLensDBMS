@@ -341,7 +341,7 @@ function showChart() {
 
             console.log("in search");
             // let searchMovie = document.getElementById('movieSearch').value.split(' ').join('+'); // Movie Title Search
-            let searchMovie = document.getElementById('movieSearch').value; // Movie ID Search
+            let searchMovie = document.getElementById('movieId').value; // Movie ID Search
             var data, omdbAPI, searchIMDB;
             updateChart();
             await d3.csv(linksCSV)
@@ -402,7 +402,7 @@ function showChart() {
             myHistChart.update();
             myChart.config.data.datasets[0].data = { min: chartData.min, q1: chartData.median - chartData.min, median: chartData.median, q3: chartData.max - chartData.median, max: chartData.max };
             console.log(myHistChart.data.datasets[0].data)
-            alert(histRating)
+            console.log(histRating)
         }
 
             
@@ -426,8 +426,23 @@ function showChart() {
 
         function makeChart(data) {
 
-            var movieId = data.slice(0, 50).map(function (d) { return d.movieId });
-            var rating = data.slice(0, 50).map(function (d) { return d.rating; });
+            let searchMovie = '1';
+            // searchMovie = document.getElementById('movieId').value; // Movie ID Search
+            console.log("searchMovie: ", searchMovie)
+            var userId = data.filter(x => x.movieId === searchMovie).map(function (x) { return x.userId});
+            var ratings = data.filter(x => x.movieId === searchMovie).map(function(x) { return x.rating }); 
+            userId = userId.slice(0,50);
+            ratings = ratings.slice(0,50);
+            // var userId = data.filter(x => x.movieId === 1).map(x => x.userId)
+            // var ratings = data.filter(x => x.movieId === 1).map(x => x.rating)
+            // if(searchMovie){
+               
+            // } else {
+            //     var userId = data.filter(x => x.movieId === 1).map(x => x.userId)
+            //     var ratings = data.filter(x => x.movieId === 1).map(x => x.rating)
+            // }
+            // var movieId = data.slice(0, 50).map(function (d) { return d.movieId });
+            // var rating = data.slice(0, 50).map(function (d) { return d.rating; });
 
             var myLineChart = new Chart(lineChart, {
                 type: 'line',
