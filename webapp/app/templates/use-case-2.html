@@ -84,7 +84,7 @@
 
         {% if imdb_data %}
         <div>
-            <table class="d-flex table table-bordered table-striped table-dark justify-content-center html-content">
+            <table id="table-data" class="d-flex table table-bordered table-striped table-dark justify-content-center html-content">
               <thead>
                 <tr>
                   <!-- <th class="tg-baqh" colspan="6">Aggregate Personality Metrics of people who liked this film</th> -->
@@ -145,7 +145,6 @@
         <button class="btn btn-primary" onclick="saveAsPDF();">save as pdf</button>
         {% endif %}
 
-
         <footer class="mt-auto text-white-50">
         </footer>
     </div>
@@ -160,6 +159,35 @@
     {% block content %}
 
     <!-- BoxPlot JS  -->
+    <script>
+    function saveAsPDF() {
+
+        console.log("Entering save pdf");
+
+        var HTML_Width = $(".html-content").width();
+        var HTML_Height = $(".html-content").height();
+        var top_left_margin = 15;
+        var PDF_Width = HTML_Width + (top_left_margin * 2);
+        var PDF_Height = (PDF_Width * 1.5) + (top_left_margin * 2);
+        var canvas_image_width = HTML_Width;
+        var canvas_image_height = HTML_Height;
+
+        var totalPDFPages = Math.ceil(HTML_Height / PDF_Height) - 1;
+
+        html2canvas(document.getElementById("table-data"), {
+            onrendered: function (canvas) {
+                var img = canvas.toDataURL("image/jpeg", 1.0); //image data of canvas
+                var doc = new jsPDF('p', 'pt', [PDF_Width, PDF_Height]);
+                doc.addImage(img, 'JPG', top_left_margin, top_left_margin, canvas_image_width, canvas_image_height);
+                for (var i = 1; i <= totalPDFPages; i++) {
+                    doc.addPage(PDF_Width, PDF_Height);
+                    doc.addImage(img, 'JPG', top_left_margin, -(PDF_Height * i) + (top_left_margin * 4), canvas_image_width, canvas_image_height);
+                }
+                doc.save('report.pdf');
+            }
+        });
+        }
+    </script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script type="text/javascript"
         src="https://unpkg.com/@sgratzl/chartjs-chart-boxplot@3.7.0/build/index.umd.min.js"> </script>
