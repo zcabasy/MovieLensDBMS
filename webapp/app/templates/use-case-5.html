@@ -162,11 +162,17 @@ function showChart() {
 
   <!-- Specific Page JS goes HERE  -->
   {% block javascripts %}
-  <script>
+   <script>
 
     var chartData, actualLabel, predictLabel, actualData, predictData;// pre-initialization
-    chartData = {{ data | safe }};
+    var movieId = {{ movieId | safe }}
+    var avg_rating = {{ avg_rating | safe }}
+    var predicted_avg = {{ predicted_avg | safe }}
+    var score = {{ score | safe }}
+    var person_traits_most_enjoyed = {{ person_traits_most_enjoyed | safe }}
+    var easy_to_predict_users_peron_traits = {{ easy_to_predict_users_peron_traits | safe }}
 
+    alert(movieId)
     // if(chartData) {
     //   actualLabel = `Personality Traits of Viewers Who Rated Highly (Average Viewer Rating was ${chartData.avg_rating})`;
     //   predictLabel = `Predicted Personality Traits of Viewers (Average Viewer Rating was ${chartData.predicted_avg})`
@@ -189,13 +195,13 @@ function showChart() {
       data: {
         labels: ["Openness", "Agreeableness", "Emotional Stability", "Conscientiousness", "Extraversion", "Metric", "Condition"],
         datasets: [{
-          label: `Personality Traits of Viewers Who Rated Highly (Average Viewer Rating was ${chartData.avg_rating})`,
+          label: `Personality Traits of Viewers Who Rated Highly (Average Viewer Rating was ${avg_rating.toFixed(2)})`,
           backgroundColor:
             'rgba(255, 26, 104, 0.2)',
           borderColor:
             'rgba(255, 26, 104, 1)',
           borderWidth: 1,
-          data: chartData.person_traits_most_enjoyed,
+          data: person_traits_most_enjoyed,
         }],
       },
       options: {
@@ -216,11 +222,11 @@ function showChart() {
       data: {
         labels: ["Openness", "Agreeableness", "Emotional Stability", "Conscientiousness", "Extraversion", "Metric", "Condition"],
         datasets: [{
-          label: `Predicted Personality Traits of Viewers (Average Viewer Rating was ${chartData.predicted_avg})`,
+          label: `Predicted Personality Traits of Viewers (Average Viewer Rating was ${predicted_avg.toFixed(2)})`,
           backgroundColor: 'rgb(23, 125, 255)',
           borderColor: 'rgb(23, 125, 255)',
           borderWidth: 1,
-          data: chartData.easy_to_predict_users_person_traits,
+          data: easy_to_predict_users_peron_traits,
         }],
       },
       options: {
@@ -236,6 +242,19 @@ function showChart() {
       }
     });
     
+    function showChart() {
+        console.log("inside showchart()");
+        var x = document.getElementById("charts");
+        if (x.style.display === "none") {
+          x.style.display = "block";
+        } else {
+          x.style.display = "none";
+        }
+
+      }
+
+      showChart();
+      console.log("Called showChart");
 
   </script>
 
