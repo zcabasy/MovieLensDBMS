@@ -102,7 +102,7 @@
 
     <footer class="mt-auto text-white-50">
     </footer>
-    <div class="row">
+    <div id="charts" class="row">
       <div class="col-md-6">
         <div class="card">
           <div class="card-header">
@@ -129,6 +129,25 @@
       </div>
     </div>
   </div>
+
+  <script>
+
+
+function showChart() {
+       console.log("inside showchart()");
+        var x = document.getElementById("charts");
+        if (x.style.display === "none") {
+          x.style.display = "block";
+        } else {
+          x.style.display = "none";
+        }
+
+    }
+    
+      showChart(); 
+      console.log("Called showCart");
+
+  </script>
 
   {% extends "layouts/base.html" %}
 

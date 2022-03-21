@@ -139,10 +139,6 @@
         </div>
     </div> -->
 
-    <script>
-
-
-    </script>
 
 
     <div class="content html-content" id="chart-container">
@@ -270,6 +266,22 @@
 
     <br>
 
+    <script>
+
+function showChart() {
+       console.log("inside showchart()");
+        var x = document.getElementById("chart-container");
+        if (x.style.display === "none") {
+          x.style.display = "block";
+        } else {
+          x.style.display = "none";
+        }
+
+    }
+    
+      showChart(); 
+      console.log("Called showCart");
+    </script>
 
 
     {% endblock content %}
