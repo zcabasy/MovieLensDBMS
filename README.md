@@ -9,13 +9,3 @@ $ cd webapp
 $ docker-compose build
 $ docker-compose up -d
 ```
-
-To log in to bash terminal of the SQL container run:
-```
-$ docker exec -it db-1 bash
-```
-
-Once in the container's bash terminal, the MySQL shell can be run using:
-```
-$ mysql -usafebrowser -pZ}p6MYVvY`/4e.@LF*tTx2esyY~eqE4#
-```
