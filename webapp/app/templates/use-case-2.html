@@ -67,14 +67,10 @@
 
         <div class="row">
             <div class="col">
-                <form action="" method="POST">
+                <form action="#" method="POST">
                     <div class="input-group">
-                        <!-- <div class="form-outline"> -->
-                        <input type="text" id="movieId" name="movieId" class="form-control" />
-
-                        <!-- <label class="form-label" for="formOne">Search</label> -->
-                        <!-- </div> -->
-                        <button type="button" id="submitBtn" name="submitBtn" class="btn btn-primary">
+                        <input type="number" placeholder="Movie ID" id="movieId" name="movieId" class="form-control" required />
+                        <button id="submitBtn" ftype="submit" class="btn btn-primary">
                             <i class="fas fa-search"></i>
                         </button>
                     </div>
@@ -82,23 +78,62 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col">
-                <div class="media mt-4">
-                    <div class="media-body">
-                        <h5 class="mt-0" id="movieName">Movie Name Here</h5>
-                        Viewer reactions described here, or as a list
-                        <ul>
-                            <li id="movieReleased">Like this</li>
-                            <li id="movieRottenTomatoes">Like this</li>
-                            <li id="movieMetacritic">Like this</li>
-                            <li id="movieIMDB">Like this</li>
-                            <li id="movie_IMDB_ID">Like this</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+        {% if imdb_data %}
+        <div>
+            <table class="d-flex table table-bordered table-striped table-dark justify-content-center html-content">
+              <thead>
+                <tr>
+                  <!-- <th class="tg-baqh" colspan="6">Aggregate Personality Metrics of people who liked this film</th> -->
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                    <th>Mean Rating</th>
+                    <th>{{ data.mean|round(3) }}</th>
+                </tr>
+                <tr>
+                    <th>Standard Deviation of Ratings</th>
+                    <th>{{ data.std_dev|round(3) }}</th>
+                </tr>
+                <tr>
+                    <th>Minimum Rating</th>
+                    <th>{{ data.min|round(3) }}</th>
+                </tr>
+                <tr>
+                    <th>Maximum Rating</th>
+                    <th>{{ data.max|round(3) }}</th>
+                </tr>
+                <tr>
+                    <th>Median Rating</th>
+                    <th>{{ data.median|round(3) }}</th>
+                </tr>
+                <tr>
+                    <th>Imdb Id</th>
+                    <th>{{ imdb_data.imdbid }}</th>
+                </tr>
+                <tr>
+                    <th>Metascore</th>
+                    <th>{{ imdb_data.Metascore }}</th>
+                </tr>
+                <tr>
+                    <th>Imdb Rating</th>
+                    <th>{{ imdb_data.imdbrating }}</th>
+                </tr>
+                <tr>
+                    <th>Imdb Botes</th>
+                    <th>{{ imdb_data.imdbvotes }}</th>
+                </tr>
+
+                {% for key, value in imdb_data.items() %}
+                <tr>
+                  <th>{{ key.title() }}</th>
+                  <th>{% if key == 'Poster' %} <img src="{{ value }}" style="max-height:200%;" alt="Movie Poster"> {% else %} {{ value }} {% endif %}</th>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
         </div>
+        {% endif %}
 
         <br>
         <button class="btn btn-primary" onclick="saveAsPDF();">save as pdf</button>
@@ -141,7 +176,7 @@
 
 
 
-    <div class="content html-content" id="chart-container">
+    <div class="content" id="chart-container">
         <div class="page-inner">
             <h4 class="page-title">Film Report</h4>
             <div class="page-category">Simple yet flexible charting based on the MovieLens dataset. Please checkout
@@ -439,7 +474,6 @@ function showChart() {
                     }
                 }
             });
-            showChart();
         }
         var myHistChart = new Chart(histChart, {
             type: 'bar',

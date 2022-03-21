@@ -61,18 +61,18 @@ def use_case_1():
 
 @app.route("/use-case-2.html",  methods=["GET", "POST"])
 def use_case_2():
-    
     if request.method == "POST":
-        # req = request.form
-
-        # movieSearch = req.get("movieSearch")
-
+        req = request.form
         movieId = req.get("movieId")
         form_data = {'movieId': movieId}
 
         response = requests.post('http://use-case-2:5003/', form_data)
         data = response.json()
-        return render_template("use-case-2.html", data=data)
+        imdbId = data['imdbId']
+        url = 'https://www.omdbapi.com/?i=tt' + imdbId + '&apikey=ba751858'
+        imdb_api_response = requests.get(url)
+        imdb_data = imdb_api_response.json()
+        return render_template("use-case-2.html", data=data, imdb_data=imdb_data)
     return render_template("use-case-2.html")
 
 

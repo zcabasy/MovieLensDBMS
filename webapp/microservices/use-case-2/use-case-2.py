@@ -34,6 +34,14 @@ def connect():
         sys.exit(1)
     
 
+def get_imdbId(movieId):
+    conn = connect()
+    cur = conn.cursor()
+    cur.execute("SELECT imdbId FROM Links WHERE Links.movieId = %s;", (movieId, ))
+    id = cur.fetchone()[-1]
+    conn.close()
+    return id
+
 @use_case_2.route("/", methods=["POST"])
 def query_table():
     data = request.form
@@ -54,6 +62,7 @@ def query_table():
 
     conn.close()
 
+    imdbId = get_imdbId(movieId)
     mean = np.mean(ratings_list)
     std_dev = np.std(ratings_list)
     min = np.min(ratings_list)
@@ -61,12 +70,15 @@ def query_table():
     median = np.median(ratings_list)
     # Mode was not included here as a metric since ratings can take any continuous value so it is not very useful here
     return_val = {
+        "mean": mean,
         "ratings_list": ratings_list,
         "std_dev": std_dev,
         "min": min,
         "max": max,
-        "median": median
+        "median": median,
+        "imdbId": imdbId
     }
+    print("RETURNING", return_val, flush=True)
     cache.set(movieId, return_val)
     return return_val
 
