@@ -131,7 +131,30 @@
                 {% for key, value in imdb_data.items() %}
                 <tr>
                   <th>{{ key.title() }}</th>
-                  <th>{% if key == 'Poster' %} <img src="{{ value }}" style="max-height:200%;" alt="Movie Poster"> {% else %} {{ value }} {% endif %}</th>
+                  <th>
+                    {% if key == 'Poster' %}
+                      <img src="{{ value }}" style="max-height:200%;" alt="Movie Poster">
+                      {% elif key == 'Ratings' %}
+                      <table class="table table-dark justify-content-center html-content">
+                        <!-- <thead>
+                          <tr>
+                            <th>Source</th>
+                            <th>Value</th>
+                          </tr>
+                        </thead> -->
+                        <tbody>
+                          {% for rating in value %}
+                          <tr>
+                            <td>{{ rating.Source }}</td>
+                            <td>{{ rating.Value }}</td>
+                          </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    {% else %}
+                      {{ value }}
+                    {% endif %}
+                  </th>
                 </tr>
                 {% endfor %}
               </tbody>
@@ -379,7 +402,7 @@ function showChart() {
                 .then(function (data) {
                     let searchIMDB = data.filter(x => x.movieId === searchMovie).map(x => x.imdbId);
                     omdbAPI = 'https://www.omdbapi.com/?i=tt' + searchIMDB + '&apikey=ba751858';
-                    alert(omdbAPI);
+                    // alert(omdbAPI);
 
                     console.log('outside d3');
                 }
