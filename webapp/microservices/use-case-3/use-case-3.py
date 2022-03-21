@@ -13,8 +13,9 @@ cache = Cache()
 cache.init_app(use_case_3)
 
 def connect():
-    # f = open("mysql-user-db3.txt"); pwd = f.read(); f.close()
-    pwd = "CNuDHdcW3DIc5DL37ZDZpnwYQO4ONp3n"
+    f = open("mysql-user-db3.txt")
+    pwd = f.read()
+    f.close()
 
     try:
         conn = mariadb.connect(
