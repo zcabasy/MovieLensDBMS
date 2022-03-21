@@ -90,6 +90,26 @@
       </div>
     </form>
 
+    {% if y_test %}
+    <table class="table table-bordered table-striped table-dark">
+      <thead>
+        <tr>
+          <th class="tg-baqh" colspan="6">Aggregate Data</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>Actual Rating</th>
+          <th>Predicted Rating</th>
+        </tr>
+        <tr>
+          <th>{{ y_test[0]|round(3) }}</th>
+          <th>{{ y_pred[0]|round(3) }}</th>
+        </tr>
+      </tbody>
+    </table>
+    {% endif %}
+
     <div id="chartRow" class="row">
       <div class="d-flex w-100 h-100 p-3 mx-auto flex-column">
         <div class="card" style="text-align: center;">
