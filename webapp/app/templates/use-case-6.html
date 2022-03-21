@@ -94,8 +94,8 @@
                   {% endfor %}
                 </tr>
                 <tr>
-                  {% for trait in traits %}
-                  <th>{{ '✅' if  trait else '❌' }}</th>
+                  {% for trait, value in traits.items() %}
+                  <th>{{ '✅' if  value == 1 else '❌' }}</th>
                   {% endfor %}
                 </tr>
               </tbody>
