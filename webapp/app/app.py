@@ -67,7 +67,7 @@ def use_case_2():
 
         # movieSearch = req.get("movieSearch")
 
-        movieId = 1
+        movieId = req.get("movieId")
         form_data = {'movieId': movieId}
 
         response = requests.post('http://use-case-2:5003/', form_data)
@@ -91,7 +91,7 @@ def use_case_3():
 def use_case_4():
     if request.method == "POST":
         req = request.form
-        movieId = 1 # req.get("movieId")
+        movieId = req.get("movieId")
         form_data = {'movieId': movieId}
         response = requests.post('http://use-case-4:5005/', form_data)
         score = response.json()['score']
@@ -113,7 +113,7 @@ def use_case_4():
 def use_case_5():
     if request.method == "POST":
         req = request.form
-        movieId = 1 # req.get("movieId")
+        movieId = req.get("movieId")
         form_data = {'movieId': movieId}
         response = requests.post('http://use-case-5:5006/', form_data)
         avg_rating = response.json()['avg_rating']
@@ -136,7 +136,7 @@ def use_case_5():
 def use_case_6(): 
     if request.method == "POST":
         req = request.form
-        movieId = 1 # req.get("movieId")
+        movieId = req.get("movieId")
         form_data = {'movieId': movieId}
 
         response = requests.post('http://use-case-6:5007/', form_data)
