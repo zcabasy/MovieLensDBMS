@@ -1,63 +1,74 @@
 <!doctype html>
 <html lang="en" class="h-100">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Hugo 0.88.1">
-    <title>Cover Template · Bootstrap v5.1</title>
 
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/cover/">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+  <meta name="generator" content="Hugo 0.88.1">
+  <title>Cover Template · Bootstrap v5.1</title>
 
-    
+  <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/cover/">
 
-    <!-- Bootstrap core CSS -->
-<link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://kit.fontawesome.com/62896aab70.js" crossorigin="anonymous"></script>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
-    <style>
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        user-select: none;
+
+  <!-- Bootstrap core CSS -->
+  <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/62896aab70.js" crossorigin="anonymous"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+    crossorigin="anonymous"></script>
+
+  <style>
+    .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
+    }
+
+    @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+        font-size: 3.5rem;
       }
+    }
 
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
-      }
-    </style>
-
-    
-    <!-- Custom styles for this template -->
-    <link href="../static/cover.css" rel="stylesheet">
-  </head>
-  <body class="d-flex h-100 text-center text-white bg-dark">
-    
-<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-  <header class="mb-auto">
-    <div>
-      <h3 class="float-md-start mb-0">Team 1</h3>
-      <nav class="nav nav-masthead justify-content-center float-md-end">
-        <a class="nav-link" aria-current="page" href="use-case-1.html">Case 1</a>
-        <a class="nav-link" href="use-case-2.html">Case 2</a>
-        <a class="nav-link" href="use-case-3.html">Case 3</a>
-        <a class="nav-link" href="use-case-4.html">Case 4</a>
-        <a class="nav-link active" href="use-case-5.html">Case 5</a>
-        <a class="nav-link" href="use-case-6.html">Case 6</a>
+    .chart-container {
+      width: 700px;
+      height: 100px;
+      position: absolute;
+    }
+  </style>
 
 
-      </nav>
-    </div>
-  </header>
+  <!-- Custom styles for this template -->
+  <link href="../static/cover.css" rel="stylesheet">
+</head>
 
-  <!-- <main class="px-3">
+<body class="d-flex h-100 text-center text-white bg-dark">
+
+  <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+    <header class="mb-auto">
+      <div>
+        <h3 class="float-md-start mb-0">Team 1</h3>
+        <nav class="nav nav-masthead justify-content-center float-md-end">
+          <a class="nav-link" aria-current="page" href="use-case-1.html">Case 1</a>
+          <a class="nav-link" href="use-case-2.html">Case 2</a>
+          <a class="nav-link" href="use-case-3.html">Case 3</a>
+          <a class="nav-link" href="use-case-4.html">Case 4</a>
+          <a class="nav-link active" href="use-case-5.html">Case 5</a>
+          <a class="nav-link" href="use-case-6.html">Case 6</a>
+
+
+        </nav>
+      </div>
+    </header>
+
+    <!-- <main class="px-3">
     <h1>Team 1 Cases</h1>
     <p class="lead">Choose a Case from the Menu above</p>
     <p class="lead">
@@ -65,86 +76,107 @@
     </p>
   </main> -->
 
-      {% if error %}
-        <div class="alert alert-warning" role="alert">
-          Your search returned no results.<br>Please ensure you have entered a valid movie ID and try again.
-        </div>
-      {% endif %}
+  {% if error %}
+  <div class="alert alert-warning" role="alert">
+    Your search returned no results.<br>Please ensure you have entered a valid movie ID and try again.
+  </div>
+  {% endif %}
 
-      <h1>Case 5</h1>
- 
-      <form method="POST">
-        <div class="input-group">
-          <!-- <div class="form-outline"> -->
-            <input type="number" placeholder="Movie ID" id="movieId" name="movieId" class="form-control" minlength="1" required/>
-  
-            <!-- <label class="form-label" for="formOne">Search</label> -->
-          <!-- </div> -->
-          <button type="submit" class="btn btn-primary">
-            <i class="fas fa-search"></i>
-          </button>
-        </div>
-      </form>
-      <div class="row">
-        <div class="col-md-6">
-          <div class="card">
-            <div class="card-header">
-              <div class="card-title">Predicted User Subset</div>
-            </div>
-            <div class="card-body">
-              <div class="chart-container">
-                <canvas id="barChart1"></canvas>
-              </div>
-            </div>
+
+    <h1>Case 5</h1>
+
+    <form method="POST">
+      <div class="input-group">
+        <!-- <div class="form-outline"> -->
+        <input type="number" placeholder="Movie ID" id="movieId" name="movieId" class="form-control" minlength="1"
+          required />
+
+        <!-- <label class="form-label" for="formOne">Search</label> -->
+        <!-- </div> -->
+        <button type="submit" class="btn btn-primary">
+          <i class="fas fa-search"></i>
+        </button>
+      </div>
+    </form>
+
+
+    <footer class="mt-auto text-white-50">
+    </footer>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Predicted User Subset</div>
           </div>
-        </div>
-        <div class="col-md-6">
-          <div class="card">
-            <div class="card-header">
-              <div class="card-title">High Rating Users</div>
-            </div>
-            <div class="card-body">
-              <div class="chart-container">
-                <canvas id="barChart2"></canvas>
-              </div>
+          <div class="card-body">
+            <div class="chart-container">
+              <canvas id="barChart1"></canvas>
             </div>
           </div>
         </div>
       </div>
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Users Who Rated Highly</div>
+          </div>
+          <div class="card-body">
+            <div class="chart-container">
+              <canvas id="barChart2"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-  <footer class="mt-auto text-white-50">
-  </footer>
-</div>
+  {% extends "layouts/base.html" %}
 
-{% extends "layouts/base.html" %}
+  {% block title %} Case 5 {% endblock %}
 
-{% block title %} Case 5 {% endblock %}
+  <!-- Specific Page CSS goes HERE  -->
+  {% block stylesheets %}{% endblock stylesheets %}
 
-<!-- Specific Page CSS goes HERE  -->
-{% block stylesheets %}{% endblock stylesheets %}
+  {% block content %}
 
-{% block content %}
+  {% endblock content %}
 
-{% endblock content %}
+  <!-- Specific Page JS goes HERE  -->
+  {% block javascripts %}
+  <script>
 
-<!-- Specific Page JS goes HERE  -->
-{% block javascripts %}
-<script>
-var barChart1 = document.getElementById('barChart1').getContext('2d'),
-    barChart2 = document.getElementById('barChart2').getContext('2d');
+    var chartData, actualLabel, predictLabel, actualData, predictData;// pre-initialization
+    chartData = {{ data | safe }};
 
-  var myBarChart1 = new Chart(barChart1, {
+    // if(chartData) {
+    //   actualLabel = `Personality Traits of Viewers Who Rated Highly (Average Viewer Rating was ${chartData.avg_rating})`;
+    //   predictLabel = `Predicted Personality Traits of Viewers (Average Viewer Rating was ${chartData.predicted_avg})`
+    //   actualData = chartData.person_traits_most_enjoyed;
+    //   predictData = chartData.easy_to_predict_users_person_traits
+    // }
+    // else {
+    //   actualLabel = `Personality Traits of Viewers Who Rated Highly (Sample)`;
+    //   predictLabel = `Predicted Personality Traits of Viewers (Sample)`
+    //   actualData = [0];
+    //   predictData = [0];
+    // }
+    alert(JSON.stringify(chartData))
+
+    var barChart1 = document.getElementById('barChart1').getContext('2d'),
+      barChart2 = document.getElementById('barChart2').getContext('2d');
+
+    var myBarChart1 = new Chart(barChart1, {
       type: 'bar',
       data: {
-        labels: ["Tom", "May", "Susan", "Peter", "Wang", "Josh", "Ollie", "Chris", "Matt", "Dillon", "Alexander", "Napoleon"],
+        labels: ["Openness", "Agreeableness", "Emotional Stability", "Conscientiousness", "Extraversion", "Metric", "Condition"],
         datasets: [{
-          label: "Sales",
+          label: `Personality Traits of Viewers Who Rated Highly (Average Viewer Rating was ${chartData.avg_rating})`,
           backgroundColor:
             'rgba(255, 26, 104, 0.2)',
           borderColor:
             'rgba(255, 26, 104, 1)',
           borderWidth: 1,
-          data: [23, 12, 29, 5, 4, 36, 4, 36, 7, 58, 27, 34],
+          data: chartData.person_traits_most_enjoyed,
         }],
       },
       options: {
@@ -159,35 +191,36 @@ var barChart1 = document.getElementById('barChart1').getContext('2d'),
         },
       }
     });
-    
+
     var myBarChart2 = new Chart(barChart2, {
-        type: 'bar',
-        data: {
-          labels: ["Jaden", "Fabian", "Marcus", "Aster", "May", "Jake", "Juliet", "Augustine", "Semphis", "Ohana", "Nat", "Dill"],
-          datasets: [{
-            label: "Sales",
-            backgroundColor: 'rgb(23, 125, 255)',
-            borderColor: 'rgb(23, 125, 255)',
-            borderWidth: 1,
-            data: [13, 2, 19, 5, 34, 16, 14, 56, 7, 8, 27, 4],
-          }],
+      type: 'bar',
+      data: {
+        labels: ["Openness", "Agreeableness", "Emotional Stability", "Conscientiousness", "Extraversion", "Metric", "Condition"],
+        datasets: [{
+          label: `Predicted Personality Traits of Viewers (Average Viewer Rating was ${chartData.predicted_avg})`,
+          backgroundColor: 'rgb(23, 125, 255)',
+          borderColor: 'rgb(23, 125, 255)',
+          borderWidth: 1,
+          data: chartData.easy_to_predict_users_person_traits,
+        }],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
         },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          scales: {
-            yAxes: [{
-              ticks: {
-                beginAtZero: true
-              }
-            }]
-          },
-        }
-      });
+      }
+    });
 
-</script>
+  </script>
 
-{% endblock javascripts %}
-    
-  </body>
+  {% endblock javascripts %}
+
+</body>
+
 </html>
