@@ -87,22 +87,88 @@
 
     <form method="POST">
       <div class="input-group">
-        <!-- <div class="form-outline"> -->
-        <input type="number" placeholder="Movie ID" id="movieId" name="movieId" class="form-control" minlength="1"
-          required />
-
-        <!-- <label class="form-label" for="formOne">Search</label> -->
-        <!-- </div> -->
+        <input type="number" placeholder="Movie ID" id="movieId" name="movieId" class="form-control" minlength="1" required />
         <button type="submit" class="btn btn-primary">
           <i class="fas fa-search"></i>
         </button>
       </div>
     </form>
+    {% if movieId %}
+    <div>
+      <h3>Movie ID: {{movieId}}</h3>
+      <table class="table table-bordered table-striped table-dark">
+        <thead>
+        </thead>
+        <tbody>
+          <tr>
+            <th>Average Rating</th>
+            <th>{{ avg_rating|round(3) }}</th>
+          </tr>
+          <tr>
+            <th>Predicted Rating</th>
+            <th>{{ predicted_avg|round(3) }}</th>
+          </tr>
+          <tr>
+            <th>Prediction Confidence</th>
+            <th>{{ (score * 100)|round(1) }}%</th>
+          </tr>
+        </tbody>
+      </table>
+
+      <table class="table table-bordered table-striped table-dark">
+        <thead>
+          <tr>
+            <th class="tg-baqh" colspan="6">Median personality traits of people who liked this film</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>Agreeable</th>
+            <th>Conscientious</th>
+            <th>Emotional</th>
+            <th>Extraverted</th>
+            <th>Openness</th>
+          </tr>
+          <tr>
+            {% for trait in person_traits_most_enjoyed[:-2] %}
+            <th>{{ trait|round(3) }}</th> 
+            {% endfor %}
+          </tr>
+        </tbody>
+      </table>
+      <h4>Modal Metric: {{ person_traits_most_enjoyed[-2] }}</h4>
+      <h4>Modal Condition: {{ person_traits_most_enjoyed[-1] }}</h4>
+
+      <table class="table table-bordered table-striped table-dark">
+        <thead>
+          <tr>
+            <th class="tg-baqh" colspan="6">Personality traits for whom it is easy to make predictions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>Agreeable</th>
+            <th>Conscientious</th>
+            <th>Emotional</th>
+            <th>Extraverted</th>
+            <th>Openness</th>
+          </tr>
+          <tr>
+            {% for trait in easy_to_predict_users_peron_traits[:-2] %}
+            <th>{{ trait|round(3) }}</th> 
+            {% endfor %}
+          </tr>
+        </tbody>
+      </table>
+      <h4>Modal Metric: {{ easy_to_predict_users_peron_traits[-2] }}</h4>
+      <h4>Modal Condition: {{ easy_to_predict_users_peron_traits[-1] }}</h4>
+    </div>
+    {% endif %}
 
 
     <footer class="mt-auto text-white-50">
     </footer>
-    <div class="row">
+    <!-- <div class="row">
       <div class="col-md-6">
         <div class="card">
           <div class="card-header">
@@ -127,7 +193,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 
   {% extends "layouts/base.html" %}
