@@ -112,6 +112,25 @@
     </footer>
   </div>
 
+  <script>
+
+
+function showChart() {
+       console.log("inside showchart()");
+        var x = document.getElementById("chartRow");
+        if (x.style.display === "none") {
+          x.style.display = "block";
+        } else {
+          x.style.display = "none";
+        }
+
+    }
+    
+      showChart(); 
+      console.log("Called showCart");
+
+  </script>
+
   {% extends "layouts/base.html" %}
 
   {% block title %} Case 4 {% endblock %}
@@ -127,6 +146,7 @@
   {% block javascripts %}
 
   <script>
+
 
     let submit = document.getElementById('submitBtn').addEventListener('click', updateChart);
 
@@ -188,17 +208,10 @@
           }
         }
       });
+      showChart(); 
     }
 
-    //  function showChart() {
-    //     var x = document.getElementById("chartRow");
-    //     if (x.style.display === "none") {
-    //       x.style.display = "block";
-    //     } else {
-    //       x.style.display = "none";
-    //     }
 
-    //   } 
     function updateChart() {
       // alert(subData);
       // alert(fullData);

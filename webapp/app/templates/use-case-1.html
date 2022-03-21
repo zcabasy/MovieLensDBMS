@@ -69,7 +69,7 @@
       <br><br>
       <form action="#" method="POST">
         <div class="form-group row">
-          <label for="movieTitle" class="col-sm-2 col-form-label">Movie Title</label>
+          <label for="movieTitle" class="col-sm-2 col-form-label text-white">Movie Title</label>
           <div class="col-sm-10">
             <input type="text" class="form-control" name="movieTitle" id="movieTitle" placeholder="Toy Story" value="">
           </div>
@@ -81,12 +81,12 @@
         <!-- TODO: Replace the options with genres by scraping from genres table-->
         {% if genres %}
         <div name="genre" id="genre">
-          <label for="genre">Genre</label>
+          <label class="text-white" for="genre">Genre</label>
           <ul style="list-style-type:none">
             {% for genre in genres %}
             <li>
-            <input class="form-check-input" type="checkbox" name="genre" value="{{ genre }}" id="check{{ genre }}">
-            <label class="form-check-label" for="check{{ genre }}">
+            <input class="form-check-input text-white" type="checkbox" name="genre" value="{{ genre }}" id="check{{ genre }}">
+            <label class="form-check-label text-white" for="check{{ genre }}">
             {{ genre }}
             </label>
             </li>
@@ -100,25 +100,25 @@
 
         <!-- Slider taken from https://github.com/seiyria/bootstrap-slider
         its Javascript code configured used in script tag below-->
-        <div class="form-group row">
-          <label for="rating" class="col-sm-2 col-form-label">Ratings</label>
+        <div class="form-group row text-white">
+          <label for="rating" class="col-sm-2 col-form-label text-white">Ratings</label>
           <div class="col-sm-10">
-              <label for="min_rating">From (between 1 and 5):</label>
+              <label class="text-white" for="min_rating">From (between 1 and 5):</label>
               <input type="number" id="min_rating" name="min_rating" min="1" max="5" value="1">
-              <label for="max_rating">To </label>
+              <label class="text-white" for="max_rating">To </label>
               <input type="number" id="max_rating" name="max_rating" min="1" max="5" value="5">
           </div>
         </div>
 
         <div class="form-group row">
-          <label for="tags" class="col-sm-2 col-form-label">Tags</label>
+          <label for="tags" class="col-sm-2 col-form-label text-white">Tags</label>
           <div class="col-sm-10">
             <input type="text" class="form-control" name="tags" id="tags" placeholder="Fun" value="">
           </div>
         </div>
 
         <div class="form-group row">
-          <label for="sort_by" class="col-sm-2 col-form-label">Order By</label>
+          <label for="sort_by" class="col-sm-2 col-form-label text-white">Order By</label>
         <div class="form-group col-md-4">
 
         <select class="form-select" name="sort_by" id="sort_by" aria-label="sort_by">
