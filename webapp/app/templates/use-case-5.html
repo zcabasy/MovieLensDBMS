@@ -87,22 +87,88 @@
 
     <form method="POST">
       <div class="input-group">
-        <!-- <div class="form-outline"> -->
-        <input type="number" placeholder="Movie ID" id="movieId" name="movieId" class="form-control" minlength="1"
-          required />
-
-        <!-- <label class="form-label" for="formOne">Search</label> -->
-        <!-- </div> -->
+        <input type="number" placeholder="Movie ID" id="movieId" name="movieId" class="form-control" minlength="1" required />
         <button type="submit" class="btn btn-primary">
           <i class="fas fa-search"></i>
         </button>
       </div>
     </form>
+    {% if movieId %}
+    <div>
+      <h3>Movie ID: {{movieId}}</h3>
+      <table class="table table-bordered table-striped table-dark">
+        <thead>
+        </thead>
+        <tbody>
+          <tr>
+            <th>Average Rating</th>
+            <th>{{ avg_rating|round(3) }}</th>
+          </tr>
+          <tr>
+            <th>Predicted Rating</th>
+            <th>{{ predicted_avg|round(3) }}</th>
+          </tr>
+          <tr>
+            <th>Prediction Confidence</th>
+            <th>{{ (score * 100)|round(1) }}%</th>
+          </tr>
+        </tbody>
+      </table>
+
+      <table class="table table-bordered table-striped table-dark">
+        <thead>
+          <tr>
+            <th class="tg-baqh" colspan="6">Median personality traits of people who liked this film</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>Agreeable</th>
+            <th>Conscientious</th>
+            <th>Emotional</th>
+            <th>Extraverted</th>
+            <th>Openness</th>
+          </tr>
+          <tr>
+            {% for trait in person_traits_most_enjoyed[:-2] %}
+            <th>{{ trait|round(3) }}</th> 
+            {% endfor %}
+          </tr>
+        </tbody>
+      </table>
+      <h4>Modal Metric: {{ person_traits_most_enjoyed[-2] }}</h4>
+      <h4>Modal Condition: {{ person_traits_most_enjoyed[-1] }}</h4>
+
+      <table class="table table-bordered table-striped table-dark">
+        <thead>
+          <tr>
+            <th class="tg-baqh" colspan="6">Personality traits for whom it is easy to make predictions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>Agreeable</th>
+            <th>Conscientious</th>
+            <th>Emotional</th>
+            <th>Extraverted</th>
+            <th>Openness</th>
+          </tr>
+          <tr>
+            {% for trait in easy_to_predict_users_peron_traits[:-2] %}
+            <th>{{ trait|round(3) }}</th> 
+            {% endfor %}
+          </tr>
+        </tbody>
+      </table>
+      <h4>Modal Metric: {{ easy_to_predict_users_peron_traits[-2] }}</h4>
+      <h4>Modal Condition: {{ easy_to_predict_users_peron_traits[-1] }}</h4>
+    </div>
+    {% endif %}
 
 
     <footer class="mt-auto text-white-50">
     </footer>
-    <div id="charts" class="row">
+    <!-- <div class="row">
       <div class="col-md-6">
         <div class="card">
           <div class="card-header">
@@ -127,7 +193,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 
   <script>
@@ -162,11 +228,17 @@ function showChart() {
 
   <!-- Specific Page JS goes HERE  -->
   {% block javascripts %}
-  <script>
+   <script>
 
     var chartData, actualLabel, predictLabel, actualData, predictData;// pre-initialization
-    chartData = {{ data | safe }};
+    var movieId = {{ movieId | safe }}
+    var avg_rating = {{ avg_rating | safe }}
+    var predicted_avg = {{ predicted_avg | safe }}
+    var score = {{ score | safe }}
+    var person_traits_most_enjoyed = {{ person_traits_most_enjoyed | safe }}
+    var easy_to_predict_users_peron_traits = {{ easy_to_predict_users_peron_traits | safe }}
 
+    alert(movieId)
     // if(chartData) {
     //   actualLabel = `Personality Traits of Viewers Who Rated Highly (Average Viewer Rating was ${chartData.avg_rating})`;
     //   predictLabel = `Predicted Personality Traits of Viewers (Average Viewer Rating was ${chartData.predicted_avg})`
@@ -189,13 +261,13 @@ function showChart() {
       data: {
         labels: ["Openness", "Agreeableness", "Emotional Stability", "Conscientiousness", "Extraversion", "Metric", "Condition"],
         datasets: [{
-          label: `Personality Traits of Viewers Who Rated Highly (Average Viewer Rating was ${chartData.avg_rating})`,
+          label: `Personality Traits of Viewers Who Rated Highly (Average Viewer Rating was ${avg_rating.toFixed(2)})`,
           backgroundColor:
             'rgba(255, 26, 104, 0.2)',
           borderColor:
             'rgba(255, 26, 104, 1)',
           borderWidth: 1,
-          data: chartData.person_traits_most_enjoyed,
+          data: person_traits_most_enjoyed,
         }],
       },
       options: {
@@ -216,11 +288,11 @@ function showChart() {
       data: {
         labels: ["Openness", "Agreeableness", "Emotional Stability", "Conscientiousness", "Extraversion", "Metric", "Condition"],
         datasets: [{
-          label: `Predicted Personality Traits of Viewers (Average Viewer Rating was ${chartData.predicted_avg})`,
+          label: `Predicted Personality Traits of Viewers (Average Viewer Rating was ${predicted_avg.toFixed(2)})`,
           backgroundColor: 'rgb(23, 125, 255)',
           borderColor: 'rgb(23, 125, 255)',
           borderWidth: 1,
-          data: chartData.easy_to_predict_users_person_traits,
+          data: easy_to_predict_users_peron_traits,
         }],
       },
       options: {
@@ -236,6 +308,19 @@ function showChart() {
       }
     });
     
+    function showChart() {
+        console.log("inside showchart()");
+        var x = document.getElementById("charts");
+        if (x.style.display === "none") {
+          x.style.display = "block";
+        } else {
+          x.style.display = "none";
+        }
+
+      }
+
+      showChart();
+      console.log("Called showChart");
 
   </script>
 
