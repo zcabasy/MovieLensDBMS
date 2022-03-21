@@ -179,6 +179,7 @@
         <table class="table table-bordered table-striped table-dark">
           <thead>
             <tr>
+              <th>Movie ID</th>
               <th>Title</th>
               <th>Tags</th>
               <th>Rating</th>
@@ -188,6 +189,7 @@
           <tbody id="movieTable">
             {% for movie in movies %}
             <tr>
+              <th>{{ movie.movieId }}</th>
               <td>{{ movie.title }}</td>
               <td>{% for tag in movie.tags[:-1] %} {{ tag.strip().title() }}, {% endfor %} {{ movie.tags[-1].strip().title() }}</td>
               <td>{{ movie.rating|round(3) }}</td>

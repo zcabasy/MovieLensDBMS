@@ -114,6 +114,5 @@ def query_table():
     return {'movies': movies}
 
 
-
 if __name__ == '__main__':
     use_case_1.run(debug = True, port = 5002, host="0.0.0.0")

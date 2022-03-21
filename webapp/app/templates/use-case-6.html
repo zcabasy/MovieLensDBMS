@@ -77,6 +77,48 @@
           <button type="submit" class="btn btn-primary">
             <i class="fas fa-search"></i>
           </button>
+          {% if movieId %}
+          <div>
+            <h3>Movie ID: {{movieId}}</h3>
+            <p>Tags: {% for tag in tags[:-1] %} {{ tag.strip().title() }}, {% endfor %} {{ tags[-1].strip().title() }}</p>
+            
+            <table class="table table-bordered table-striped table-dark">
+              <thead>
+                <tr>
+                  <th class="tg-baqh" colspan="6">Which personality traits will like this film?</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  {% for trait in traits %}
+                  <th>{{ trait.title() }}</th>
+                  {% endfor %}
+                </tr>
+                <tr>
+                  {% for trait in traits %}
+                  <th>{{ '✅' if  trait else '❌' }}</th>
+                  {% endfor %}
+                </tr>
+              </tbody>
+            </table>
+
+            <table class="table table-bordered table-striped table-dark">
+              <thead>
+                <tr>
+                  <th class="tg-baqh" colspan="6">TODO: WHAT TO THE NUMBERS MEAN?</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for trait, value in y.items() %}
+                <tr>
+                  <th>{{ trait.title() }}</th>
+                  <th>{{ value|round(3) }}</th>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>    
+          </div>
+          {% endif %}
         </div>
       </form>
 
