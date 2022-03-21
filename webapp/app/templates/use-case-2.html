@@ -61,7 +61,11 @@
             </div>
         </header>
 
-
+        {% if error %}
+        <div class="alert alert-warning text-black" role="alert">
+          Your search returned no results.<br>Please ensure you have entered a valid movie ID and try again.
+        </div>
+        {% endif %}
         <h1>Case 2</h1>
 
 

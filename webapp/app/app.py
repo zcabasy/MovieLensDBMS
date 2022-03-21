@@ -67,12 +67,17 @@ def use_case_2():
         form_data = {'movieId': movieId}
 
         response = requests.post('http://use-case-2:5003/', form_data)
-        data = response.json()
-        imdbId = data['imdbId']
-        url = 'https://www.omdbapi.com/?i=tt' + imdbId + '&apikey=ba751858'
-        imdb_api_response = requests.get(url)
-        imdb_data = imdb_api_response.json()
+        try:
+            data = response.json()
+            imdbId = data['imdbId']
+            url = 'https://www.omdbapi.com/?i=tt' + imdbId + '&apikey=ba751858'
+            imdb_api_response = requests.get(url)
+            imdb_data = imdb_api_response.json()
+        except:
+            return redirect(url_for('use_case_2', error=True), code=302)
         return render_template("use-case-2.html", data=data, imdb_data=imdb_data)
+    if "error" in request.args:
+        return render_template("use-case-2.html", error=True)
     return render_template("use-case-2.html")
 
 
