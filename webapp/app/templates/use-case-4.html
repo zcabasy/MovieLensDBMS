@@ -110,15 +110,15 @@
     </table>
     {% endif %}
 
-    <div id="chartRow" class="row">
+    <div id="chartRow" class="row" style="position: relative; height:40vh; width:50vw; left: 55%; top: 0%; transform: translateX(-50%);">
       <div class="d-flex w-100 h-100 p-3 mx-auto flex-column">
         <div class="card" style="text-align: center;">
           <div class="card-header">
             <div class="card-title">Subset stacked against Full Ratings</div>
           </div>
           <div class="card-body">
-            <div class="chart-container">
-              <canvas id="multipleBarChart"></canvas>
+            <div class="chart-container" >
+              <canvas id="multipleBarChart" width="550" height="400"></canvas>
             </div>
           </div>
         </div>
@@ -173,6 +173,13 @@ function showChart() {
     let subData = {{ subset_stats | safe }}
     let fullData = {{ full_stats | safe }}
     let searchId = {{ movieId | safe }}
+    let y_test = {{ y_test | safe }}
+    let y_pred = {{ y_pred | safe }}
+
+    
+
+    let subLabel = [subData[0], subData[1], y_pred[0], subData[2], subData[3]];
+    let fullLabel = [fullData[0], fullData[1], y_test[0], fullData[2], fullData[3]];
 
 
 
@@ -194,17 +201,17 @@ function showChart() {
       var myMultipleBarChart = new Chart(multipleBarChart, {
         type: 'bar',
         data: {
-          labels: ["Mean Rating", "Standard Deviation", "Min Rating", "Max Rating"],
+          labels: ["Mean Rating", "Standard Deviation", "Scores", "Min Rating", "Max Rating"],
           datasets: [{
             label: `Subset Statistics (per ${subData[4]} sample size)`,
             backgroundColor: '#fdaf4b',
             borderColor: '#fdaf4b',
-            data: subData.slice(0, 4),
+            data: subLabel,
           }, {
             label: `Full Statistics (per ${fullData[4]} sample size)`,
             backgroundColor: '#177dff',
             borderColor: '#177dff',
-            data: fullData.slice(0, 4),
+            data: fullLabel,
           }],
         },
         options: {
@@ -217,7 +224,6 @@ function showChart() {
             mode: 'index',
             intersect: false
           },
-          responsive: true,
           scales: {
             xAxes: [{
               stacked: true,
