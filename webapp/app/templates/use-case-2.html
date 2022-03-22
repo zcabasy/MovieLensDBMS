@@ -136,12 +136,6 @@
                       <img src="{{ value }}" style="max-height:200%;" alt="Movie Poster">
                       {% elif key == 'Ratings' %}
                       <table class="table table-dark justify-content-center html-content">
-                        <!-- <thead>
-                          <tr>
-                            <th>Source</th>
-                            <th>Value</th>
-                          </tr>
-                        </thead> -->
                         <tbody>
                           {% for rating in value %}
                           <tr>
@@ -160,6 +154,17 @@
               </tbody>
             </table>
         </div>
+
+        <div class="card" style="text-align: center;">
+            <div class="card-header">
+              <div class="card-title">Ratings</div>
+            </div>
+            <div class="card-body">
+              <div class="chart-container">
+                <canvas id="ratingChart"></canvas>
+              </div>
+            </div>
+          </div>
         {% endif %}
 
         <br>
@@ -380,6 +385,58 @@ function showChart() {
     <!-- Page downloader js -->
 
     {% block javascripts %}
+    {% if data %}
+    <script>
+        var ratingChart = document.getElementById('ratingChart').getContext('2d')
+        var xValues = [
+            "Mean Rating",
+            "Minimum Rating",
+            "Maximum Rating",
+            "Median Rating",
+            "Metascore",
+            "Imdb Rating"
+        ];
+        var yValues = [
+            {{ data.mean|round(3) }},
+            {{ data.min|round(3) }},
+            {{ data.max|round(3) }},
+            {{ data.median|round(3) }},
+            {{ imdb_data.Metascore }} / 20,
+            {{ imdb_data.imdbRating }} / 2
+        ];
+        var barColors = ["red", "brown", "blue", "orange", "green", "yellow"];
+        var chart = new Chart("ratingChart", {
+            type: "bar",
+            data: {
+                labels: xValues,
+                datasets: [{
+                    backgroundColor: barColors,
+                    data: yValues
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                legend: {
+                    display: false,
+                    position: 'bottom'
+                },
+                tooltips: {
+                    mode: 'index',
+                    intersect: false
+                },
+                scales: {
+                    xAxes: [{
+                    stacked: true,
+                    }],
+                    yAxes: [{
+                    stacked: true
+                    }]
+                }
+            }
+            });
+    </script>
+    {% endif %}
 
 
     <!-- Atlantis DEMO methods, don't include it in your project! -->
