@@ -238,7 +238,7 @@ function showChart() {
     var person_traits_most_enjoyed = {{ person_traits_most_enjoyed | safe }}
     var easy_to_predict_users_peron_traits = {{ easy_to_predict_users_peron_traits | safe }}
 
-    alert(movieId)
+    // alert(movieId)
     // if(chartData) {
     //   actualLabel = `Personality Traits of Viewers Who Rated Highly (Average Viewer Rating was ${chartData.avg_rating})`;
     //   predictLabel = `Predicted Personality Traits of Viewers (Average Viewer Rating was ${chartData.predicted_avg})`
@@ -251,7 +251,7 @@ function showChart() {
     //   actualData = [0];
     //   predictData = [0];
     // }
-    alert(JSON.stringify(chartData))
+    // alert(JSON.stringify(chartData))
 
     var barChart1 = document.getElementById('barChart1').getContext('2d'),
       barChart2 = document.getElementById('barChart2').getContext('2d');
