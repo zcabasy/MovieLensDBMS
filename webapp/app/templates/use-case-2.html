@@ -157,7 +157,7 @@
 
         <div class="card" style="text-align: center;">
             <div class="card-header">
-              <div class="card-title">Ratings</div>
+              <div class="card-title">Ratings (on a 1-5 scale)</div>
             </div>
             <div class="card-body">
               <div class="chart-container">
@@ -192,36 +192,6 @@
     {% block content %}
 
     <!-- BoxPlot JS  -->
-
-    <script>
-                {% if imdb_data %}
-
-var xValues = ["Mean rating", "S.D. of ratings", "Median rating", "IMDB Rating", "Rotten Tomato", "Metacritic"];
-var yValues = [{{ data.mean|round(3) }}, {{ data.std_dev|round(3) }}, {{ data.median }}, {{ imdb_data.imdbRating }}, 3, 4];
-//Todo Replace the rotten tomato and metacritic values above (last 2) to the correct matching ones
-var barColors = ["red", "green","blue","orange","brown", "yellow"];
-
-new Chart("mybarchart", {
-  type: "bar",
-  data: {
-    labels: xValues,
-    datasets: [{
-      backgroundColor: barColors,
-      data: yValues
-    }]
-  },
-  options: {
-    legend: {display: false},
-    title: {
-      display: true,
-      text: "Ratings"
-    }
-  }
-});
-{% endif %}
-
-
-    </script>
     <script>
     function saveAsPDF() {
 
@@ -254,20 +224,6 @@ new Chart("mybarchart", {
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script type="text/javascript"
         src="https://unpkg.com/@sgratzl/chartjs-chart-boxplot@3.7.0/build/index.umd.min.js"> </script>
-
-    <!-- <div class="content">
-        <div class="page-inner">
-            <h4 class="page-title">Boxplot Report</h4>
-            <div class="page-category">Simple yet flexible charting based on the MovieLens dataset. Please checkout
-                their <a href="https://grouplens.org/datasets/movielens/" target="_blank">full documentation</a>.</div>
-            <div class="card-body">
-                <div class="chart-container">
-                    <canvas id="myChart"></canvas>
-                </div>
-            </div>
-        </div>
-    </div> -->
-
 
 
     <div class="content" id="chart-container">
@@ -428,7 +384,8 @@ function showChart() {
             "Minimum Rating",
             "Maximum Rating",
             "Median Rating",
-            "Metascore",
+            {% if imdb_data.Metascore != 'N/A' %} "Metacritic", {% endif %}
+            "Rotten Tomatoes",
             "Imdb Rating"
         ];
         var yValues = [
@@ -436,10 +393,11 @@ function showChart() {
             {{ data.min|round(3) }},
             {{ data.max|round(3) }},
             {{ data.median|round(3) }},
-            {{ imdb_data.Metascore }} / 20,
+            {% if imdb_data.Metascore != 'N/A' %}  {{ imdb_data.Metascore }} / 20, {% endif %}
+            {{ imdb_data.Ratings[1].Value[:-1] }} / 20,
             {{ imdb_data.imdbRating }} / 2
         ];
-        var barColors = ["red", "brown", "blue", "orange", "green", "yellow"];
+        var barColors = ["pink", "brown", "blue", "orange", "green", "red", "yellow"];
         var chart = new Chart("ratingChart", {
             type: "bar",
             data: {
