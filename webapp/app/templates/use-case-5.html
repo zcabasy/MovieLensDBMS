@@ -140,6 +140,21 @@
       <h4>Modal Metric: {{ person_traits_most_enjoyed[-2] }}</h4>
       <h4>Modal Condition: {{ person_traits_most_enjoyed[-1] }}</h4>
 
+      <!-- <div class="container container-fluid"> -->
+
+        <!-- <div class="card"> -->
+          <!-- <div class="card-header">
+            <div class="card-title">Ratings (on a 1-5 scale)</div>
+          </div> -->
+          <!-- <div class="card-body"> -->
+            <div class="chart-container">
+              <canvas id="medianTraitsChart"></canvas>
+            </div>
+          <!-- </div> -->
+        <!-- </div> -->
+        
+      <!-- </div> -->
+
       <table class="table table-bordered table-striped table-dark">
         <thead>
           <tr>
@@ -163,81 +178,27 @@
       </table>
       <h4>Modal Metric: {{ easy_to_predict_users_peron_traits[-2] }}</h4>
       <h4>Modal Condition: {{ easy_to_predict_users_peron_traits[-1] }}</h4>
-    </div>
 
+      <!-- <div class="container container-fluid"> -->
 
-    <div class="container">
-
-    <div class="row">
-
-      <div class="col">
-
-    <canvas id="barchartOne" style=""></canvas>
-    </div>
-    <div class="col">
-
-    <canvas id="barchartTwo" style=""></canvas>
+        <!-- <div class="card"> -->
+          <!-- <div class="card-header">
+            <div class="card-title">Ratings (on a 1-5 scale)</div>
+          </div> -->
+          <!-- <div class="card-body"> -->
+            <div class="chart-container">
+              <canvas id="easyPredictionsChart"></canvas>
+            </div>
+          <!-- </div> -->
+        <!-- </div> -->
+        
+      <!-- </div> -->
     </div>
 </div>
 </div>
 
 
     {% endif %}
-
-    <script>
-
-{% if movieId %}
-
-
-var xValuesOne = ["Agreeable", "Conscientious", "Emotional", "Extraverted", "Openness"];
-var yValuesOne = [{% for trait in person_traits_most_enjoyed[:-2] %} {{ trait|round(3) }}, {% endfor %}];
-
-var xValuesTwo = ["Agreeable", "Conscientious", "Emotional", "Extraverted", "Openness"];
-//var yValuesOne = [55, 49, 44, 24, 15];
-var yValuesTwo = [{% for trait in easy_to_predict_users_peron_traits[:-2] %} {{ trait|round(3) }}, {% endfor %}];
-
-var barColors = ["red", "green","blue","orange","brown"];
-
-new Chart("barchartOne", {
-  type: "bar",
-  data: {
-    labels: xValuesOne,
-    datasets: [{
-      backgroundColor: barColors,
-      data: yValuesOne
-    }]
-  },
-  options: {
-    legend: {display: false},
-    title: {
-      display: true,
-      text: "Chart One"
-    }
-  }
-});
-
-new Chart("barchartTwo", {
-  type: "bar",
-  data: {
-    labels: xValuesTwo,
-    datasets: [{
-      backgroundColor: barColors,
-      data: yValuesTwo
-    }]
-  },
-  options: {
-    legend: {display: false},
-    title: {
-      display: true,
-      text: "Chart Two"
-    }
-  }
-});
-
-{% endif %}
-
-    </script>
-
     <footer class="mt-auto text-white-50">
     </footer>
     <!-- <div class="row">
@@ -268,25 +229,6 @@ new Chart("barchartTwo", {
     </div> -->
   </div>
 
-  <script>
-
-
-function showChart() {
-       console.log("inside showchart()");
-        var x = document.getElementById("charts");
-        if (x.style.display === "none") {
-          x.style.display = "block";
-        } else {
-          x.style.display = "none";
-        }
-
-    }
-    
-      showChart(); 
-      console.log("Called showCart");
-
-  </script>
-
   {% extends "layouts/base.html" %}
 
   {% block title %} Case 5 {% endblock %}
@@ -300,6 +242,93 @@ function showChart() {
 
   <!-- Specific Page JS goes HERE  -->
   {% block javascripts %}
+  <script>
+  function showChart() {
+          console.log("inside showchart()");
+          var x = document.getElementById("charts");
+          if (x.style.display === "none") {
+            x.style.display = "block";
+          } else {
+            x.style.display = "none";
+          }
+      }
+      showChart(); 
+      console.log("Called showCart");
+    </script>
+    {% if movieId %}
+    <script>
+    var xValuesOne = ["Agreeable", "Conscientious", "Emotional", "Extraverted", "Openness"];
+    var yValuesOne = [{% for trait in person_traits_most_enjoyed[:-2] %} {{ trait|round(3) }}, {% endfor %}];
+
+    var xValuesTwo = ["Agreeable", "Conscientious", "Emotional", "Extraverted", "Openness"];
+    //var yValuesOne = [55, 49, 44, 24, 15];
+    var yValuesTwo = [{% for trait in easy_to_predict_users_peron_traits[:-2] %} {{ trait|round(3) }}, {% endfor %}];
+
+    var barColors = ["red", "green","blue","orange","brown"];
+
+    new Chart("medianTraitsChart", {
+      type: "bar",
+      data: {
+        labels: xValuesOne,
+        datasets: [{
+          backgroundColor: barColors,
+          data: yValuesOne
+        }]
+      },
+      options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                legend: {
+                    display: false,
+                    position: 'bottom'
+                },
+                tooltips: {
+                    mode: 'index',
+                    intersect: false
+                },
+                scales: {
+                    xAxes: [{
+                    stacked: true,
+                    }],
+                    yAxes: [{
+                    stacked: true
+                    }]
+                }
+            }
+    });
+
+    new Chart("easyPredictionsChart", {
+      type: "bar",
+      data: {
+        labels: xValuesTwo,
+        datasets: [{
+          backgroundColor: barColors,
+          data: yValuesTwo
+        }]
+      },
+      options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                legend: {
+                    display: false,
+                    position: 'bottom'
+                },
+                tooltips: {
+                    mode: 'index',
+                    intersect: false
+                },
+                scales: {
+                    xAxes: [{
+                    stacked: true,
+                    }],
+                    yAxes: [{
+                    stacked: true
+                    }]
+                }
+            }
+    });
+    </script>
+    {% endif %}
    <script>
 
     var chartData, actualLabel, predictLabel, actualData, predictData;// pre-initialization
