@@ -31,8 +31,8 @@ def use_case_1():
         movieTitle = sanitize(req.get("movieTitle"))
 
         genre = ','.join(req.getlist("genre"))
-        min_rating = req.get("min_rating")
-        max_rating = req.get("max_rating")
+        min_rating = sanitize(req.get("min_rating"))
+        max_rating = sanitize(req.get("max_rating"))
         tag = sanitize(req.get("tags"))
         sort_by = req.get("sort_by")
         
@@ -63,7 +63,7 @@ def use_case_1():
 def use_case_2():
     if request.method == "POST":
         req = request.form
-        movieId = req.get("movieId")
+        movieId = sanitize(req.get("movieId"))
         form_data = {'movieId': movieId}
 
         response = requests.post('http://use-case-2:5003/', form_data)
@@ -96,7 +96,7 @@ def use_case_3():
 def use_case_4():
     if request.method == "POST":
         req = request.form
-        movieId = req.get("movieId")
+        movieId = sanitize(req.get("movieId"))
         form_data = {'movieId': movieId}
         response = requests.post('http://use-case-4:5005/', form_data)
         try:
@@ -123,7 +123,7 @@ def use_case_4():
 def use_case_5():
     if request.method == "POST":
         req = request.form
-        movieId = req.get("movieId")
+        movieId = sanitize(req.get("movieId"))
         form_data = {'movieId': movieId}
         response = requests.post('http://use-case-5:5006/', form_data)
         try:
@@ -150,7 +150,7 @@ def use_case_5():
 def use_case_6(): 
     if request.method == "POST":
         req = request.form
-        movieId = req.get("movieId")
+        movieId = sanitize(req.get("movieId"))
         form_data = {'movieId': movieId}
 
         response = requests.post('http://use-case-6:5007/', form_data)
