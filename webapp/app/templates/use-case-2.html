@@ -165,6 +165,11 @@
         <br>
 
         {% if imdb_data %}
+
+        <canvas id="mybarchart" style="width:100%;max-width:600px"></canvas>
+
+
+
         <button class="btn btn-primary" onclick="saveAsPDF();">save as pdf</button>
         {% endif %}
 
@@ -182,6 +187,36 @@
     {% block content %}
 
     <!-- BoxPlot JS  -->
+
+    <script>
+                {% if imdb_data %}
+
+var xValues = ["Mean rating", "S.D. of ratings", "Median rating", "IMDB Rating", "Rotten Tomato", "Metacritic"];
+var yValues = [{{ data.mean|round(3) }}, {{ data.std_dev|round(3) }}, {{ data.median }}, {{ imdb_data.imdbRating }}, 3, 4];
+//Todo Replace the rotten tomato and metacritic values above (last 2) to the correct matching ones
+var barColors = ["red", "green","blue","orange","brown", "yellow"];
+
+new Chart("mybarchart", {
+  type: "bar",
+  data: {
+    labels: xValues,
+    datasets: [{
+      backgroundColor: barColors,
+      data: yValues
+    }]
+  },
+  options: {
+    legend: {display: false},
+    title: {
+      display: true,
+      text: "Ratings"
+    }
+  }
+});
+{% endif %}
+
+
+    </script>
     <script>
     function saveAsPDF() {
 
