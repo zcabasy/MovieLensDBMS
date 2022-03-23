@@ -34,3 +34,6 @@ You will need to have [Docker](https://docs.docker.com/get-docker/) and [Docker 
    ```bash
    docker-compose down
    ```
+
+## Errors
+For Use Case 4, 5 and 6, some movie IDs return no result. The reason for this is due to a lack of data in the provided datasets. For instance, not all movies have tags. Therefore, for Use Case 6, an empty result is returned. The same is true for Use Case 4 and 5, where not all movies have ratings.
