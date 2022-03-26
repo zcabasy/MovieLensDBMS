@@ -6,7 +6,8 @@ USE `MovieLensDB`;
 CREATE TABLE IF NOT EXISTS `MovieLensDB`.`Movies` (
   `movieId` INT NOT NULL,
   `title` VARCHAR(500) NOT NULL,
-  PRIMARY KEY (`movieId`))
+  PRIMARY KEY (`movieId`),
+  INDEX `title_idx` (`title` ASC) VISIBLE)
 ENGINE = InnoDB;
 
 
@@ -18,13 +19,13 @@ CREATE TABLE IF NOT EXISTS `MovieLensDB`.`Tags` (
   `timestamp` INT NOT NULL,
   PRIMARY KEY (`userId`, `movieId`, `tag`),
   INDEX `movieId_idx` (`movieId` ASC) VISIBLE,
+  INDEX `tag_idx` (`tag` ASC) VISIBLE,
   CONSTRAINT `tags.movieId`
     FOREIGN KEY (`movieId`)
     REFERENCES `MovieLensDB`.`Movies` (`movieId`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;      
-
 
 -- Table Genres
 CREATE TABLE IF NOT EXISTS `MovieLensDB`.`Genres` (
@@ -150,6 +151,8 @@ CREATE TABLE IF NOT EXISTS `MovieLensDB`.`Personality-Predictions` (
   `is_personalized` INT NOT NULL,
   `enjoy_watching` INT NOT NULL,
   PRIMARY KEY (`userId`),
+  INDEX `is_personalised_idx` (`is_personalized` ASC) VISIBLE,
+  INDEX `enjoy_watching_idx` (`enjoy_watching` ASC) VISIBLE,
   CONSTRAINT `Personality-Predictions.userId`
     FOREIGN KEY (`userId`)
     REFERENCES `MovieLensDB`.`Personality` (`userId`)
@@ -183,28 +186,6 @@ LOAD DATA INFILE '/data/personality_data/condition.csv' INTO TABLE Conditions FI
 LOAD DATA INFILE '/data/personality_data/personality-data.csv' INTO TABLE Personality FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
 LOAD DATA INFILE '/data/personality_data/personality-predictions.csv' INTO TABLE `Personality-Predictions` FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
 LOAD DATA INFILE '/data/personality_data/ratings.csv' INTO TABLE RatingsForPersonality FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
-
--- Create indexes for faster searching
--- CREATE INDEX title_idx
--- ON Movies (title);
-
--- CREATE INDEX tag_idx
--- ON Tags (tag);
-
--- CREATE INDEX genreId_idx
--- ON Movie_Genres (genreId);
-
--- CREATE INDEX metricId_idx
--- ON Personality (`assigned metric`);
-
--- CREATE INDEX conditionId_idx
--- ON Personality (`assigned condition`);
-
--- CREATE INDEX enjoy_watching_idx
--- ON `Personality-Predictions` (enjoy_watching);
-
--- CREATE INDEX is_personalised_idx
--- ON `Personality-Predictions` (is_personalized);
 
 -- Setup permissions for safeuser
 REVOKE ALL PRIVILEGES, GRANT OPTION FROM 'safebrowser';

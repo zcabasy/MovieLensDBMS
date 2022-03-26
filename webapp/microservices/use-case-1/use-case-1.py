@@ -114,4 +114,4 @@ def query_table():
 
 
 if __name__ == '__main__':
-    use_case_1.run(debug = True, port = 5002, host="0.0.0.0")
+    use_case_1.run(debug = False, port = 5002, host="0.0.0.0")

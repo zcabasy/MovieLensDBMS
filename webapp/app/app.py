@@ -60,6 +60,7 @@ def use_case_1():
 
 
 @app.route("/use-case-2.html",  methods=["GET", "POST"])
+# @cache.cached(timeout=300)
 def use_case_2():
     if request.method == "POST":
         req = request.form
@@ -82,6 +83,7 @@ def use_case_2():
 
 
 @app.route("/use-case-3.html", methods=["GET", "POST"])
+# @cache.cached(timeout=300)
 def use_case_3():
     response = requests.get('http://use-case-3:5004/')
     popular_genres = response.json()['popular_genres']
@@ -93,6 +95,7 @@ def use_case_3():
 
 
 @app.route("/use-case-4.html", methods=["GET", "POST"])
+# @cache.cached(timeout=300)
 def use_case_4():
     if request.method == "POST":
         req = request.form
@@ -120,6 +123,7 @@ def use_case_4():
 
 
 @app.route("/use-case-5.html", methods=["GET", "POST"])
+# @cache.cached(timeout=300)
 def use_case_5():
     if request.method == "POST":
         req = request.form
@@ -147,6 +151,7 @@ def use_case_5():
 
 
 @app.route("/use-case-6.html", methods=["GET", "POST"])
+# @cache.cached(timeout=300)
 def use_case_6(): 
     if request.method == "POST":
         req = request.form
@@ -184,4 +189,4 @@ def sanitize(data):
     return output
 
 if __name__ == '__main__':
-    app.run(debug = True, port = 5001, host="0.0.0.0")
+    app.run(debug = False, port = 5001, host="0.0.0.0")

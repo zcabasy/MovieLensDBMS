@@ -99,4 +99,4 @@ def get_genres(query, popular_or_polarising):
 
 
 if __name__ == '__main__':
-    use_case_3.run(debug = True, port = 5004, host="0.0.0.0")
+    use_case_3.run(debug = False, port = 5004, host="0.0.0.0")

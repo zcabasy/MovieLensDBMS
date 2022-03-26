@@ -83,4 +83,4 @@ def query_table():
     return return_val
 
 if __name__ == '__main__':
-    use_case_2.run(debug = True, port = 5003, host="0.0.0.0")
+    use_case_2.run(debug = False, port = 5003, host="0.0.0.0")

@@ -265,4 +265,4 @@ def query():
     return return_val
 
 if __name__ == '__main__':
-    use_case_6.run(debug = True, port = 5007, host="0.0.0.0")
+    use_case_6.run(debug = False, port = 5007, host="0.0.0.0")
