@@ -78,7 +78,6 @@ def query_table():
         "median": median,
         "imdbId": imdbId
     }
-    print("RETURNING", return_val, flush=True)
     cache.set(movieId, return_val)
     return return_val
 
